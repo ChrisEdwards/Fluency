@@ -1,19 +1,27 @@
+using System;
+
+
 namespace SampleApplication.Tests.TestDataBuilders
 {
 	public static class a
 	{
-		public static ProjectBuilder Project
+		public static OrderBuilder Order
 		{
-			get { return new ProjectBuilder(); }
+			get { return new OrderBuilder(); }
+		}
+
+		public static LineItemBuilder LineItem
+		{
+			get { return new LineItemBuilder(); }
 		}
 	}
 
 
 	public static class an
 	{
-		public static EmployeeBuilder Employee
+		public static CustomerBuilder Customer
 		{
-			get { return new EmployeeBuilder(); }
+			get { return new CustomerBuilder(); }
 		}
 	}
 }

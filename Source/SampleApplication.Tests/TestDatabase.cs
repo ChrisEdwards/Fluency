@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using NHibernate;
 using SampleApplication.Domain;
@@ -9,9 +8,11 @@ namespace SampleApplication.Tests
 {
 	public class TestDatabase
 	{
-		private readonly IList< Project > _projects = new List< Project >();
-		private readonly IList<Employee> _employees = new List<Employee>();
+		private readonly IList< Customer > _customers = new List< Customer >();
 		private readonly DbHelper _dbHelper;
+		private readonly IList< LineItem > _lineItems = new List< LineItem >();
+		private readonly IList< Order > _orders = new List< Order >();
+		private readonly IList< Product > _products = new List< Product >();
 		private readonly ISession _session;
 
 
@@ -32,18 +33,62 @@ namespace SampleApplication.Tests
 		{
 			// Insert data in order of dependency.
 
-			foreach ( Project project in _projects )
-				_dbHelper.Insert( project );
+			foreach ( Customer customer in _customers )
+				_dbHelper.Insert( customer );
 
-			foreach ( Employee employee in _employees )
-				_dbHelper.Insert( employee );
+			foreach ( Product product in _products )
+				_dbHelper.Insert( product );
+
+			foreach ( Order order in _orders )
+				_dbHelper.Insert( order );
+
+			foreach ( LineItem lineItem in _lineItems )
+				_dbHelper.Insert( lineItem );
 		}
 
 
-		public TestDatabase Add( Project project )
+		public TestDatabase Add( Order order )
 		{
 			// Exit if null or if this has already been added.
-			if (_projects.AddIfUnique(project, x => x.Id == project.Id))
+			if ( _orders.AddIfUnique( order, x => x.Id == order.Id ) )
+			{
+				// Add parents.
+				Add( order.Customer );
+
+				// Add children.
+				Add( order.LineItems );
+			}
+			return this;
+		}
+
+
+		public TestDatabase Add( IList< LineItem > lineItems )
+		{
+			foreach ( LineItem lineItem in lineItems )
+				Add( lineItem );
+			return this;
+		}
+
+
+		public TestDatabase Add( LineItem lineItem )
+		{
+			// Exit if null or if this has already been added.
+			if ( _lineItems.AddIfUnique( lineItem, x => x.Id == lineItem.Id ) )
+			{
+				// Add parents.
+				Add( lineItem.Order );
+
+				// Add children.
+				Add( lineItem.Product );
+			}
+			return this;
+		}
+
+
+		public TestDatabase Add( Product product )
+		{
+			// Exit if null or if this has already been added.
+			if ( _products.AddIfUnique( product, x => x.Id == product.Id ) )
 			{
 				// Add parents.
 				// Add children.
@@ -52,12 +97,10 @@ namespace SampleApplication.Tests
 		}
 
 
-
-
-		public TestDatabase Add( Employee employee )
+		public TestDatabase Add( Customer customer )
 		{
 			// Exit if null or if this has already been added.
-			if (_employees.AddIfUnique(employee, x => x.Id == employee.Id))
+			if ( _customers.AddIfUnique( customer, x => x.Id == customer.Id ) )
 			{
 				// Add parents.
 				// Add children.

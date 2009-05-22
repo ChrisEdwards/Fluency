@@ -1,11 +1,11 @@
 using System;
 using System.Data;
 using System.Reflection;
-using BancVue.Tests.Common.Utils;
 using log4net;
 using NHibernate;
 using SampleApplication.Domain;
 using SampleApplication.NHibernate;
+using SampleApplication.Tests.Utils;
 
 
 namespace SampleApplication.Tests
@@ -42,33 +42,60 @@ namespace SampleApplication.Tests
 		}
 
 
-		public void Insert( Project project )
+		public void Insert( Order order )
 		{
 			IDbCommand command = _session.CreateCommandWithinCurrentTransaction();
 
 			command.CommandText = SqlGenerator.GenerateInsertSql(
-					"Project",
+					"[Order]",
 					new[]
 						{
 								"Id",
-								"Name"
+								"Customer_id"
 						},
 					HasIdentityColumn );
 
-			command.SetParameter( "@Id", project.Id );
-			command.SetParameter( "@Name", project.Name );
+			command.SetParameter( "@Id", order.Id );
+			command.SetParameter( "@Customer_id", order.Customer.Id );
 
 			LogCommand( command );
 			command.ExecuteNonQuery();
 		}
 
 
-		public void Insert( Employee employee )
+		public void Insert( LineItem lineItem )
 		{
 			IDbCommand command = _session.CreateCommandWithinCurrentTransaction();
 
 			command.CommandText = SqlGenerator.GenerateInsertSql(
-					"Employee",
+					"LineItem",
+					new[]
+						{
+								"Id",
+								"Order_id",
+                                "Product_id",
+                                "Quantity",
+                                "UnitPrice"
+						},
+					HasIdentityColumn );
+
+			command.SetParameter( "@Id", lineItem.Id );
+			command.SetParameter("@Order_id", lineItem.Order.Id);
+			command.SetParameter("@Product_id", lineItem.Product.Id);
+			command.SetParameter("@Quantity", lineItem.Quantity);
+			command.SetDecimalParameter("@UnitPrice", lineItem.UnitPrice);
+
+			LogCommand( command );
+			command.ExecuteNonQuery();
+		}
+
+
+		public void Insert( Customer customer )
+		{
+			IDbCommand command = _session.CreateCommandWithinCurrentTransaction();
+
+			command.CommandText = SqlGenerator.GenerateInsertSql(
+					"Customer",
 					new[]
 						{
 								"Id",
@@ -77,9 +104,32 @@ namespace SampleApplication.Tests
 						},
 					HasIdentityColumn);
 
-			command.SetParameter("@Id", employee.Id);
-			command.SetParameter("@FirstName", employee.FirstName);
-			command.SetParameter("@LastName", employee.LastName);
+			command.SetParameter("@Id", customer.Id);
+			command.SetParameter("@FirstName", customer.FirstName);
+			command.SetParameter("@LastName", customer.LastName);
+
+			LogCommand(command);
+			command.ExecuteNonQuery();
+		}
+
+
+		public void Insert( Product product )
+		{
+			IDbCommand command = _session.CreateCommandWithinCurrentTransaction();
+
+			command.CommandText = SqlGenerator.GenerateInsertSql(
+					"Product",
+					new[]
+						{
+								"Id",
+								"Name",
+                                "Description"
+						},
+					HasIdentityColumn);
+
+			command.SetParameter("@Id", product.Id);
+			command.SetParameter("@Name", product.Name);
+			command.SetParameter("@Description", product.Description);
 
 			LogCommand(command);
 			command.ExecuteNonQuery();

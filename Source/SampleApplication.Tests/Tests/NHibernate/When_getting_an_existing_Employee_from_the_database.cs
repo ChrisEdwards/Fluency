@@ -7,25 +7,31 @@ using SampleApplication.Tests.TestDataBuilders;
 namespace SampleApplication.Tests.Tests.NHibernate
 {
 	[ TestFixture ]
-	public class When_getting_an_existing_Employee_from_the_database : AutoRollbackDatabaseTest
+	public class When_getting_an_existing_Customer_from_the_database : AutoRollbackDatabaseTest
 	{
-		private Employee _expectedEmployee;
-		private Employee _actualEmployee;
+		private Customer _expectedCustomer;
+		private Customer _actualCustomer;
 
 		protected override void TestSetUp()
 		{
-			_expectedEmployee = an.Employee.build();
+			_expectedCustomer = an.Customer.build();
 
-			_db.Add( _expectedEmployee )
+			_db.Add( _expectedCustomer )
 				.Persist();
 
-			_actualEmployee = _session.Get< Employee >( _expectedEmployee.Id );
+			_actualCustomer = _session.Get< Customer >( _expectedCustomer.Id );
 		}
 
 		[ Test ]
 		public void Should_retrieve_first_name()
 		{
-			Assert.That( _actualEmployee.FirstName, Is.EqualTo( _expectedEmployee.FirstName ));
+			Assert.That( _actualCustomer.FirstName, Is.EqualTo( _expectedCustomer.FirstName ));
+		}
+
+		[ Test ]
+		public void Should_retrieve_last_name()
+		{
+			Assert.That( _actualCustomer.LastName, Is.EqualTo( _expectedCustomer.LastName ));
 		}
 
 	}

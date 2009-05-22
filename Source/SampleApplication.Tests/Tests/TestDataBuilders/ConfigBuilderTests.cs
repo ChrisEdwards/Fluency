@@ -12,11 +12,11 @@ namespace SampleApplication.Tests.Tests.TestDataBuilders
 		[ Test ]
 		public void Build_creates_anonymous_Employee()
 		{
-			Employee employee = new EmployeeBuilder().build();
+			Customer customer = new CustomerBuilder().build();
 
-			Assert.IsNotNull( employee );
-			Assert.IsNotNullOrEmpty( employee.FirstName );
-			Assert.IsNotNullOrEmpty( employee.LastName );
+			Assert.IsNotNull( customer );
+			Assert.IsNotNullOrEmpty( customer.FirstName );
+			Assert.IsNotNullOrEmpty( customer.LastName );
 		}
 	}
 }

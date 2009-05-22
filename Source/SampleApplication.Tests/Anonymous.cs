@@ -15,14 +15,25 @@ namespace SampleApplication.Tests
 		}
 
 
-		public Project Project()
+		public Order Order()
 		{
-			var project = new Project
+			var order = new Order
 			              	{
 			              			Id = GetUniqueId(),
-			              			Name = ARandom.Title( 100 )
+			              			Customer = Customer()
 			              	};
-			return project;
+			return order;
+		}
+
+		public Customer Customer()
+		{
+			var customer = new Customer
+			               	{
+			               			Id = GetUniqueId(),
+			               			FirstName = ARandom.FirstName(),
+			               			LastName = ARandom.LastName()
+			               	};
+			return customer;
 		}
 	}
 }

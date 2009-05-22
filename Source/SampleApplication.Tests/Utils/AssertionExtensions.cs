@@ -26,6 +26,12 @@ namespace SampleApplication.Tests.Utils
 		}
 
 
+		public static void should_have_same_item_count_as< T >( this IEnumerable< T > items, IEnumerable<T> expected ) 
+		{
+			Assert.AreEqual( expected.Count(), items.Count() );
+		}
+
+
 		public static void should_contain_no_items< T >( this IEnumerable< T > items )
 		{
 			items.should_have_item_count_of( 0 );
