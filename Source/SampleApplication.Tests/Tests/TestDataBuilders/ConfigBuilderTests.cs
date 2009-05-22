@@ -1,21 +1,22 @@
-using BancVue.Domain.CoreVue;
-using BancVue.Tests.Common.TestDataBuilders;
+
 using NUnit.Framework;
+using SampleApplication.Domain;
+using SampleApplication.Tests.TestDataBuilders;
 
 
-namespace BancVue.Tests.Common.Tests.TestDataBuilders
+namespace SampleApplication.Tests.Tests.TestDataBuilders
 {
-    [ TestFixture ]
-    public class ConfigBuilderTests : TestDataBuilderTestsBase
-    {
-        [ Test ]
-        public void Build_creates_anonymous_config()
-        {
-            Config config = new ConfigBuilder().build();
+	[ TestFixture ]
+	public class EmployeeBuilderTests : TestDataBuilderTestsBase
+	{
+		[ Test ]
+		public void Build_creates_anonymous_Employee()
+		{
+			Employee employee = new EmployeeBuilder().build();
 
-            Assert.IsNotNull( config );
-            Assert.IsTrue( config.ConfigId < 0 );
-            Assert.IsTrue( config.InstitutionId == 0 );
-        }
-    }
+			Assert.IsNotNull( employee );
+			Assert.IsNotNullOrEmpty( employee.FirstName );
+			Assert.IsNotNullOrEmpty( employee.LastName );
+		}
+	}
 }
