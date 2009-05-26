@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 
 namespace SampleApplication.Domain
@@ -14,6 +16,11 @@ namespace SampleApplication.Domain
 		{
 			get { return _lineItems; }
 			set { _lineItems = value; }
+		}
+
+		public virtual double TotalAmount
+		{
+			get { return LineItems.Sum( x => x.Amount ); }
 		}
 	}
 }

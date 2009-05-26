@@ -1,4 +1,3 @@
-using System;
 using FluentObjectBuilder;
 using FluentObjectBuilder.DataGeneration;
 using SampleApplication.Domain;
@@ -6,31 +5,65 @@ using SampleApplication.Domain;
 
 namespace SampleApplication.Tests.TestDataBuilders
 {
-	public class LineItemBuilder:TestDataBuilder<LineItem>
+	public class LineItemBuilder : TestDataBuilder< LineItem >
 	{
-		private double _unitPrice;
-		private int _quantity;
-		private OrderBuilder _orderBuilder;
-		private ProductBuilder _productBuilder;
 
 		public LineItemBuilder()
 		{
-			_unitPrice = ARandom.CurrencyAmount();
-			_quantity = ARandom.IntBetween( 1, 20 );
-			_orderBuilder = new OrderBuilder();
-			_productBuilder = new ProductBuilder();
+			// TODO: Setup AutoPopulation of random values by type. Need a way to override defaults.
+			_prototype.UnitPrice = ARandom.CurrencyAmount();
+			_prototype.Quantity = 1;
+
+			SetPropertyBuilder( x => x.Product, new ProductBuilder() );
+			SetPropertyBuilder( x => x.Order, new OrderBuilder() );
 		}
+
+
+		public LineItemBuilder And
+		{
+			get { return this; }
+		}
+
 
 		protected override LineItem _build()
 		{
+			// TODO: Use Automapper
 			return new LineItem
 			       	{
 			       			Id = GetUniqueId(),
-			       			Order = _orderBuilder.build(),
-			       			Product = _productBuilder.build(),
-			       			Quantity = _quantity,
-			       			UnitPrice = _unitPrice
+			       			Order = _prototype.Order,
+			       			Product = _prototype.Product,
+			       			Quantity = _prototype.Quantity,
+			       			UnitPrice = _prototype.UnitPrice
 			       	};
+		}
+
+
+		public LineItemBuilder For( TestDataBuilder< Product > productBuilder )
+		{
+			SetPropertyBuilder( x => x.Product, productBuilder );
+			return this;
+		}
+
+
+		public LineItemBuilder Costing( double unitPrice )
+		{
+			SetPropertyValue( x => x.UnitPrice, unitPrice );
+			return this;
+		}
+
+
+		public LineItemBuilder WithQuantity( int howMany )
+		{
+			SetPropertyValue( x => x.Quantity, howMany );
+			return this;
+		}
+
+
+		public LineItemBuilder UnitPriceOf( double unitPrice )
+		{
+			SetPropertyValue( x => x.UnitPrice, unitPrice );
+			return this;
 		}
 	}
 }

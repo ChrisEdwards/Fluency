@@ -19,7 +19,7 @@ namespace SampleApplication.Tests
 		public static string GenerateInsertSql( string tableName, string[] fieldNames, bool hasIdentityColumn )
 		{
 			string sqlTemplate=
-					@"INSERT INTO {0}
+					@"INSERT INTO [{0}]
                                     ({1})
                         VALUES
                                     ({2});";

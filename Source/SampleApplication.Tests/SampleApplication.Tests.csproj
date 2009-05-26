@@ -77,11 +77,14 @@
     <Compile Include="TestDataBuilders\CustomerBuilder.cs" />
     <Compile Include="TestDataBuilders\OrderBuilder.cs" />
     <Compile Include="TestDataBuilders\ProductBuilder.cs" />
+    <Compile Include="Tests\Domain\DiscountCalculation\DiscountCalculatorTests\When_calculating_a_discount.cs" />
+    <Compile Include="Tests\Domain\LineItemTests\When_calculating_the_amount_of_a_line_item_with_quantity_of_one.cs" />
+    <Compile Include="Tests\Domain\OrderTests\When_getting_the_total_order_amount.cs" />
     <Compile Include="Tests\NHibernate\When_getting_an_existing_Employee_from_the_database.cs" />
     <Compile Include="Tests\NHibernate\When_getting_an_existing_LineItem_from_the_database.cs" />
-    <Compile Include="Tests\TestDataBuilders\ConfigBuilderTests.cs" />
+    <Compile Include="Tests\TestDataBuilders\EmployeeBuilderTests.cs" />
+    <Compile Include="Tests\TestDataBuilders\LineItemBuilderTests.cs" />
     <Compile Include="Tests\TestDataBuilders\TestDataBuilderTestsBase.cs" />
-    <Compile Include="Utils\AssertionExtensions.cs" />
     <Compile Include="Utils\DomainAssertionExtensions.cs" />
     <Compile Include="Utils\IDbCommandExtensions.cs" />
   </ItemGroup>

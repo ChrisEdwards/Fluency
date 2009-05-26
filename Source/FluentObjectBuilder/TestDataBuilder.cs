@@ -1,13 +1,32 @@
 using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+using System.Reflection;
+using AutoMapper;
+using FluentNHibernate.Utils;
+using Rhino.Mocks;
 
 
 namespace FluentObjectBuilder
 {
-	public abstract class TestDataBuilder< T > : ITestDataBuilder< T > where T : class
+	public abstract class TestDataBuilder< T > : ITestDataBuilder< T > where T : class, new()
 	{
-		private static bool _executedBuildOnceAlready = false;
+		private static bool _executedBuildOnceAlready;
 		private static int _uniqueId = -10;
+		private readonly Dictionary< string, ITestDataBuilder > _builders = new Dictionary< string, ITestDataBuilder >();
+		private readonly MockRepository _mocks;
 		protected T _preBuiltResult;
+		protected T _prototype;
+
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="TestDataBuilder&lt;T&gt;"/> class.
+		/// </summary>
+		public TestDataBuilder()
+		{
+			_mocks = new MockRepository();
+			_prototype = _mocks.Stub< T >();
+		}
 
 
 		#region ITestDataBuilder<T> Members
@@ -21,11 +40,55 @@ namespace FluentObjectBuilder
 			if ( _executedBuildOnceAlready )
 				throw new Exception( "Cannot build more than once [" + GetType().FullName + "]." );
 
-			return _preBuiltResult ?? _build();
+			foreach ( var pair in _builders )
+			{
+				string propertyName = pair.Key;
+				object propertyValue = pair.Value.GetType().GetMethod( "build" ).Invoke( pair.Value, null ); // Calls builder.build()
+				_prototype.GetType().GetProperty( propertyName ).SetValue( _prototype, propertyValue, null );
+			}
+
+			return _preBuiltResult ?? _build();//BuildFromPrototype( _prototype );
 			//_executedBuildOnceAlready = true;
 		}
 
 		#endregion
+
+
+		private T BuildFromPrototype( T prototype )
+		{
+			// User Automapper to copy values
+			
+			//IMappingExpression< T, T > map = Mapper.CreateMap< T, T >();
+			// TODO: Must fix... readonly properties break.
+			//map.IgnoreReadOnlyProperties();
+			//var result = new T();
+			var  result = Mapper.DynamicMap<T,T>( prototype);
+			return result;
+		}
+
+
+		public void SetPropertyValue< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression, TPropertyType propertyValue )
+		{
+			Accessor accessor = ReflectionHelper.GetAccessor( propertyExpression );
+			accessor.SetValue( _prototype, propertyValue );
+		}
+
+
+		public void SetPropertyBuilder< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression, TestDataBuilder< TPropertyType > builder )
+				where TPropertyType : class, new()
+		{
+			PropertyInfo property = ReflectionHelper.GetProperty( propertyExpression );
+
+			if ( _builders.ContainsKey( property.Name ) )
+				_builders.Remove( property.Name );
+
+			_builders.Add( property.Name, builder );
+
+//			var func = new Function< T, TPropertyType >( propertyExpression.Compile() );
+//			_prototype
+//					.Stub( func )
+//					.WhenCalled( x => { x.ReturnValue = ( (TestDataBuilder< TPropertyType >)_builders[propertyName] ).build(); } );
+		}
 
 
 		/// <summary>

@@ -4,7 +4,7 @@ using System.Linq;
 using NUnit.Framework;
 
 
-namespace SampleApplication.Tests.Utils
+namespace FluentObjectBuilder
 {
 	public static class AssertionExtensions
 	{

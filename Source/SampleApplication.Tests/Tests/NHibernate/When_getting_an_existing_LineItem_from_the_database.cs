@@ -1,8 +1,8 @@
 using BancVue.Tests.Common;
+using FluentObjectBuilder;
 using NUnit.Framework;
 using SampleApplication.Domain;
 using SampleApplication.Tests.TestDataBuilders;
-using SampleApplication.Tests.Utils;
 
 
 namespace SampleApplication.Tests.Tests.NHibernate

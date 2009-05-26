@@ -8,8 +8,8 @@
     <ProjectGuid>{F8CADD7C-6E49-476F-AF03-274507FA06B4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>fluentobjectbuilder.tests</RootNamespace>
-    <AssemblyName>fluentobjectbuilder.tests</AssemblyName>
+    <RootNamespace>FluentObjectBuilder.Tests</RootNamespace>
+    <AssemblyName>FluentObjectBuilder.Tests</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -49,7 +49,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="NumericalExtensionTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\fluentobjectbuilder\FluentObjectBuilder.csproj">
+      <Project>{CA8DE273-AA4A-4FC1-9D41-B67B56A53433}</Project>
+      <Name>FluentObjectBuilder</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

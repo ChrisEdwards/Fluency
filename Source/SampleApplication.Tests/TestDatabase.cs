@@ -1,7 +1,7 @@
 using System.Collections.Generic;
+using FluentObjectBuilder;
 using NHibernate;
 using SampleApplication.Domain;
-using SampleApplication.Tests.Utils;
 
 
 namespace SampleApplication.Tests

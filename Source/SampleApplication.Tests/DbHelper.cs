@@ -47,7 +47,7 @@ namespace SampleApplication.Tests
 			IDbCommand command = _session.CreateCommandWithinCurrentTransaction();
 
 			command.CommandText = SqlGenerator.GenerateInsertSql(
-					"[Order]",
+					"Order",
 					new[]
 						{
 								"Id",

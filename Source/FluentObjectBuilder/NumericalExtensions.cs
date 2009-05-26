@@ -39,5 +39,22 @@ namespace FluentObjectBuilder
 		{
 			return DateTime.Now.AddDays( days );
 		}
+
+		public static double cents(this int cents)
+		{
+			double value = (double) cents / 100;
+			return Math.Round( value, 2 );
+		}
+
+		public static double percent(this int percent)
+		{
+			double value = (double) percent / 100;
+			return Math.Round( value, 2 );
+		}
+
+		public static double dollars(this int dollars)
+		{
+			return (double) dollars;
+		}
 	}
 }

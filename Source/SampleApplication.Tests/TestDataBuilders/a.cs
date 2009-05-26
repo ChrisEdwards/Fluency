@@ -5,23 +5,28 @@ namespace SampleApplication.Tests.TestDataBuilders
 {
 	public static class a
 	{
-		public static OrderBuilder Order
+		public static CustomerBuilder Customer
 		{
-			get { return new OrderBuilder(); }
+			get { return new CustomerBuilder(); }
 		}
 
 		public static LineItemBuilder LineItem
 		{
 			get { return new LineItemBuilder(); }
 		}
+
+		public static ProductBuilder Product
+		{
+			get {return new ProductBuilder(); }
+		}
 	}
 
 
 	public static class an
 	{
-		public static CustomerBuilder Customer
+		public static OrderBuilder Order
 		{
-			get { return new CustomerBuilder(); }
+			get { return new OrderBuilder(); }
 		}
 	}
 }

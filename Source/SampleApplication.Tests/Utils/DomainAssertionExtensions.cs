@@ -1,3 +1,4 @@
+using FluentObjectBuilder;
 using SampleApplication.Domain;
 using SampleApplication.Tests.Utils;
 

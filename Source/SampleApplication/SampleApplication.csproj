@@ -61,15 +61,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Domain\DiscountCalculation\DiscountTier.cs" />
+    <Compile Include="Domain\DiscountCalculation\ITieredDiscountStrategyBuilder_Then.cs" />
+    <Compile Include="Domain\DiscountCalculation\ITieredDiscountStrategyBuilder_Where.cs" />
+    <Compile Include="Domain\DiscountCalculation\ITieredDiscountStrategyBuilder_WhereOrBuild.cs" />
+    <Compile Include="Domain\DiscountCalculation\TieredDiscountStrategy.cs" />
     <Compile Include="Domain\Customer.cs" />
+    <Compile Include="Domain\DiscountCalculation\DiscountCalculator.cs" />
+    <Compile Include="Domain\IDiscountStrategy.cs" />
     <Compile Include="Domain\LineItem.cs" />
     <Compile Include="Domain\Order.cs" />
     <Compile Include="Domain\Product.cs" />
+    <Compile Include="Domain\DiscountCalculation\DiscountStrategyBuilder.cs" />
     <Compile Include="ISampleApplicationAssembly.cs" />
     <Compile Include="Log4NetConfiguration.cs" />
     <Compile Include="NHibernate\SessionExtensions.cs" />
     <Compile Include="NHibernate\NHibernateHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Specifications\AndSpecification.cs" />
+    <Compile Include="Specifications\ISpecification.cs" />
+    <Compile Include="Specifications\NotSpecification.cs" />
+    <Compile Include="Specifications\OrSpecification.cs" />
+    <Compile Include="Specifications\Specification.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="NHibernate\Extensions\" />

@@ -14,7 +14,7 @@ namespace SampleApplication.Tests.Tests.NHibernate
 
 		protected override void TestSetUp()
 		{
-			_expectedCustomer = an.Customer.build();
+			_expectedCustomer = a.Customer.build();
 
 			_db.Add( _expectedCustomer )
 				.Persist();

@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace FluentObjectBuilder
 {
-	public class ListBuilder< T > : ITestDataBuilder< List< T > > where T : class
+	public class ListBuilder< T > : ITestDataBuilder< List< T > > where T : class, new()
 	{
 		private readonly IList< ITestDataBuilder< T > > _builders = new List< ITestDataBuilder< T > >();
 		private readonly IList< T > _directItems = new List< T >();
