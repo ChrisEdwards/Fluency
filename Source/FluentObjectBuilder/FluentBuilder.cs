@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
-using AutoMapper;
 using FluentNHibernate.Utils;
 using Rhino.Mocks;
 
@@ -59,17 +58,17 @@ namespace FluentObjectBuilder
 		protected abstract void SetupDefaultValues( T defaults );
 
 
-		private T BuildFromPrototype( T prototype )
-		{
-			// User Automapper to copy values
-
-			//IMappingExpression< T, T > map = Mapper.CreateMap< T, T >();
-			// TODO: Must fix... readonly properties break.
-			//map.IgnoreReadOnlyProperties();
-			//var result = new T();
-			T result = Mapper.DynamicMap< T, T >( prototype );
-			return result;
-		}
+//		private T BuildFromPrototype( T prototype )
+//		{
+//			// User Automapper to copy values
+//
+//			//IMappingExpression< T, T > map = Mapper.CreateMap< T, T >();
+//			// TODO: Must fix... readonly properties break.
+//			//map.IgnoreReadOnlyProperties();
+//			//var result = new T();
+//			T result = Mapper.DynamicMap< T, T >( prototype );
+//			return result;
+//		}
 
 
 		protected void SetPropertyValue< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression, TPropertyType propertyValue )
