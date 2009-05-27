@@ -1,3 +1,4 @@
+using System;
 using FluentObjectBuilder;
 using FluentObjectBuilder.DataGeneration;
 using SampleApplication.Domain;
@@ -5,23 +6,29 @@ using SampleApplication.Domain;
 
 namespace SampleApplication.Tests.TestDataBuilders
 {
-	public class LineItemBuilder : TestDataBuilder< LineItem >
+	public class LineItemBuilder : FluentBuilder< LineItem >
 	{
 
 		public LineItemBuilder()
 		{
-			// TODO: Setup AutoPopulation of random values by type. Need a way to override defaults.
-			_prototype.UnitPrice = ARandom.CurrencyAmount();
-			_prototype.Quantity = 1;
-
-			SetPropertyBuilder( x => x.Product, new ProductBuilder() );
-			SetPropertyBuilder( x => x.Order, new OrderBuilder() );
 		}
 
 
 		public LineItemBuilder And
 		{
 			get { return this; }
+		}
+
+
+		protected override void SetupDefaultValues( LineItem defaults )
+		{
+			// TODO: Setup AutoPopulation of random values by type. Need a way to override defaults.
+			_prototype.UnitPrice = ARandom.CurrencyAmount();
+			_prototype.Quantity = 1;
+
+			SetPropertyBuilder(x => x.Product, new ProductBuilder());
+			SetPropertyBuilder(x => x.Order, new OrderBuilder());
+		
 		}
 
 
@@ -39,7 +46,7 @@ namespace SampleApplication.Tests.TestDataBuilders
 		}
 
 
-		public LineItemBuilder For( TestDataBuilder< Product > productBuilder )
+		public LineItemBuilder For( FluentBuilder< Product > productBuilder )
 		{
 			SetPropertyBuilder( x => x.Product, productBuilder );
 			return this;

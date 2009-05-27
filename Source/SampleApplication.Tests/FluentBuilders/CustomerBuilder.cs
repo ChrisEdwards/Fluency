@@ -1,3 +1,4 @@
+using System;
 using FluentObjectBuilder;
 using FluentObjectBuilder.DataGeneration;
 using SampleApplication.Domain;
@@ -5,8 +6,16 @@ using SampleApplication.Domain;
 
 namespace SampleApplication.Tests.TestDataBuilders
 {
-	public class CustomerBuilder : TestDataBuilder< Customer >
+	public class CustomerBuilder : FluentBuilder< Customer >
 	{
+		protected override void SetupDefaultValues( Customer defaults )
+		{
+			defaults.Id = GetUniqueId();
+			defaults.FirstName = ARandom.FirstName();
+			defaults.LastName = ARandom.LastName();
+		}
+
+
 		protected override Customer _build()
 		{
 			return new Customer

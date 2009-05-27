@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -9,27 +10,28 @@ using Rhino.Mocks;
 
 namespace FluentObjectBuilder
 {
-	public abstract class TestDataBuilder< T > : ITestDataBuilder< T > where T : class, new()
+	public abstract class FluentBuilder< T > : IFluentBuilder< T >
 	{
 		private static bool _executedBuildOnceAlready;
 		private static int _uniqueId = -10;
-		private readonly Dictionary< string, ITestDataBuilder > _builders = new Dictionary< string, ITestDataBuilder >();
+		private readonly Dictionary< string, IFluentBuilder > _builders = new Dictionary< string, IFluentBuilder >();
 		private readonly MockRepository _mocks;
 		protected T _preBuiltResult;
 		protected T _prototype;
 
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="TestDataBuilder&lt;T&gt;"/> class.
+		/// Initializes a new instance of the <see cref="FluentBuilder{T}"/> class.
 		/// </summary>
-		public TestDataBuilder()
+		public FluentBuilder()
 		{
 			_mocks = new MockRepository();
 			_prototype = _mocks.Stub< T >();
+			SetupDefaultValues( _prototype );
 		}
 
 
-		#region ITestDataBuilder<T> Members
+		#region IFluentBuilder<T> Members
 
 		/// <summary>
 		/// Either returns the override result, or builds this object.
@@ -47,47 +49,73 @@ namespace FluentObjectBuilder
 				_prototype.GetType().GetProperty( propertyName ).SetValue( _prototype, propertyValue, null );
 			}
 
-			return _preBuiltResult ?? _build();//BuildFromPrototype( _prototype );
+			return (T)( (object)_preBuiltResult ?? _build() ); //BuildFromPrototype( _prototype );
 			//_executedBuildOnceAlready = true;
 		}
 
 		#endregion
 
 
+		protected abstract void SetupDefaultValues( T defaults );
+
+
 		private T BuildFromPrototype( T prototype )
 		{
 			// User Automapper to copy values
-			
+
 			//IMappingExpression< T, T > map = Mapper.CreateMap< T, T >();
 			// TODO: Must fix... readonly properties break.
 			//map.IgnoreReadOnlyProperties();
 			//var result = new T();
-			var  result = Mapper.DynamicMap<T,T>( prototype);
+			T result = Mapper.DynamicMap< T, T >( prototype );
 			return result;
 		}
 
 
-		public void SetPropertyValue< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression, TPropertyType propertyValue )
+		protected void SetPropertyValue< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression, TPropertyType propertyValue )
 		{
 			Accessor accessor = ReflectionHelper.GetAccessor( propertyExpression );
 			accessor.SetValue( _prototype, propertyValue );
 		}
 
 
-		public void SetPropertyBuilder< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression, TestDataBuilder< TPropertyType > builder )
-				where TPropertyType : class, new()
+		protected void SetPropertyBuilder< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression, IFluentBuilder builder ) where TPropertyType:class,new()
 		{
+			// Due to lack of polymorphism in generic parameters.
+			if ( !( builder is FluentBuilder< TPropertyType > )  )
+			{
+				throw new ArgumentException( "Invalid builder type. Builder type must be a builder of Property Type. \n  BuilderType='{0}'\n  PropertyType='{1}'".format_using( builder.GetType().FullName,
+				                                                                                                                                                  typeof ( TPropertyType ).FullName ) );
+			}
+
 			PropertyInfo property = ReflectionHelper.GetProperty( propertyExpression );
 
 			if ( _builders.ContainsKey( property.Name ) )
 				_builders.Remove( property.Name );
 
 			_builders.Add( property.Name, builder );
+		}
 
-//			var func = new Function< T, TPropertyType >( propertyExpression.Compile() );
-//			_prototype
-//					.Stub( func )
-//					.WhenCalled( x => { x.ReturnValue = ( (TestDataBuilder< TPropertyType >)_builders[propertyName] ).build(); } );
+
+		protected void SetPropertyListBuilder<TPropertyType>(Expression<Func<T, TPropertyType>> propertyExpression, IFluentBuilder builder) where TPropertyType : class
+		{
+			if (!typeof(TPropertyType  ).FullName.Contains( "IList" ))
+			{
+				throw new ArgumentException("PropertyType must derive from IList");
+			}
+
+			// Due to lack of polymorphism in generic parameters.
+			if (!(builder is IFluentBuilder<TPropertyType>))
+			{
+				throw new ArgumentException("Invalid builder type. Builder type must be a ListBuilder of Property Type. \n  BuilderType='{0}'\n  PropertyType='{1}'".format_using(builder.GetType().FullName,
+																																								  typeof(TPropertyType).FullName));
+			}
+			PropertyInfo property = ReflectionHelper.GetProperty(propertyExpression);
+
+			if (_builders.ContainsKey(property.Name))
+				_builders.Remove(property.Name);
+
+			_builders.Add(property.Name, builder);
 		}
 
 
@@ -99,12 +127,12 @@ namespace FluentObjectBuilder
 
 
 		/// <summary>
-		/// Performs an implicit conversion from <see cref="BancVue.Tests.Common.TestDataBuilders.TestDataBuilder&lt;T&gt;"/> to <see cref="T"/>.
+		/// Performs an implicit conversion from <see cref="BancVue.Tests.Common.TestDataBuilders.FluentBuilder&lt;T&gt;"/> to <see cref="T"/>.
 		/// This is so we don't have to explicitly call "build()" in the code.
 		/// </summary>
 		/// <param name="builder">The builder.</param>
 		/// <returns>The result of the conversion.</returns>
-		public static explicit operator T( TestDataBuilder< T > builder )
+		public static explicit operator T( FluentBuilder< T > builder )
 		{
 			return builder.build();
 		}
@@ -124,7 +152,7 @@ namespace FluentObjectBuilder
 		/// Overrides the build result with the specified object. If this is called, the builder will not perform the build, but will rather, return the prebuilt result.
 		/// </summary>
 		/// <param name="buildResult">The build result.</param>
-		public TestDataBuilder< T > AliasFor( T buildResult )
+		public FluentBuilder< T > AliasFor( T buildResult )
 		{
 			return UsePreBuiltResult( buildResult );
 		}
@@ -134,7 +162,7 @@ namespace FluentObjectBuilder
 		/// Overrides the build result with the specified object. If this is called, the builder will not perform the build, but will rather, return the prebuilt result.
 		/// </summary>
 		/// <param name="buildResult">The build result.</param>
-		public TestDataBuilder< T > UsePreBuiltResult( T buildResult )
+		public FluentBuilder< T > UsePreBuiltResult( T buildResult )
 		{
 			_preBuiltResult = buildResult;
 			return this;

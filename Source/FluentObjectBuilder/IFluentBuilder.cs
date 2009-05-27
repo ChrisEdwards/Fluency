@@ -1,6 +1,6 @@
 namespace FluentObjectBuilder
 {
-	public interface ITestDataBuilder< T > : ITestDataBuilder where T : class
+	public interface IFluentBuilder< T > : IFluentBuilder
 	{
 		/// <summary>
 		/// Builds this instance.
@@ -12,5 +12,5 @@ namespace FluentObjectBuilder
 	/// <summary>
 	/// Marker interface.
 	/// </summary>
-	public interface ITestDataBuilder{}
+	public interface IFluentBuilder{}
 }

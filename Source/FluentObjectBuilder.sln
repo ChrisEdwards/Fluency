@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentObjectBuilder", "fluentobjectbuilder\FluentObjectBuilder.csproj", "{CA8DE273-AA4A-4FC1-9D41-B67B56A53433}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fluency", "fluentobjectbuilder\Fluency.csproj", "{CA8DE273-AA4A-4FC1-9D41-B67B56A53433}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentObjectBuilder.Tests", "fluentobjectbuilder.tests\FluentObjectBuilder.Tests.csproj", "{F8CADD7C-6E49-476F-AF03-274507FA06B4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fluency.Tests", "fluentobjectbuilder.tests\Fluency.Tests.csproj", "{F8CADD7C-6E49-476F-AF03-274507FA06B4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleApplication", "sampleapplication\SampleApplication.csproj", "{0B310EB5-358D-45B4-B95D-E217B3B4283C}"
 EndProject

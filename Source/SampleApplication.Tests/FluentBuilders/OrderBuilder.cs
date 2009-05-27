@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using FluentObjectBuilder;
 using FluentObjectBuilder.DataGeneration;
 using SampleApplication.Domain;
@@ -6,10 +7,17 @@ using SampleApplication.Domain;
 
 namespace SampleApplication.Tests.TestDataBuilders
 {
-	public class OrderBuilder :TestDataBuilder<Order >
+	public class OrderBuilder :FluentBuilder<Order >
 	{
+		
 		private readonly ListBuilder<LineItem> _lineItemsListBuilder = new ListBuilder<LineItem>();
 		private CustomerBuilder _customerBuilder = new CustomerBuilder();
+
+		protected override void SetupDefaultValues( Order defaults )
+		{
+			SetPropertyListBuilder( (Order x)=>x.LineItems, new ListBuilder<LineItem>() );
+		}
+
 
 		protected override Order _build()
 		{

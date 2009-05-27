@@ -1,22 +1,23 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
 
 namespace FluentObjectBuilder
 {
-	public class ListBuilder< T > : ITestDataBuilder< List< T > > where T : class, new()
+	public class ListBuilder< T > : IFluentBuilder< IList< T > > 
 	{
-		private readonly IList< ITestDataBuilder< T > > _builders = new List< ITestDataBuilder< T > >();
+		private readonly IList< IFluentBuilder< T > > _builders = new List< IFluentBuilder< T > >();
 		private readonly IList< T > _directItems = new List< T >();
 
 
-		#region ITestDataBuilder<List<T>> Members
+		#region IFluentBuilder<List<T>> Members
 
 		/// <summary>
 		/// Builds a list of all the items specified directly combined with a list of all items built by the specifed builders.
 		/// </summary>
 		/// <returns></returns>
-		public List< T > build()
+		public IList< T > build()
 		{
 			// Build each builder's item and gather into collection.
 			IEnumerable< T > builtItems =
@@ -37,7 +38,7 @@ namespace FluentObjectBuilder
 		/// Adds a builder to build a specified item in the list.
 		/// </summary>
 		/// <param name="builder">The builder.</param>
-		public void Add( TestDataBuilder< T > builder )
+		public void Add( FluentBuilder< T > builder )
 		{
 			_builders.Add( builder );
 		}
