@@ -8,8 +8,8 @@
     <ProjectGuid>{CA8DE273-AA4A-4FC1-9D41-B67B56A53433}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FluentObjectBuilder</RootNamespace>
-    <AssemblyName>FluentObjectBuilder</AssemblyName>
+    <RootNamespace>Fluency</RootNamespace>
+    <AssemblyName>Fluency</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -61,10 +61,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssertionExtensions.cs" />
+    <Compile Include="Utils\AssertionExtensions.cs" />
+    <Compile Include="Conventions\DecrementingIdConvention.cs" />
+    <Compile Include="Conventions\IncrementingIdConvention.cs" />
     <Compile Include="IFluentBuilder.cs" />
+    <Compile Include="Conventions\IIdConvention.cs" />
     <Compile Include="ListBuilder.cs" />
-    <Compile Include="NumericalExtensions.cs" />
+    <Compile Include="Utils\NumericalExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DataGeneration\ARandom.cs" />
     <Compile Include="DataGeneration\CSharpDefaultValuesAndConstraints.cs" />
@@ -75,8 +78,9 @@
     <Compile Include="DataGeneration\SqlServerDefaultValuesAndConstraints.cs" />
     <Compile Include="DataGeneration\ValueConstraints.cs" />
     <Compile Include="DataGeneration\WaffleEngine.cs" />
-    <Compile Include="ReflectionHelper.cs" />
+    <Compile Include="Utils\ReflectionExtensions.cs" />
     <Compile Include="FluentBuilder.cs" />
+    <Compile Include="Conventions\ZeroIdConvention.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -4,25 +4,25 @@ using FluentObjectBuilder.DataGeneration;
 using SampleApplication.Domain;
 
 
-namespace SampleApplication.Tests.TestDataBuilders
+namespace SampleApplication.Tests.FluentBuilders
 {
 	public class CustomerBuilder : FluentBuilder< Customer >
 	{
 		protected override void SetupDefaultValues( Customer defaults )
 		{
-			defaults.Id = GetUniqueId();
+			defaults.Id = GenerateNewId();
 			defaults.FirstName = ARandom.FirstName();
 			defaults.LastName = ARandom.LastName();
 		}
 
 
-		protected override Customer _build()
+		protected override Customer BuildFrom( Customer values )
 		{
 			return new Customer
 			       	{
-			       			Id = GetUniqueId(),
-			       			FirstName = ARandom.FirstName(),
-			       			LastName = ARandom.LastName()
+			       			Id = values.Id,
+			       			FirstName = values.FirstName,
+			       			LastName = values.LastName
 			       	};
 		}
 	}

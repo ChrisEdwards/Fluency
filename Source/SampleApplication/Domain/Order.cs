@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -15,7 +14,12 @@ namespace SampleApplication.Domain
 		public virtual IList< LineItem > LineItems
 		{
 			get { return _lineItems; }
-			set { _lineItems = value; }
+			set
+			{
+				_lineItems = value;
+				foreach ( LineItem lineItem in _lineItems )
+					lineItem.Order = this;
+			}
 		}
 
 		public virtual double TotalAmount

@@ -1,19 +1,13 @@
-using System;
 using FluentObjectBuilder;
 using FluentObjectBuilder.DataGeneration;
 using SampleApplication.Domain;
+using SampleApplication.Tests.FluentBuilders;
 
 
 namespace SampleApplication.Tests.TestDataBuilders
 {
 	public class LineItemBuilder : FluentBuilder< LineItem >
 	{
-
-		public LineItemBuilder()
-		{
-		}
-
-
 		public LineItemBuilder And
 		{
 			get { return this; }
@@ -23,25 +17,24 @@ namespace SampleApplication.Tests.TestDataBuilders
 		protected override void SetupDefaultValues( LineItem defaults )
 		{
 			// TODO: Setup AutoPopulation of random values by type. Need a way to override defaults.
-			_prototype.UnitPrice = ARandom.CurrencyAmount();
-			_prototype.Quantity = 1;
+			defaults.UnitPrice = ARandom.CurrencyAmount();
+			defaults.Quantity = 1;
 
-			SetPropertyBuilder(x => x.Product, new ProductBuilder());
-			SetPropertyBuilder(x => x.Order, new OrderBuilder());
-		
+			SetPropertyBuilder( x => x.Product, new ProductBuilder() );
+			SetPropertyBuilder( x => x.Order, new OrderBuilder() );
 		}
 
 
-		protected override LineItem _build()
+		protected override LineItem BuildFrom( LineItem values )
 		{
 			// TODO: Use Automapper
 			return new LineItem
 			       	{
-			       			Id = GetUniqueId(),
-			       			Order = _prototype.Order,
-			       			Product = _prototype.Product,
-			       			Quantity = _prototype.Quantity,
-			       			UnitPrice = _prototype.UnitPrice
+			       			Id = values.Id,
+			       			Order = values.Order,
+			       			Product = values.Product,
+			       			Quantity = values.Quantity,
+			       			UnitPrice = values.UnitPrice
 			       	};
 		}
 

@@ -1,31 +1,32 @@
-using System;
-using System.Collections.Generic;
 using FluentObjectBuilder;
-using FluentObjectBuilder.DataGeneration;
 using SampleApplication.Domain;
+using SampleApplication.Tests.TestDataBuilders;
 
 
-namespace SampleApplication.Tests.TestDataBuilders
+namespace SampleApplication.Tests.FluentBuilders
 {
-	public class OrderBuilder :FluentBuilder<Order >
+	public class OrderBuilder : FluentBuilder< Order >
 	{
-		
-		private readonly ListBuilder<LineItem> _lineItemsListBuilder = new ListBuilder<LineItem>();
-		private CustomerBuilder _customerBuilder = new CustomerBuilder();
+		private readonly CustomerBuilder _customerBuilder = new CustomerBuilder();
+		private readonly ListBuilder< LineItem > _lineItemsListBuilder = new ListBuilder< LineItem >();
+
 
 		protected override void SetupDefaultValues( Order defaults )
 		{
-			SetPropertyListBuilder( (Order x)=>x.LineItems, new ListBuilder<LineItem>() );
+			defaults.Id = GenerateNewId();
+
+			SetPropertyBuilder( x => x.Customer, new CustomerBuilder() );
+			SetPropertyListBuilder( x => x.LineItems, new ListBuilder< LineItem >() );
 		}
 
 
-		protected override Order _build()
+		protected override Order BuildFrom( Order values )
 		{
 			return new Order
 			       	{
-			       			Id = GetUniqueId(),
+			       			Id = values.Id,
 			       			Customer = _customerBuilder.build(),
-							LineItems = _lineItemsListBuilder.build()
+			       			LineItems = _lineItemsListBuilder.build()
 			       	};
 		}
 
@@ -33,6 +34,13 @@ namespace SampleApplication.Tests.TestDataBuilders
 		public OrderBuilder With( LineItemBuilder lineItemBuilder )
 		{
 			_lineItemsListBuilder.Add( lineItemBuilder );
+			return this;
+		}
+
+
+		public OrderBuilder With( LineItem lineItem )
+		{
+			_lineItemsListBuilder.Add( lineItem );
 			return this;
 		}
 	}

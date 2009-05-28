@@ -1,8 +1,8 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
+using Fluency;
 using FluentNHibernate.Utils;
 using Rhino.Mocks;
 
@@ -17,7 +17,7 @@ namespace FluentObjectBuilder
 		private readonly MockRepository _mocks;
 		protected T _preBuiltResult;
 		protected T _prototype;
-
+		protected IIdConvention _idConvention= new DecrementingIdConvention();
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="FluentBuilder{T}"/> class.
@@ -41,20 +41,27 @@ namespace FluentObjectBuilder
 			if ( _executedBuildOnceAlready )
 				throw new Exception( "Cannot build more than once [" + GetType().FullName + "]." );
 
+			// Populate the prototype with the result of executing each builder.
 			foreach ( var pair in _builders )
 			{
 				string propertyName = pair.Key;
-				object propertyValue = pair.Value.GetType().GetMethod( "build" ).Invoke( pair.Value, null ); // Calls builder.build()
-				_prototype.GetType().GetProperty( propertyName ).SetValue( _prototype, propertyValue, null );
+				IFluentBuilder builder = pair.Value;
+
+				object propertyValue = builder.InvokeMethod( "build" );
+				_prototype.SetProperty( propertyName, propertyValue );
 			}
 
-			return (T)( (object)_preBuiltResult ?? _build() ); //BuildFromPrototype( _prototype );
+			return (T)( (object)_preBuiltResult ?? BuildFrom( _prototype ) ); //BuildFromPrototype( _prototype );
 			//_executedBuildOnceAlready = true;
 		}
 
 		#endregion
 
 
+		/// <summary>
+		/// Setups the default values.
+		/// </summary>
+		/// <param name="defaults">The defaults.</param>
 		protected abstract void SetupDefaultValues( T defaults );
 
 
@@ -78,13 +85,14 @@ namespace FluentObjectBuilder
 		}
 
 
-		protected void SetPropertyBuilder< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression, IFluentBuilder builder ) where TPropertyType:class,new()
+		protected void SetPropertyBuilder< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression, IFluentBuilder builder ) where TPropertyType : class, new()
 		{
 			// Due to lack of polymorphism in generic parameters.
-			if ( !( builder is FluentBuilder< TPropertyType > )  )
+			if ( !( builder is FluentBuilder< TPropertyType > ) )
 			{
-				throw new ArgumentException( "Invalid builder type. Builder type must be a builder of Property Type. \n  BuilderType='{0}'\n  PropertyType='{1}'".format_using( builder.GetType().FullName,
-				                                                                                                                                                  typeof ( TPropertyType ).FullName ) );
+				throw new ArgumentException(
+						"Invalid builder type. Builder type must be a builder of Property Type. \n  BuilderType='{0}'\n  PropertyType='{1}'".format_using( builder.GetType().FullName,
+						                                                                                                                                   typeof ( TPropertyType ).FullName ) );
 			}
 
 			PropertyInfo property = ReflectionHelper.GetProperty( propertyExpression );
@@ -96,25 +104,25 @@ namespace FluentObjectBuilder
 		}
 
 
-		protected void SetPropertyListBuilder<TPropertyType>(Expression<Func<T, TPropertyType>> propertyExpression, IFluentBuilder builder) where TPropertyType : class
+		protected void SetPropertyListBuilder< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression, IFluentBuilder builder ) where TPropertyType : class
 		{
-			if (!typeof(TPropertyType  ).FullName.Contains( "IList" ))
-			{
-				throw new ArgumentException("PropertyType must derive from IList");
-			}
+			if ( !typeof ( TPropertyType ).FullName.Contains( "IList" ) )
+				throw new ArgumentException( "PropertyType must derive from IList" );
 
 			// Due to lack of polymorphism in generic parameters.
-			if (!(builder is IFluentBuilder<TPropertyType>))
+			if ( !( builder is IFluentBuilder< TPropertyType > ) )
 			{
-				throw new ArgumentException("Invalid builder type. Builder type must be a ListBuilder of Property Type. \n  BuilderType='{0}'\n  PropertyType='{1}'".format_using(builder.GetType().FullName,
-																																								  typeof(TPropertyType).FullName));
+				throw new ArgumentException(
+						"Invalid builder type. Builder type must be a ListBuilder of Property Type. \n  BuilderType='{0}'\n  PropertyType='{1}'".format_using( builder.GetType().FullName,
+						                                                                                                                                       typeof ( TPropertyType ).FullName ) );
 			}
-			PropertyInfo property = ReflectionHelper.GetProperty(propertyExpression);
 
-			if (_builders.ContainsKey(property.Name))
-				_builders.Remove(property.Name);
+			PropertyInfo property = ReflectionHelper.GetProperty( propertyExpression );
 
-			_builders.Add(property.Name, builder);
+			if ( _builders.ContainsKey( property.Name ) )
+				_builders.Remove( property.Name );
+
+			_builders.Add( property.Name, builder );
 		}
 
 
@@ -122,7 +130,7 @@ namespace FluentObjectBuilder
 		/// Builds an object of type T based on the specs specified in the builder.
 		/// </summary>
 		/// <returns></returns>
-		protected abstract T _build();
+		protected abstract T BuildFrom( T values );
 
 
 		/// <summary>
@@ -141,9 +149,10 @@ namespace FluentObjectBuilder
 		/// Gets a unique id with a negative value so that it does not conflict with existing data in the database.
 		/// </summary>
 		/// <returns></returns>
-		protected int GetUniqueId()
+		protected int GenerateNewId()
 		{
-			return _uniqueId--;
+			//return _uniqueId--;
+			return 0;
 		}
 
 

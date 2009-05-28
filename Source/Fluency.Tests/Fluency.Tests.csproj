@@ -53,7 +53,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\fluentobjectbuilder\Fluency.csproj">
+    <ProjectReference Include="..\Fluency\Fluency.csproj">
       <Project>{CA8DE273-AA4A-4FC1-9D41-B67B56A53433}</Project>
       <Name>Fluency</Name>
     </ProjectReference>

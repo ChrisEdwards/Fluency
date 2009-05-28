@@ -80,6 +80,7 @@
     <Compile Include="Tests\Domain\DiscountCalculation\DiscountCalculatorTests\When_calculating_a_discount.cs" />
     <Compile Include="Tests\Domain\LineItemTests\When_calculating_the_amount_of_a_line_item_with_quantity_of_one.cs" />
     <Compile Include="Tests\Domain\OrderTests\When_getting_the_total_order_amount.cs" />
+    <Compile Include="Tests\FluentBuilders\OrderBuilderTests.cs" />
     <Compile Include="Tests\NHibernate\When_getting_an_existing_Employee_from_the_database.cs" />
     <Compile Include="Tests\NHibernate\When_getting_an_existing_LineItem_from_the_database.cs" />
     <Compile Include="Tests\FluentBuilders\EmployeeBuilderTests.cs" />
@@ -89,7 +90,7 @@
     <Compile Include="Utils\IDbCommandExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\fluentobjectbuilder\Fluency.csproj">
+    <ProjectReference Include="..\Fluency\Fluency.csproj">
       <Project>{CA8DE273-AA4A-4FC1-9D41-B67B56A53433}</Project>
       <Name>Fluency</Name>
     </ProjectReference>

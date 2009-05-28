@@ -75,6 +75,10 @@
     <Compile Include="Domain\DiscountCalculation\DiscountStrategyBuilder.cs" />
     <Compile Include="ISampleApplicationAssembly.cs" />
     <Compile Include="Log4NetConfiguration.cs" />
+    <Compile Include="NHibernate\Mappings\CustomerMap.cs" />
+    <Compile Include="NHibernate\Mappings\LineItemMap.cs" />
+    <Compile Include="NHibernate\Mappings\OrderMap.cs" />
+    <Compile Include="NHibernate\Mappings\ProductMap.cs" />
     <Compile Include="NHibernate\SessionExtensions.cs" />
     <Compile Include="NHibernate\NHibernateHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

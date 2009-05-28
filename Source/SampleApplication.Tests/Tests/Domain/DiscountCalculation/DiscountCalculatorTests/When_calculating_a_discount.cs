@@ -28,10 +28,15 @@ namespace SampleApplication.Tests.Tests.Domain.DiscountCalculation.DiscountCalcu
 		[ Test ]
 		public void For_an_order_less_than_100_dollars()
 		{
-			Order order = an.Order.With( a.LineItem.Costing( 10.dollars() ) )
+			LineItem lineItem;
+			Order order = an.Order
+					.With( lineItem = a.LineItem
+					                  		.Costing( 10.cents() ).build()
+					)
 					.build();
 
 			_session.Save( order );
+			//_session.Save( lineItem );
 			_session.Flush();
 
 			double discount = _calculator.CalculateDiscount( order );
