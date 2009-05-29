@@ -79,17 +79,9 @@
     <Compile Include="NHibernate\Mappings\LineItemMap.cs" />
     <Compile Include="NHibernate\Mappings\OrderMap.cs" />
     <Compile Include="NHibernate\Mappings\ProductMap.cs" />
-    <Compile Include="NHibernate\SessionExtensions.cs" />
+    <Compile Include="NHibernate\Extensions\SessionExtensions.cs" />
     <Compile Include="NHibernate\NHibernateHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Specifications\AndSpecification.cs" />
-    <Compile Include="Specifications\ISpecification.cs" />
-    <Compile Include="Specifications\NotSpecification.cs" />
-    <Compile Include="Specifications\OrSpecification.cs" />
-    <Compile Include="Specifications\Specification.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="NHibernate\Extensions\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

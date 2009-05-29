@@ -1,4 +1,4 @@
-﻿namespace FluentObjectBuilder.DataGeneration
+﻿namespace Fluency.DataGeneration
 {
 	public static class RandomData
 	{

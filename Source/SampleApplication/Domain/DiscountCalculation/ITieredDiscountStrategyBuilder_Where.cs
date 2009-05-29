@@ -1,4 +1,4 @@
-namespace SampleApplication.DiscountCalculation
+namespace SampleApplication.Domain.DiscountCalculation
 {
 	public interface ITieredDiscountStrategyBuilder_Where
 	{

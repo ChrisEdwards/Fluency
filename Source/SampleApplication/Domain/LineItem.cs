@@ -1,6 +1,3 @@
-using System;
-
-
 namespace SampleApplication.Domain
 {
 	public class LineItem

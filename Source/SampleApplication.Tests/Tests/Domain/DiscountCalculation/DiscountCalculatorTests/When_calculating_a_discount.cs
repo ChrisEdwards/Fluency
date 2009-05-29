@@ -1,10 +1,9 @@
-using BancVue.Tests.Common;
+using Fluency.Utils;
 using FluentObjectBuilder;
 using NUnit.Framework;
-using SampleApplication.DiscountCalculation;
 using SampleApplication.Domain;
 using SampleApplication.Domain.DiscountCalculation;
-using SampleApplication.Tests.TestDataBuilders;
+using SampleApplication.Tests.FluentBuilders;
 
 
 namespace SampleApplication.Tests.Tests.Domain.DiscountCalculation.DiscountCalculatorTests

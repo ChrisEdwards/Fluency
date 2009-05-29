@@ -1,4 +1,4 @@
-namespace FluentObjectBuilder
+namespace Fluency
 {
 	public interface IFluentBuilder< T > : IFluentBuilder
 	{
@@ -9,8 +9,9 @@ namespace FluentObjectBuilder
 		T build();
 	}
 
+
 	/// <summary>
 	/// Marker interface.
 	/// </summary>
-	public interface IFluentBuilder{}
+	public interface IFluentBuilder {}
 }

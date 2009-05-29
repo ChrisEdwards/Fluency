@@ -1,13 +1,12 @@
-
 using NUnit.Framework;
 using SampleApplication.Domain;
 using SampleApplication.Tests.FluentBuilders;
 
 
-namespace SampleApplication.Tests.Tests.TestDataBuilders
+namespace SampleApplication.Tests.Tests.FluentBuilders
 {
 	[ TestFixture ]
-	public class EmployeeBuilderTests : TestDataBuilderTestsBase
+	public class EmployeeBuilderTests
 	{
 		[ Test ]
 		public void Build_creates_anonymous_Employee()

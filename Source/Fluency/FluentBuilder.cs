@@ -2,12 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
-using Fluency;
+using Fluency.IdGenerators;
+using Fluency.Utils;
 using FluentNHibernate.Utils;
+using FluentObjectBuilder;
 using Rhino.Mocks;
 
 
-namespace FluentObjectBuilder
+namespace Fluency
 {
 	public abstract class FluentBuilder< T > : IFluentBuilder< T >
 	{
@@ -17,7 +19,8 @@ namespace FluentObjectBuilder
 		private readonly MockRepository _mocks;
 		protected T _preBuiltResult;
 		protected T _prototype;
-		protected IIdConvention _idConvention= new DecrementingIdConvention();
+		protected IIdGenerator IdGenerator = new DecrementingIdGenerator();
+
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="FluentBuilder{T}"/> class.
@@ -113,8 +116,8 @@ namespace FluentObjectBuilder
 			if ( !( builder is IFluentBuilder< TPropertyType > ) )
 			{
 				throw new ArgumentException(
-						"Invalid builder type. Builder type must be a ListBuilder of Property Type. \n  BuilderType='{0}'\n  PropertyType='{1}'".format_using( builder.GetType().FullName,
-						                                                                                                                                       typeof ( TPropertyType ).FullName ) );
+						"Invalid builder type. Builder type must be a FluentListBuilder of Property Type. \n  BuilderType='{0}'\n  PropertyType='{1}'".format_using( builder.GetType().FullName,
+						                                                                                                                                             typeof ( TPropertyType ).FullName ) );
 			}
 
 			PropertyInfo property = ReflectionHelper.GetProperty( propertyExpression );

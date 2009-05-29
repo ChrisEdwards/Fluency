@@ -8,8 +8,8 @@
     <ProjectGuid>{F8CADD7C-6E49-476F-AF03-274507FA06B4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FluentObjectBuilder.Tests</RootNamespace>
-    <AssemblyName>FluentObjectBuilder.Tests</AssemblyName>
+    <RootNamespace>Fluency.Tests</RootNamespace>
+    <AssemblyName>Fluency.Tests</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

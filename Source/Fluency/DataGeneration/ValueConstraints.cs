@@ -1,4 +1,4 @@
-namespace FluentObjectBuilder.DataGeneration
+namespace Fluency.DataGeneration
 {
 	/// <summary>
 	/// Defines the current set of value constraints (or range limits) for generating random data.

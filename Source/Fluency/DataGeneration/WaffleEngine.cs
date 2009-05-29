@@ -5,7 +5,7 @@ using System.Text;
 // From SimpleTalk.WaffleEngine.
 
 
-namespace FluentObjectBuilder.DataGeneration
+namespace Fluency.DataGeneration
 {
 	public class WaffleEngine
 	{

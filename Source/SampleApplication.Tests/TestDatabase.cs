@@ -32,7 +32,6 @@ namespace SampleApplication.Tests
 		public void Persist()
 		{
 			// Insert data in order of dependency.
-
 			foreach ( Customer customer in _customers )
 				_dbHelper.Insert( customer );
 

@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Fluency.Utils;
 
 // From ChrisEdwards.TestUtils
 // Depends upon Simpletalk.WaffleGenerator
 
 
-namespace FluentObjectBuilder.DataGeneration
+namespace Fluency.DataGeneration
 {
 	public static class ARandom
 	{

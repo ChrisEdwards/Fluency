@@ -1,12 +1,11 @@
-using System;
-using FluentObjectBuilder;
-using FluentObjectBuilder.DataGeneration;
+using Fluency;
+using Fluency.DataGeneration;
 using SampleApplication.Domain;
 
 
 namespace SampleApplication.Tests.FluentBuilders
 {
-	public class ProductBuilder : FluentBuilder<Product>
+	public class ProductBuilder : FluentBuilder< Product >
 	{
 		protected override void SetupDefaultValues( Product defaults )
 		{
@@ -21,7 +20,7 @@ namespace SampleApplication.Tests.FluentBuilders
 			return new Product
 			       	{
 			       			Id = values.Id,
-			       			Name =values.Name,
+			       			Name = values.Name,
 			       			Description = values.Description
 			       	};
 		}

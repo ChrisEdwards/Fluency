@@ -1,8 +1,4 @@
-using System;
-using SampleApplication.Tests.FluentBuilders;
-
-
-namespace SampleApplication.Tests.TestDataBuilders
+namespace SampleApplication.Tests.FluentBuilders
 {
 	public static class a
 	{
@@ -18,7 +14,7 @@ namespace SampleApplication.Tests.TestDataBuilders
 
 		public static ProductBuilder Product
 		{
-			get {return new ProductBuilder(); }
+			get { return new ProductBuilder(); }
 		}
 	}
 

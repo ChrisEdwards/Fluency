@@ -1,10 +1,9 @@
-using System;
 using System.Data;
 using System.Reflection;
 using log4net;
 using NHibernate;
 using SampleApplication.Domain;
-using SampleApplication.NHibernate;
+using SampleApplication.NHibernate.Extensions;
 using SampleApplication.Tests.Utils;
 
 
@@ -73,17 +72,17 @@ namespace SampleApplication.Tests
 						{
 								"Id",
 								"Order_id",
-                                "Product_id",
-                                "Quantity",
-                                "UnitPrice"
+								"Product_id",
+								"Quantity",
+								"UnitPrice"
 						},
 					HasIdentityColumn );
 
 			command.SetParameter( "@Id", lineItem.Id );
-			command.SetParameter("@Order_id", lineItem.Order.Id);
-			command.SetParameter("@Product_id", lineItem.Product.Id);
-			command.SetParameter("@Quantity", lineItem.Quantity);
-			command.SetDecimalParameter("@UnitPrice", lineItem.UnitPrice);
+			command.SetParameter( "@Order_id", lineItem.Order.Id );
+			command.SetParameter( "@Product_id", lineItem.Product.Id );
+			command.SetParameter( "@Quantity", lineItem.Quantity );
+			command.SetDecimalParameter( "@UnitPrice", lineItem.UnitPrice );
 
 			LogCommand( command );
 			command.ExecuteNonQuery();
@@ -100,15 +99,15 @@ namespace SampleApplication.Tests
 						{
 								"Id",
 								"FirstName",
-                                "LastName"
+								"LastName"
 						},
-					HasIdentityColumn);
+					HasIdentityColumn );
 
-			command.SetParameter("@Id", customer.Id);
-			command.SetParameter("@FirstName", customer.FirstName);
-			command.SetParameter("@LastName", customer.LastName);
+			command.SetParameter( "@Id", customer.Id );
+			command.SetParameter( "@FirstName", customer.FirstName );
+			command.SetParameter( "@LastName", customer.LastName );
 
-			LogCommand(command);
+			LogCommand( command );
 			command.ExecuteNonQuery();
 		}
 
@@ -123,15 +122,15 @@ namespace SampleApplication.Tests
 						{
 								"Id",
 								"Name",
-                                "Description"
+								"Description"
 						},
-					HasIdentityColumn);
+					HasIdentityColumn );
 
-			command.SetParameter("@Id", product.Id);
-			command.SetParameter("@Name", product.Name);
-			command.SetParameter("@Description", product.Description);
+			command.SetParameter( "@Id", product.Id );
+			command.SetParameter( "@Name", product.Name );
+			command.SetParameter( "@Description", product.Description );
 
-			LogCommand(command);
+			LogCommand( command );
 			command.ExecuteNonQuery();
 		}
 	}

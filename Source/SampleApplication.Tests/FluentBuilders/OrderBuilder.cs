@@ -1,6 +1,5 @@
-using FluentObjectBuilder;
+using Fluency;
 using SampleApplication.Domain;
-using SampleApplication.Tests.TestDataBuilders;
 
 
 namespace SampleApplication.Tests.FluentBuilders
@@ -8,7 +7,7 @@ namespace SampleApplication.Tests.FluentBuilders
 	public class OrderBuilder : FluentBuilder< Order >
 	{
 		private readonly CustomerBuilder _customerBuilder = new CustomerBuilder();
-		private readonly ListBuilder< LineItem > _lineItemsListBuilder = new ListBuilder< LineItem >();
+		private readonly FluentListBuilder< LineItem > _lineItemsListBuilder = new FluentListBuilder< LineItem >();
 
 
 		protected override void SetupDefaultValues( Order defaults )
@@ -16,7 +15,7 @@ namespace SampleApplication.Tests.FluentBuilders
 			defaults.Id = GenerateNewId();
 
 			SetPropertyBuilder( x => x.Customer, new CustomerBuilder() );
-			SetPropertyListBuilder( x => x.LineItems, new ListBuilder< LineItem >() );
+			SetPropertyListBuilder( x => x.LineItems, new FluentListBuilder< LineItem >() );
 		}
 
 

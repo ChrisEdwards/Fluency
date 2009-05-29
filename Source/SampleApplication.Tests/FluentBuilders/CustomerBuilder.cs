@@ -1,6 +1,5 @@
-using System;
-using FluentObjectBuilder;
-using FluentObjectBuilder.DataGeneration;
+using Fluency;
+using Fluency.DataGeneration;
 using SampleApplication.Domain;
 
 

@@ -1,9 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
-using SampleApplication.Domain;
 
 
-namespace SampleApplication.DiscountCalculation
+namespace SampleApplication.Domain.DiscountCalculation
 {
 	public class TieredDiscountStrategy : IDiscountStrategy
 	{

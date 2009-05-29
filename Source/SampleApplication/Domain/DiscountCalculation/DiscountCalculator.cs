@@ -1,7 +1,4 @@
-using SampleApplication.Domain;
-
-
-namespace SampleApplication.DiscountCalculation
+namespace SampleApplication.Domain.DiscountCalculation
 {
 	public class DiscountCalculator
 	{

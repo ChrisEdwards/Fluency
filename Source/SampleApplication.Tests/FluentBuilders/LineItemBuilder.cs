@@ -1,10 +1,9 @@
-using FluentObjectBuilder;
-using FluentObjectBuilder.DataGeneration;
+using Fluency;
+using Fluency.DataGeneration;
 using SampleApplication.Domain;
-using SampleApplication.Tests.FluentBuilders;
 
 
-namespace SampleApplication.Tests.TestDataBuilders
+namespace SampleApplication.Tests.FluentBuilders
 {
 	public class LineItemBuilder : FluentBuilder< LineItem >
 	{

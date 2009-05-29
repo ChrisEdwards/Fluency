@@ -7,8 +7,6 @@ namespace SampleApplication.Tests
 {
 	public static class SqlGenerator
 	{
-
-
 		/// <summary>
 		/// Generates the insert SQL.
 		/// </summary>
@@ -18,7 +16,7 @@ namespace SampleApplication.Tests
 		/// <returns></returns>
 		public static string GenerateInsertSql( string tableName, string[] fieldNames, bool hasIdentityColumn )
 		{
-			string sqlTemplate=
+			string sqlTemplate =
 					@"INSERT INTO [{0}]
                                     ({1})
                         VALUES

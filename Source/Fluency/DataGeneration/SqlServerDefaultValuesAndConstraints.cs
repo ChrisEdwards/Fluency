@@ -1,7 +1,7 @@
 using System;
 
 
-namespace FluentObjectBuilder.DataGeneration
+namespace Fluency.DataGeneration
 {
 	public class SqlServerDefaultValuesAndConstraints : IValueConstraints, IDefaultValues
 	{

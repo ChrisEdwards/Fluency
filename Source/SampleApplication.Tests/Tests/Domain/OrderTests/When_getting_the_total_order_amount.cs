@@ -1,7 +1,8 @@
+using Fluency.Utils;
 using FluentObjectBuilder;
 using NUnit.Framework;
 using SampleApplication.Domain;
-using SampleApplication.Tests.TestDataBuilders;
+using SampleApplication.Tests.FluentBuilders;
 
 
 namespace SampleApplication.Tests.Tests.Domain.OrderTests

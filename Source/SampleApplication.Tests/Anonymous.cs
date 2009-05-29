@@ -1,4 +1,4 @@
-using FluentObjectBuilder.DataGeneration;
+using Fluency.DataGeneration;
 using SampleApplication.Domain;
 
 
@@ -18,12 +18,13 @@ namespace SampleApplication.Tests
 		public Order Order()
 		{
 			var order = new Order
-			              	{
-			              			Id = GetUniqueId(),
-			              			Customer = Customer()
-			              	};
+			            	{
+			            			Id = GetUniqueId(),
+			            			Customer = Customer()
+			            	};
 			return order;
 		}
+
 
 		public Customer Customer()
 		{

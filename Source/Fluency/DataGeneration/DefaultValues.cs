@@ -1,4 +1,4 @@
-namespace FluentObjectBuilder.DataGeneration
+namespace Fluency.DataGeneration
 {
 	/// <summary>
 	/// Defines the current set of default values used for data.

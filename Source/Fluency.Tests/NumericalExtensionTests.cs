@@ -1,7 +1,9 @@
+using Fluency.Utils;
+using FluentObjectBuilder;
 using NUnit.Framework;
 
 
-namespace FluentObjectBuilder.Tests
+namespace Fluency.Tests
 {
 	[ TestFixture ]
 	public class NumericalExtensionTests

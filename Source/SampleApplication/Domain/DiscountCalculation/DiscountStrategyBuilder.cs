@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using SampleApplication.DiscountCalculation;
 
 
 namespace SampleApplication.Domain.DiscountCalculation

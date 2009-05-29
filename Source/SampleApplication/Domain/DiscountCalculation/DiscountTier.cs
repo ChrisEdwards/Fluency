@@ -1,4 +1,4 @@
-namespace SampleApplication.DiscountCalculation
+namespace SampleApplication.Domain.DiscountCalculation
 {
 	public class DiscountTier
 	{
@@ -7,6 +7,7 @@ namespace SampleApplication.DiscountCalculation
 		/// </summary>
 		/// <value>The lowest amount to qualify for the discount.</value>
 		public double LowestQualifyingAmount { get; set; }
+
 		public double DiscountPercentage { get; set; }
 	}
 }
