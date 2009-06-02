@@ -69,6 +69,8 @@
     <Compile Include="AutoRollbackDatabaseTest.cs" />
     <Compile Include="DbHelper.cs" />
     <Compile Include="FileAssertions.cs" />
+    <Compile Include="IntegrationTests\FluentBuilderFixtureTest.cs" />
+    <Compile Include="IntegrationTests\ObjectMotherTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlGenerator.cs" />
     <Compile Include="TestDatabase.cs" />
@@ -77,14 +79,17 @@
     <Compile Include="FluentBuilders\CustomerBuilder.cs" />
     <Compile Include="FluentBuilders\OrderBuilder.cs" />
     <Compile Include="FluentBuilders\ProductBuilder.cs" />
-    <Compile Include="Tests\Domain\DiscountCalculation\DiscountCalculatorTests\When_calculating_a_discount.cs" />
-    <Compile Include="Tests\Domain\LineItemTests\When_calculating_the_amount_of_a_line_item_with_quantity_of_one.cs" />
-    <Compile Include="Tests\Domain\OrderTests\When_getting_the_total_order_amount.cs" />
-    <Compile Include="Tests\FluentBuilders\OrderBuilderTests.cs" />
-    <Compile Include="Tests\NHibernate\When_getting_an_existing_Employee_from_the_database.cs" />
-    <Compile Include="Tests\NHibernate\When_getting_an_existing_LineItem_from_the_database.cs" />
-    <Compile Include="Tests\FluentBuilders\EmployeeBuilderTests.cs" />
-    <Compile Include="Tests\FluentBuilders\LineItemBuilderTests.cs" />
+    <Compile Include="IntegrationTests\BigFrigginInsertTest.cs" />
+    <Compile Include="UnitTests\Domain\DiscountCalculation\DiscountCalculatorTests\When_calculating_a_discount.cs" />
+    <Compile Include="UnitTests\Domain\LineItemTests\When_calculating_the_amount_of_a_line_item_with_quantity_of_one.cs" />
+    <Compile Include="UnitTests\Domain\OrderTests\When_getting_the_total_order_amount.cs" />
+    <Compile Include="UnitTests\FluentBuilders\OrderBuilderTests.cs" />
+    <Compile Include="IntegrationTests\InlineFixtureTest.cs" />
+    <Compile Include="UnitTests\NHibernate\When_getting_an_existing_Employee_from_the_database.cs" />
+    <Compile Include="UnitTests\NHibernate\When_getting_an_existing_LineItem_from_the_database.cs" />
+    <Compile Include="UnitTests\FluentBuilders\EmployeeBuilderTests.cs" />
+    <Compile Include="UnitTests\FluentBuilders\LineItemBuilderTests.cs" />
+    <Compile Include="TestData.cs" />
     <Compile Include="Utils\DomainAssertionExtensions.cs" />
     <Compile Include="Utils\IDbCommandExtensions.cs" />
   </ItemGroup>

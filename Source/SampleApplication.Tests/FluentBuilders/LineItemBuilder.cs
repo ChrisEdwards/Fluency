@@ -19,8 +19,8 @@ namespace SampleApplication.Tests.FluentBuilders
 			defaults.UnitPrice = ARandom.CurrencyAmount();
 			defaults.Quantity = 1;
 
-			SetPropertyBuilder( x => x.Product, new ProductBuilder() );
-			SetPropertyBuilder( x => x.Order, new OrderBuilder() );
+			SetProperty( x => x.Product, new ProductBuilder() );
+			SetProperty( x => x.Order, new OrderBuilder() );
 		}
 
 
@@ -40,28 +40,28 @@ namespace SampleApplication.Tests.FluentBuilders
 
 		public LineItemBuilder For( FluentBuilder< Product > productBuilder )
 		{
-			SetPropertyBuilder( x => x.Product, productBuilder );
+			SetProperty( x => x.Product, productBuilder );
 			return this;
 		}
 
 
 		public LineItemBuilder Costing( double unitPrice )
 		{
-			SetPropertyValue( x => x.UnitPrice, unitPrice );
+			SetProperty( x => x.UnitPrice, unitPrice );
 			return this;
 		}
 
 
 		public LineItemBuilder WithQuantity( int howMany )
 		{
-			SetPropertyValue( x => x.Quantity, howMany );
+			SetProperty( x => x.Quantity, howMany );
 			return this;
 		}
 
 
 		public LineItemBuilder UnitPriceOf( double unitPrice )
 		{
-			SetPropertyValue( x => x.UnitPrice, unitPrice );
+			SetProperty( x => x.UnitPrice, unitPrice );
 			return this;
 		}
 	}

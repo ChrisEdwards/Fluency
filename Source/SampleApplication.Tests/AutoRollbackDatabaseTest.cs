@@ -70,14 +70,5 @@ namespace SampleApplication.Tests
 			command.CommandText = "select " + functionName;
 			return command;
 		}
-
-
-		protected IDbCommand GetAdHocQueryCommand( string query )
-		{
-			IDbCommand command = _session.CreateCommandWithinCurrentTransaction();
-			command.CommandType = CommandType.Text;
-			command.CommandText = query;
-			return command;
-		}
 	}
 }

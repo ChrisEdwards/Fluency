@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using Fluency;
 using SampleApplication.Domain;
 
@@ -6,16 +8,12 @@ namespace SampleApplication.Tests.FluentBuilders
 {
 	public class OrderBuilder : FluentBuilder< Order >
 	{
-		private readonly CustomerBuilder _customerBuilder = new CustomerBuilder();
-		private readonly FluentListBuilder< LineItem > _lineItemsListBuilder = new FluentListBuilder< LineItem >();
-
-
 		protected override void SetupDefaultValues( Order defaults )
 		{
 			defaults.Id = GenerateNewId();
 
-			SetPropertyBuilder( x => x.Customer, new CustomerBuilder() );
-			SetPropertyListBuilder( x => x.LineItems, new FluentListBuilder< LineItem >() );
+			SetProperty( x => x.Customer, new CustomerBuilder() );
+			SetList( x => x.LineItems, new FluentListBuilder< LineItem >() );
 		}
 
 
@@ -24,22 +22,23 @@ namespace SampleApplication.Tests.FluentBuilders
 			return new Order
 			       	{
 			       			Id = values.Id,
-			       			Customer = _customerBuilder.build(),
-			       			LineItems = _lineItemsListBuilder.build()
+			       			Customer = values.Customer,
+			       			LineItems = values.LineItems
 			       	};
 		}
 
 
 		public OrderBuilder With( LineItemBuilder lineItemBuilder )
 		{
-			_lineItemsListBuilder.Add( lineItemBuilder );
+			AddListItem( x=>x.LineItems, lineItemBuilder );
 			return this;
 		}
 
 
 		public OrderBuilder With( LineItem lineItem )
 		{
-			_lineItemsListBuilder.Add( lineItem );
+			AddListItem(x => x.LineItems, lineItem);
+			//AddListItem(x => x.LineItems, new LineItemBuilder().AliasFor( lineItem ));
 			return this;
 		}
 	}

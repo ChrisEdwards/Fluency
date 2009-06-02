@@ -61,6 +61,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Fluency.cs" />
     <Compile Include="Utils\AssertionExtensions.cs" />
     <Compile Include="IdGenerators\DecrementingIdGenerator.cs" />
     <Compile Include="IdGenerators\IncrementingIdGenerator.cs" />

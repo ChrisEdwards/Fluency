@@ -19,7 +19,7 @@ namespace Fluency
 		private readonly MockRepository _mocks;
 		protected T _preBuiltResult;
 		protected T _prototype;
-		protected IIdGenerator IdGenerator = new DecrementingIdGenerator();
+		protected IIdGenerator IdGenerator = new StaticValueIdGenerator( 0 );
 
 
 		/// <summary>
@@ -54,8 +54,9 @@ namespace Fluency
 				_prototype.SetProperty( propertyName, propertyValue );
 			}
 
-			return (T)( (object)_preBuiltResult ?? BuildFrom( _prototype ) ); //BuildFromPrototype( _prototype );
 			//_executedBuildOnceAlready = true;
+
+			return (T)( (object)_preBuiltResult ?? BuildFrom( _prototype ) ); //BuildFromPrototype( _prototype );
 		}
 
 		#endregion
@@ -81,14 +82,26 @@ namespace Fluency
 //		}
 
 
-		protected void SetPropertyValue< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression, TPropertyType propertyValue )
+		/// <summary>
+		/// Sets the value to be built for the specified property.
+		/// </summary>
+		/// <typeparam name="TPropertyType">The type of the property type.</typeparam>
+		/// <param name="propertyExpression">The property expression.</param>
+		/// <param name="propertyValue">The property value.</param>
+		protected void SetProperty< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression, TPropertyType propertyValue )
 		{
 			Accessor accessor = ReflectionHelper.GetAccessor( propertyExpression );
 			accessor.SetValue( _prototype, propertyValue );
 		}
 
 
-		protected void SetPropertyBuilder< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression, IFluentBuilder builder ) where TPropertyType : class, new()
+		/// <summary>
+		/// Sets the builder to be used to construct the value for the specified propety.
+		/// </summary>
+		/// <typeparam name="TPropertyType">The type of the property type.</typeparam>
+		/// <param name="propertyExpression">The property expression.</param>
+		/// <param name="builder">The builder.</param>
+		protected void SetProperty< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression, IFluentBuilder builder ) where TPropertyType : class
 		{
 			// Due to lack of polymorphism in generic parameters.
 			if ( !( builder is FluentBuilder< TPropertyType > ) )
@@ -107,7 +120,7 @@ namespace Fluency
 		}
 
 
-		protected void SetPropertyListBuilder< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression, IFluentBuilder builder ) where TPropertyType : class
+		protected void SetList< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression, IFluentBuilder builder ) where TPropertyType : class
 		{
 			if ( !typeof ( TPropertyType ).FullName.Contains( "IList" ) )
 				throw new ArgumentException( "PropertyType must derive from IList" );
@@ -126,6 +139,48 @@ namespace Fluency
 				_builders.Remove( property.Name );
 
 			_builders.Add( property.Name, builder );
+		}
+
+
+		/// <summary>
+		/// Adds a new builder to a list of builders for the specified list property.
+		/// </summary>
+		/// <typeparam name="TPropertyType">The type of the property type.</typeparam>
+		/// <param name="propertyExpression">The property expression.</param>
+		/// <param name="builder">The builder.</param>
+		protected void AddListItem< TPropertyType >( Expression< Func< T, IList< TPropertyType > > > propertyExpression, FluentBuilder< TPropertyType > builder )
+				where TPropertyType : class
+		{
+			GetListBuilderFor( propertyExpression ).Add( builder );
+		}
+
+
+		/// <summary>
+		/// Adds a new value to the list of values to be built for the specified list property.
+		/// </summary>
+		/// <typeparam name="TPropertyType">The type of the property type.</typeparam>
+		/// <param name="propertyExpression">The property expression.</param>
+		/// <param name="value">The value.</param>
+		protected void AddListItem< TPropertyType >( Expression< Func< T, IList< TPropertyType > > > propertyExpression, TPropertyType value ) where TPropertyType : class
+		{
+			GetListBuilderFor( propertyExpression ).Add( value );
+		}
+
+
+		/// <summary>
+		/// Gets the list builder for the specified property.
+		/// </summary>
+		/// <typeparam name="TPropertyType">The type of the property type.</typeparam>
+		/// <param name="propertyExpression">The property expression.</param>
+		/// <returns></returns>
+		private FluentListBuilder< TPropertyType > GetListBuilderFor< TPropertyType >( Expression< Func< T, IList< TPropertyType > > > propertyExpression )
+		{
+			PropertyInfo property = ReflectionHelper.GetProperty( propertyExpression );
+
+			if ( !_builders.ContainsKey( property.Name ) )
+				throw new ArgumentException( "List Builder does not exist for property [" + property.Name + "]" );
+
+			return (FluentListBuilder< TPropertyType >)_builders[property.Name];
 		}
 
 

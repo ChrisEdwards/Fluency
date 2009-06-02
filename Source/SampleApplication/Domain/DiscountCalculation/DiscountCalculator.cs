@@ -15,7 +15,8 @@ namespace SampleApplication.Domain.DiscountCalculation
 		{
 			// TODO: order.TotalAmount
 			// TODO: discountStrategy.GetDiscount
-			return _discountStrategy.GetDiscount( order.TotalAmount ) * order.TotalAmount;
+			double discount = _discountStrategy.GetDiscount( order.TotalAmount );
+			return discount * order.TotalAmount;
 		}
 	}
 }
