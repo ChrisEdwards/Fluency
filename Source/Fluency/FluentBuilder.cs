@@ -29,7 +29,7 @@ namespace Fluency
 		{
 			_mocks = new MockRepository();
 			_prototype = _mocks.Stub< T >();
-			SetupDefaultValues( _prototype );
+			SetupDefaultValues();
 		}
 
 
@@ -66,7 +66,7 @@ namespace Fluency
 		/// Setups the default values.
 		/// </summary>
 		/// <param name="defaults">The defaults.</param>
-		protected abstract void SetupDefaultValues( T defaults );
+		protected abstract void SetupDefaultValues();
 
 
 //		private T BuildFromPrototype( T prototype )

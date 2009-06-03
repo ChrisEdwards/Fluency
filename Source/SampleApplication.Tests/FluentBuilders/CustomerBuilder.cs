@@ -7,11 +7,11 @@ namespace SampleApplication.Tests.FluentBuilders
 {
 	public class CustomerBuilder : FluentBuilder< Customer >
 	{
-		protected override void SetupDefaultValues( Customer defaults )
+		protected override void SetupDefaultValues()
 		{
-			defaults.Id = GenerateNewId();
-			defaults.FirstName = ARandom.FirstName();
-			defaults.LastName = ARandom.LastName();
+			SetProperty( x => x.Id, GenerateNewId() );
+			SetProperty( x=>x.FirstName, ARandom.FirstName() );
+			SetProperty( x=>x.LastName, ARandom.LastName() );
 		}
 
 

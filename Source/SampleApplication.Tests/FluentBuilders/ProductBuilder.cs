@@ -7,11 +7,11 @@ namespace SampleApplication.Tests.FluentBuilders
 {
 	public class ProductBuilder : FluentBuilder< Product >
 	{
-		protected override void SetupDefaultValues( Product defaults )
+		protected override void SetupDefaultValues()
 		{
-			defaults.Id = GenerateNewId();
-			defaults.Name = ARandom.Title( 100 );
-			defaults.Description = ARandom.Text( 300 );
+			SetProperty( x=>x.Id, GenerateNewId() );
+			SetProperty(x=>x.Name, ARandom.Title( 100 )  );
+			SetProperty( x=>x.Description, ARandom.Text( 300 ) );
 		}
 
 

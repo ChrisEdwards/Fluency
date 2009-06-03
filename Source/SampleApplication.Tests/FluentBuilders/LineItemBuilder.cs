@@ -13,12 +13,12 @@ namespace SampleApplication.Tests.FluentBuilders
 		}
 
 
-		protected override void SetupDefaultValues( LineItem defaults )
+		protected override void SetupDefaultValues()
 		{
 			// TODO: Setup AutoPopulation of random values by type. Need a way to override defaults.
-			defaults.UnitPrice = ARandom.CurrencyAmount();
-			defaults.Quantity = 1;
-
+			SetProperty( x => x.Id, GenerateNewId() );
+			SetProperty( x => x.UnitPrice, ARandom.CurrencyAmount() );
+			SetProperty( x => x.Quantity, 1 );
 			SetProperty( x => x.Product, new ProductBuilder() );
 			SetProperty( x => x.Order, new OrderBuilder() );
 		}

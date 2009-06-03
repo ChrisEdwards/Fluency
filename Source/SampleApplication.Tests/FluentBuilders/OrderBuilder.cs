@@ -8,10 +8,9 @@ namespace SampleApplication.Tests.FluentBuilders
 {
 	public class OrderBuilder : FluentBuilder< Order >
 	{
-		protected override void SetupDefaultValues( Order defaults )
+		protected override void SetupDefaultValues()
 		{
-			defaults.Id = GenerateNewId();
-
+			SetProperty( x => x.Id, GenerateNewId() );
 			SetProperty( x => x.Customer, new CustomerBuilder() );
 			SetList( x => x.LineItems, new FluentListBuilder< LineItem >() );
 		}
