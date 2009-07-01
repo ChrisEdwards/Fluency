@@ -9,7 +9,6 @@ namespace SampleApplication.Tests.UnitTests.FluentBuilders
     public class LineItemBuilderTests
     {
         [ Test ]
-		[Ignore("Work In Progress")]
         public void Specifying_a_ProductBuilder_should_use_that_ProductBuilder_to_return_the_result()
         {
             Product product = a.Product.build();

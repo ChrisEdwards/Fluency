@@ -2,19 +2,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
-using AutoMapper.Internal;
 using Fluency.Conventions;
 using Fluency.IdGenerators;
 using Fluency.Utils;
 using FluentNHibernate.Utils;
 using FluentObjectBuilder;
 using Rhino.Mocks;
-using AutoMapper;
 
 
 namespace Fluency
 {
-	public abstract class FluentBuilder< T > : IFluentBuilder< T >
+	public abstract class FluentBuilder< T > : IFluentBuilder< T > where T:new()
 	{
 		private static bool _executedBuildOnceAlready;
 		private static int _uniqueId = -10;
@@ -90,23 +88,25 @@ namespace Fluency
 		{
 			// User Automapper to copy values
 
-			IMappingExpression< T, T > map = Mapper.CreateMap< T, T >();
+			var newObject = new T();
+			//IMappingExpression< T, T > map = Mapper.CreateMap< T, T >();
 		    foreach (PropertyInfo propertyInfo in typeof(T).GetProperties())
 		    {
                 // Ignore Read-Only properties
-		        var accessor = new PropertyAccessor(propertyInfo);
-		        if (!propertyInfo.CanWrite)
-		            map.ForDestinationMember(accessor, x => x.Ignore());
-		        
-                // Return actual reference of reference types, don't nest mapping.
-                if (!propertyInfo.PropertyType.IsValueType)
-                {
-                    var propInfo = propertyInfo;
-                    map.ForDestinationMember(accessor, x => x.MapFrom(src => propInfo.GetValue(src, null)));
-                }
+//		        var accessor = new PropertyAccessor(propertyInfo);
+		        if (propertyInfo.CanRead && propertyInfo.CanWrite)
+					propertyInfo.SetValue( newObject, propertyInfo.GetValue( prototype, null ), null  );
+//		            map.ForDestinationMember(accessor, x => x.Ignore());
+//		        
+//                // Return actual reference of reference types, don't nest mapping.
+//                if (!propertyInfo.PropertyType.IsValueType)
+//                {
+//                    var propInfo = propertyInfo;
+//                    map.ForDestinationMember(accessor, x => x.MapFrom(src => propInfo.GetValue(src, null)));
+//                }
 		    }
-			T result = Mapper.DynamicMap< T, T >( prototype );
-			return result;
+			//T result = Mapper.DynamicMap< T, T >( prototype );
+			return newObject;
 		}
 
 
@@ -129,7 +129,7 @@ namespace Fluency
 		/// <typeparam name="TPropertyType">The type of the property type.</typeparam>
 		/// <param name="propertyExpression">The property expression.</param>
 		/// <param name="builder">The builder.</param>
-		protected void SetProperty< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression, IFluentBuilder builder ) where TPropertyType : class
+		protected void SetProperty< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression, IFluentBuilder builder ) where TPropertyType : class, new()
 		{
 			// Due to lack of polymorphism in generic parameters.
 			if ( !( builder is FluentBuilder< TPropertyType > ) )
@@ -177,7 +177,7 @@ namespace Fluency
 		/// <param name="propertyExpression">The property expression.</param>
 		/// <param name="builder">The builder.</param>
 		protected void AddListItem< TPropertyType >( Expression< Func< T, IList< TPropertyType > > > propertyExpression, FluentBuilder< TPropertyType > builder )
-				where TPropertyType : class
+				where TPropertyType : class, new()
 		{
 			GetListBuilderFor( propertyExpression ).Add( builder );
 		}
@@ -189,7 +189,7 @@ namespace Fluency
 		/// <typeparam name="TPropertyType">The type of the property type.</typeparam>
 		/// <param name="propertyExpression">The property expression.</param>
 		/// <param name="value">The value.</param>
-		protected void AddListItem< TPropertyType >( Expression< Func< T, IList< TPropertyType > > > propertyExpression, TPropertyType value ) where TPropertyType : class
+		protected void AddListItem< TPropertyType >( Expression< Func< T, IList< TPropertyType > > > propertyExpression, TPropertyType value ) where TPropertyType : class, new()
 		{
 			GetListBuilderFor( propertyExpression ).Add( value );
 		}
@@ -201,7 +201,7 @@ namespace Fluency
 		/// <typeparam name="TPropertyType">The type of the property type.</typeparam>
 		/// <param name="propertyExpression">The property expression.</param>
 		/// <returns></returns>
-		private FluentListBuilder< TPropertyType > GetListBuilderFor< TPropertyType >( Expression< Func< T, IList< TPropertyType > > > propertyExpression )
+		private FluentListBuilder< TPropertyType > GetListBuilderFor< TPropertyType >( Expression< Func< T, IList< TPropertyType > > > propertyExpression ) where TPropertyType : new()
 		{
 			PropertyInfo property = ReflectionHelper.GetProperty( propertyExpression );
 
