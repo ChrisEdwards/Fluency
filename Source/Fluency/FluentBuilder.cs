@@ -81,7 +81,7 @@ namespace Fluency
 		/// Setups the default values.
 		/// </summary>
 		/// <param name="defaults">The defaults.</param>
-		protected abstract void SetupDefaultValues();
+		protected virtual void SetupDefaultValues(){}
 
 
 		private T BuildFromPrototype( T prototype )
@@ -216,7 +216,10 @@ namespace Fluency
 		/// Builds an object of type T based on the specs specified in the builder.
 		/// </summary>
 		/// <returns></returns>
-		protected abstract T BuildFrom( T values );
+		protected virtual T BuildFrom(T values)
+		{
+			return new T();
+		}
 
 
 		/// <summary>
