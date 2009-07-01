@@ -2,11 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
+using AutoMapper.Internal;
+using Fluency.Conventions;
 using Fluency.IdGenerators;
 using Fluency.Utils;
 using FluentNHibernate.Utils;
 using FluentObjectBuilder;
 using Rhino.Mocks;
+using AutoMapper;
 
 
 namespace Fluency
@@ -20,6 +23,7 @@ namespace Fluency
 		protected T _preBuiltResult;
 		protected T _prototype;
 		protected IIdGenerator IdGenerator = new StaticValueIdGenerator( 0 );
+        private IList<IDefaultConvention> defaultConventions = new List<IDefaultConvention>();
 
 
 		/// <summary>
@@ -29,11 +33,24 @@ namespace Fluency
 		{
 			_mocks = new MockRepository();
 			_prototype = _mocks.Stub< T >();
+
+		    foreach (PropertyInfo propertyInfo in typeof(T).GetProperties())
+		    {
+				if (propertyInfo.CanWrite)
+				{
+					propertyInfo.SetValue( _prototype, GetDefaultValue( propertyInfo ), null );
+				}
+		    }
+
 			SetupDefaultValues();
 		}
 
+	    private object GetDefaultValue(PropertyInfo propertyInfo)
+	    {
+	        return null;
+	    }
 
-		#region IFluentBuilder<T> Members
+	    #region IFluentBuilder<T> Members
 
 		/// <summary>
 		/// Either returns the override result, or builds this object.
@@ -56,7 +73,7 @@ namespace Fluency
 
 			//_executedBuildOnceAlready = true;
 
-			return (T)( (object)_preBuiltResult ?? BuildFrom( _prototype ) ); //BuildFromPrototype( _prototype );
+			return (T)( (object)_preBuiltResult ?? BuildFromPrototype( _prototype ) ); //BuildFrom( _prototype );
 		}
 
 		#endregion
@@ -69,17 +86,28 @@ namespace Fluency
 		protected abstract void SetupDefaultValues();
 
 
-//		private T BuildFromPrototype( T prototype )
-//		{
-//			// User Automapper to copy values
-//
-//			//IMappingExpression< T, T > map = Mapper.CreateMap< T, T >();
-//			// TODO: Must fix... readonly properties break.
-//			//map.IgnoreReadOnlyProperties();
-//			//var result = new T();
-//			T result = Mapper.DynamicMap< T, T >( prototype );
-//			return result;
-//		}
+		private T BuildFromPrototype( T prototype )
+		{
+			// User Automapper to copy values
+
+			IMappingExpression< T, T > map = Mapper.CreateMap< T, T >();
+		    foreach (PropertyInfo propertyInfo in typeof(T).GetProperties())
+		    {
+                // Ignore Read-Only properties
+		        var accessor = new PropertyAccessor(propertyInfo);
+		        if (!propertyInfo.CanWrite)
+		            map.ForDestinationMember(accessor, x => x.Ignore());
+		        
+                // Return actual reference of reference types, don't nest mapping.
+                if (!propertyInfo.PropertyType.IsValueType)
+                {
+                    var propInfo = propertyInfo;
+                    map.ForDestinationMember(accessor, x => x.MapFrom(src => propInfo.GetValue(src, null)));
+                }
+		    }
+			T result = Mapper.DynamicMap< T, T >( prototype );
+			return result;
+		}
 
 
 		/// <summary>

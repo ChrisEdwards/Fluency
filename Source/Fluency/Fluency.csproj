@@ -31,6 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=0.3.1.92, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\ThirdParty\Automapper\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="FluentNHibernate, Version=0.1.0.523, Culture=neutral, PublicKeyToken=8aa435e3cb308880, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\ThirdParty\FluentNHibernate\FluentNHibernate.dll</HintPath>
@@ -61,6 +65,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Conventions\Convention.cs" />
+    <Compile Include="Conventions\LambdaConvention.cs" />
+    <Compile Include="Conventions\LastNameConvention.cs" />
+    <Compile Include="Conventions\FirstNameConvention.cs" />
+    <Compile Include="Conventions\IDefaultConvention.cs" />
     <Compile Include="Fluency.cs" />
     <Compile Include="Utils\AssertionExtensions.cs" />
     <Compile Include="IdGenerators\DecrementingIdGenerator.cs" />

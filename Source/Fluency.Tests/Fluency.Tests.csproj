@@ -49,6 +49,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Conventions\FirstNameConventionTests.cs" />
+    <Compile Include="Conventions\TypeConventionTests.cs" />
     <Compile Include="NumericalExtensionTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

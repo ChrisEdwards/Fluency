@@ -385,6 +385,17 @@
             Alter convention discovery
             </summary>
         </member>
+        <member name="M:FluentNHibernate.Mapping.ISubclass.LazyLoad">
+            <summary>
+            Sets whether this subclass is lazy loaded
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:FluentNHibernate.Mapping.ISubclass.Not">
+            <summary>
+            Inverts the next boolean
+            </summary>
+        </member>
         <member name="T:FluentNHibernate.Cfg.AutoMappingsContainer">
             <summary>
             Container for automatic mappings
@@ -1528,17 +1539,6 @@
         <member name="T:FluentNHibernate.Mapping.InvalidPrefixException">
             <summary>
             Thrown when a prefix is specified for an access-strategy that isn't supported.
-            </summary>
-        </member>
-        <member name="M:FluentNHibernate.Mapping.ISubclass.LazyLoad">
-            <summary>
-            Sets whether this subclass is lazy loaded
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="P:FluentNHibernate.Mapping.ISubclass.Not">
-            <summary>
-            Inverts the next boolean
             </summary>
         </member>
         <member name="T:FluentNHibernate.Mapping.Prefix">
