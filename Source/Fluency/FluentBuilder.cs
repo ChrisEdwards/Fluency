@@ -188,7 +188,7 @@ namespace Fluency
 		protected void AddListItem< TPropertyType >( Expression< Func< T, IList< TPropertyType > > > propertyExpression, FluentBuilder< TPropertyType > builder )
 				where TPropertyType : class, new()
 		{
-			GetListBuilderFor( propertyExpression ).Add( builder );
+			BuilderFor( propertyExpression ).Add( builder );
 		}
 
 
@@ -200,7 +200,7 @@ namespace Fluency
 		/// <param name="value">The value.</param>
 		protected void AddListItem< TPropertyType >( Expression< Func< T, IList< TPropertyType > > > propertyExpression, TPropertyType value ) where TPropertyType : class, new()
 		{
-			GetListBuilderFor( propertyExpression ).Add( value );
+			BuilderFor( propertyExpression ).Add( value );
 		}
 
 
@@ -210,7 +210,7 @@ namespace Fluency
 		/// <typeparam name="TPropertyType">The type of the property type.</typeparam>
 		/// <param name="propertyExpression">The property expression.</param>
 		/// <returns></returns>
-		private FluentListBuilder< TPropertyType > GetListBuilderFor< TPropertyType >( Expression< Func< T, IList< TPropertyType > > > propertyExpression ) where TPropertyType : new()
+		public FluentListBuilder< TPropertyType > BuilderFor< TPropertyType >( Expression< Func< T, IList< TPropertyType > > > propertyExpression ) where TPropertyType : new()
 		{
 			PropertyInfo property = ReflectionHelper.GetProperty( propertyExpression );
 
