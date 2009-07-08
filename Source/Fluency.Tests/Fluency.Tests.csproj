@@ -31,6 +31,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="developwithpassion.bdd, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\ThirdParty\DevelopWithPassion.bdd\developwithpassion.bdd.dll</HintPath>
+    </Reference>
+    <Reference Include="MbUnit.Framework, Version=2.4.2.355, Culture=neutral, PublicKeyToken=5e72ecd30bc408d5">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\ThirdParty\DevelopWithPassion.bdd\MbUnit.Framework.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework, Version=2.5.0.9122, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\thirdparty\nunit\nunit.framework.dll</HintPath>
@@ -49,9 +57,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Conventions\FirstNameConventionTests.cs" />
-    <Compile Include="Conventions\TypeConventionTests.cs" />
-    <Compile Include="NumericalExtensionTests.cs" />
+    <Compile Include="Conventions\ByName\LastNameConventionSpecs.cs" />
+    <Compile Include="Conventions\ByName\FirstNameConventionSpecs.cs" />
+    <Compile Include="Conventions\ByType\DateTypeConventionSpecs.cs" />
+    <Compile Include="Conventions\ByType\IntegerTypeConventionSpecs.cs" />
+    <Compile Include="Conventions\ByType\StringTypeConventionSpecs.cs" />
+    <Compile Include="EmptyTestFixtureToAllowTestDrivenToWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

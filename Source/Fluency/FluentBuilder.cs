@@ -1,3 +1,5 @@
+#region Usings
+
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -9,10 +11,12 @@ using FluentNHibernate.Utils;
 using FluentObjectBuilder;
 using Rhino.Mocks;
 
+#endregion
+
 
 namespace Fluency
 {
-	public abstract class FluentBuilder< T > : IFluentBuilder< T > where T:new()
+	public abstract class FluentBuilder< T > : IFluentBuilder< T > where T : new()
 	{
 		private static bool _executedBuildOnceAlready;
 		private static int _uniqueId = -10;
@@ -20,8 +24,8 @@ namespace Fluency
 		private readonly MockRepository _mocks;
 		protected T _preBuiltResult;
 		protected T _prototype;
+		private IList< IDefaultConvention > _defaultConventions = new List< IDefaultConvention >();
 		protected IIdGenerator IdGenerator = new StaticValueIdGenerator( 0 );
-        private IList<IDefaultConvention> defaultConventions = new List<IDefaultConvention>();
 
 
 		/// <summary>
@@ -32,23 +36,19 @@ namespace Fluency
 			_mocks = new MockRepository();
 			_prototype = _mocks.Stub< T >();
 
-		    foreach (PropertyInfo propertyInfo in typeof(T).GetProperties())
-		    {
-				if (propertyInfo.CanWrite)
-				{
+			// Specify default values for each property based on conventions.
+			foreach ( PropertyInfo propertyInfo in typeof ( T ).GetProperties() )
+			{
+				if ( propertyInfo.CanWrite && propertyInfo.CanRead )
 					propertyInfo.SetValue( _prototype, GetDefaultValue( propertyInfo ), null );
-				}
-		    }
+			}
 
+			// Allow the builder to specify its own default values.
 			SetupDefaultValues();
 		}
 
-	    private object GetDefaultValue(PropertyInfo propertyInfo)
-	    {
-	        return null;
-	    }
 
-	    #region IFluentBuilder<T> Members
+		#region IFluentBuilder<T> Members
 
 		/// <summary>
 		/// Either returns the override result, or builds this object.
@@ -58,6 +58,10 @@ namespace Fluency
 		{
 			if ( _executedBuildOnceAlready )
 				throw new Exception( "Cannot build more than once [" + GetType().FullName + "]." );
+
+			// If this is to return a pre-built result, go ahead in return it.
+			if (_preBuiltResult != null)
+				return _preBuiltResult;
 
 			// Populate the prototype with the result of executing each builder.
 			foreach ( var pair in _builders )
@@ -71,43 +75,39 @@ namespace Fluency
 
 			//_executedBuildOnceAlready = true;
 
-			return (T)( (object)_preBuiltResult ?? BuildFromPrototype( _prototype ) ); //BuildFrom( _prototype );
+			return (T)( (object)_preBuiltResult ?? _prototype.ShallowClone() ); //BuildFrom( _prototype );
 		}
 
 		#endregion
 
 
 		/// <summary>
-		/// Setups the default values.
+		/// Gets the default value for a specified property.
+		/// </summary>
+		/// <param name="propertyInfo">The property info.</param>
+		/// <returns></returns>
+		private object GetDefaultValue( PropertyInfo propertyInfo )
+		{
+			object result = null;
+
+			// Check each of the conventions and apply them if necessary.
+			foreach ( var defaultConvention in _defaultConventions )
+			{
+				// if more than one convention matches...last one wins.
+				if ( defaultConvention.AppliesTo(  propertyInfo) )
+					result = defaultConvention.DefaultValue( propertyInfo );
+			}
+
+			// Returns null if no convention matched.
+			return result;
+		}
+
+
+		/// <summary>
+		/// Allows the builder to specify default values for fields in the object.
 		/// </summary>
 		/// <param name="defaults">The defaults.</param>
-		protected virtual void SetupDefaultValues(){}
-
-
-		private T BuildFromPrototype( T prototype )
-		{
-			// User Automapper to copy values
-
-			var newObject = new T();
-			//IMappingExpression< T, T > map = Mapper.CreateMap< T, T >();
-		    foreach (PropertyInfo propertyInfo in typeof(T).GetProperties())
-		    {
-                // Ignore Read-Only properties
-//		        var accessor = new PropertyAccessor(propertyInfo);
-		        if (propertyInfo.CanRead && propertyInfo.CanWrite)
-					propertyInfo.SetValue( newObject, propertyInfo.GetValue( prototype, null ), null  );
-//		            map.ForDestinationMember(accessor, x => x.Ignore());
-//		        
-//                // Return actual reference of reference types, don't nest mapping.
-//                if (!propertyInfo.PropertyType.IsValueType)
-//                {
-//                    var propInfo = propertyInfo;
-//                    map.ForDestinationMember(accessor, x => x.MapFrom(src => propInfo.GetValue(src, null)));
-//                }
-		    }
-			//T result = Mapper.DynamicMap< T, T >( prototype );
-			return newObject;
-		}
+		protected virtual void SetupDefaultValues() {}
 
 
 		/// <summary>
@@ -139,15 +139,24 @@ namespace Fluency
 						                                                                                                                                   typeof ( TPropertyType ).FullName ) );
 			}
 
+			// Get the property to set
 			PropertyInfo property = ReflectionHelper.GetProperty( propertyExpression );
 
+			// Since we are adding a new builder for this property, remove the existing one if it exists.
 			if ( _builders.ContainsKey( property.Name ) )
 				_builders.Remove( property.Name );
 
+			// Add the new builder.
 			_builders.Add( property.Name, builder );
 		}
 
 
+		/// <summary>
+		/// Sets the list builder.
+		/// </summary>
+		/// <typeparam name="TPropertyType">The type of the property type.</typeparam>
+		/// <param name="propertyExpression">The property expression.</param>
+		/// <param name="builder">The builder.</param>
 		protected void SetList< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression, IFluentBuilder builder ) where TPropertyType : class
 		{
 			if ( !typeof ( TPropertyType ).FullName.Contains( "IList" ) )
@@ -216,7 +225,7 @@ namespace Fluency
 		/// Builds an object of type T based on the specs specified in the builder.
 		/// </summary>
 		/// <returns></returns>
-		protected virtual T BuildFrom(T values)
+		protected virtual T BuildFrom( T values )
 		{
 			return new T();
 		}
