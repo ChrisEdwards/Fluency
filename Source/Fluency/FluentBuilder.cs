@@ -188,7 +188,7 @@ namespace Fluency
 		protected void AddListItem< TPropertyType >( Expression< Func< T, IList< TPropertyType > > > propertyExpression, FluentBuilder< TPropertyType > builder )
 				where TPropertyType : class, new()
 		{
-			BuilderFor( propertyExpression ).Add( builder );
+			ListBuilderFor( propertyExpression ).Add( builder );
 		}
 
 
@@ -200,7 +200,7 @@ namespace Fluency
 		/// <param name="value">The value.</param>
 		protected void AddListItem< TPropertyType >( Expression< Func< T, IList< TPropertyType > > > propertyExpression, TPropertyType value ) where TPropertyType : class, new()
 		{
-			BuilderFor( propertyExpression ).Add( value );
+			ListBuilderFor( propertyExpression ).Add( value );
 		}
 
 
@@ -210,7 +210,7 @@ namespace Fluency
 		/// <typeparam name="TPropertyType">The type of the property type.</typeparam>
 		/// <param name="propertyExpression">The property expression.</param>
 		/// <returns></returns>
-		public FluentListBuilder< TPropertyType > BuilderFor< TPropertyType >( Expression< Func< T, IList< TPropertyType > > > propertyExpression ) where TPropertyType : new()
+		public FluentListBuilder< TPropertyType > ListBuilderFor< TPropertyType >( Expression< Func< T, IList< TPropertyType > > > propertyExpression ) where TPropertyType : new()
 		{
 			PropertyInfo property = ReflectionHelper.GetProperty( propertyExpression );
 
@@ -218,6 +218,24 @@ namespace Fluency
 				throw new ArgumentException( "List Builder does not exist for property [" + property.Name + "]" );
 
 			return (FluentListBuilder< TPropertyType >)_builders[property.Name];
+		}
+
+
+
+		/// <summary>
+		/// Gets the builder for the specified property.
+		/// </summary>
+		/// <typeparam name="TPropertyType">The type of the property type.</typeparam>
+		/// <param name="propertyExpression">The property expression.</param>
+		/// <returns></returns>
+		public FluentBuilder< TPropertyType > BuilderFor< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression ) where TPropertyType : new()
+		{
+			PropertyInfo property = ReflectionHelper.GetProperty( propertyExpression );
+
+			if ( !_builders.ContainsKey( property.Name ) )
+				throw new ArgumentException( "Builder does not exist for property [" + property.Name + "]" );
+
+			return (FluentBuilder< TPropertyType >)_builders[property.Name];
 		}
 
 
