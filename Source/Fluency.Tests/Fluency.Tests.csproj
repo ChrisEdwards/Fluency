@@ -43,6 +43,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\thirdparty\nunit\nunit.framework.dll</HintPath>
     </Reference>
+    <Reference Include="SpecUnit, Version=0.0.3478.22822, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\ThirdParty\SpecUnit\SpecUnit.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -63,6 +67,7 @@
     <Compile Include="Conventions\ByType\IntegerTypeConventionSpecs.cs" />
     <Compile Include="Conventions\ByType\StringTypeConventionSpecs.cs" />
     <Compile Include="EmptyTestFixtureToAllowTestDrivenToWork.cs" />
+    <Compile Include="FluencyInitializationSpecs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

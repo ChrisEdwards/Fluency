@@ -25,7 +25,7 @@ namespace Fluency
 		protected T _preBuiltResult;
 		protected T _prototype;
 		private IList< IDefaultConvention > _defaultConventions = new List< IDefaultConvention >();
-		protected IIdGenerator IdGenerator = new StaticValueIdGenerator( 0 );
+		protected IIdGenerator IdGenerator;
 
 
 		/// <summary>
@@ -33,6 +33,8 @@ namespace Fluency
 		/// </summary>
 		public FluentBuilder()
 		{
+			IdGenerator = Fluency.Configuration.ConstructIdGenerator();
+
 			_mocks = new MockRepository();
 			_prototype = _mocks.Stub< T >();
 
@@ -267,8 +269,7 @@ namespace Fluency
 		/// <returns></returns>
 		protected int GenerateNewId()
 		{
-			//return _uniqueId--;
-			return 0;
+			return IdGenerator.GetNextId();
 		}
 
 
