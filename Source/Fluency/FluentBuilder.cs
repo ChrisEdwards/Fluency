@@ -33,7 +33,7 @@ namespace Fluency
 		/// </summary>
 		public FluentBuilder()
 		{
-			IdGenerator = Fluency.Configuration.ConstructIdGenerator();
+			IdGenerator = Fluency.Configuration.GetIdGenerator<T>();
 
 			_mocks = new MockRepository();
 			_prototype = _mocks.Stub< T >();
