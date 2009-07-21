@@ -24,7 +24,7 @@ namespace Fluency
 					select builder.build();
 
 			// Merge with items added directly (without a builder)
-			IEnumerable< T > allItems = _directItems.Union( builtItems );
+			IEnumerable< T > allItems = _directItems.Concat( builtItems );
 
 			// Return these as a list.
 			return new List< T >( allItems );
