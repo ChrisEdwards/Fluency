@@ -1,6 +1,8 @@
 using System;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
+using FluentNHibernate.Utils;
 
 
 namespace Fluency.Utils
@@ -26,6 +28,11 @@ namespace Fluency.Utils
 			                         null )
 					.Cast< PropertyInfo >()
 					.ToArray();
+		}
+
+		public static PropertyInfo PropertyInfoFor<T, TPropertyType>(this T source, Expression<Func<T, TPropertyType>> propertyExpression)
+		{
+			return ReflectionHelper.GetProperty( propertyExpression );
 		}
 
 

@@ -16,13 +16,13 @@ using Rhino.Mocks;
 
 namespace Fluency
 {
-	public abstract class FluentBuilder< T > : IFluentBuilder< T > where T : new()
+	public class FluentBuilder< T > : IFluentBuilder< T > where T : class, new()
 	{
 		private static bool _executedBuildOnceAlready;
 		private static int _uniqueId = -10;
 		private readonly Dictionary< string, IFluentBuilder > _builders = new Dictionary< string, IFluentBuilder >();
 		private readonly MockRepository _mocks;
-		protected T _preBuiltResult;
+		protected T _preBuiltResult = null;
 		protected T _prototype;
 		private IList< IDefaultConvention > _defaultConventions = new List< IDefaultConvention >();
 		protected IIdGenerator IdGenerator;
@@ -120,6 +120,14 @@ namespace Fluency
 		/// <param name="propertyValue">The property value.</param>
 		protected void SetProperty< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression, TPropertyType propertyValue )
 		{
+			// Get the property to set
+			PropertyInfo property = ReflectionHelper.GetProperty(propertyExpression);
+
+			// If a builder already exists for this type, remove it.
+			if (_builders.ContainsKey(property.Name))
+				_builders.Remove(property.Name);
+
+			// Set the property on the prototype object.
 			Accessor accessor = ReflectionHelper.GetAccessor( propertyExpression );
 			accessor.SetValue( _prototype, propertyValue );
 		}
@@ -212,7 +220,7 @@ namespace Fluency
 		/// <typeparam name="TPropertyType">The type of the property type.</typeparam>
 		/// <param name="propertyExpression">The property expression.</param>
 		/// <returns></returns>
-		public FluentListBuilder< TPropertyType > ListBuilderFor< TPropertyType >( Expression< Func< T, IList< TPropertyType > > > propertyExpression ) where TPropertyType : new()
+		public FluentListBuilder< TPropertyType > ListBuilderFor< TPropertyType >( Expression< Func< T, IList< TPropertyType > > > propertyExpression ) where TPropertyType : class, new()
 		{
 			PropertyInfo property = ReflectionHelper.GetProperty( propertyExpression );
 
@@ -230,7 +238,7 @@ namespace Fluency
 		/// <typeparam name="TPropertyType">The type of the property type.</typeparam>
 		/// <param name="propertyExpression">The property expression.</param>
 		/// <returns></returns>
-		public FluentBuilder< TPropertyType > BuilderFor< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression ) where TPropertyType : new()
+		public FluentBuilder< TPropertyType > BuilderFor< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression ) where TPropertyType : class, new()
 		{
 			PropertyInfo property = ReflectionHelper.GetProperty( propertyExpression );
 

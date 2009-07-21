@@ -5,7 +5,7 @@ using Fluency.Conventions;
 using FluentObjectBuilder;
 
 
-namespace Fluency.Tests.Conventions
+namespace Fluency.Tests.Conventions.ByName
 {
 	public class FirstNameConventionSpecs
 	{
@@ -14,10 +14,7 @@ namespace Fluency.Tests.Conventions
 			protected static IDefaultConvention convention;
 			protected static PropertyInfo propertyInfo;
 
-			because b = () =>
-			            {
-			            	convention = Convention.FirstName();
-			            };
+			because b = () => { convention = Convention.FirstName(); };
 		}
 
 
@@ -72,6 +69,4 @@ namespace Fluency.Tests.Conventions
 			it should_return_nothing = () => convention.DefaultValue( propertyInfo ).should_be_null();
 		}
 	}
-
-
 }
