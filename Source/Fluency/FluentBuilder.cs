@@ -18,13 +18,13 @@ namespace Fluency
 {
 	public class FluentBuilder< T > : IFluentBuilder< T > where T : class, new()
 	{
-		private static bool _executedBuildOnceAlready;
-		private static int _uniqueId = -10;
-		private readonly Dictionary< string, IFluentBuilder > _builders = new Dictionary< string, IFluentBuilder >();
-		private readonly MockRepository _mocks;
-		protected T _preBuiltResult = null;
+		static bool _executedBuildOnceAlready;
+		static int _uniqueId = -10;
+		readonly Dictionary< string, IFluentBuilder > _builders = new Dictionary< string, IFluentBuilder >();
+		readonly MockRepository _mocks;
+		protected T _preBuiltResult;
 		protected T _prototype;
-		private IList< IDefaultConvention > _defaultConventions = new List< IDefaultConvention >();
+		readonly IList< IDefaultConvention > _defaultConventions = new List< IDefaultConvention >();
 		protected IIdGenerator IdGenerator;
 
 
@@ -33,7 +33,7 @@ namespace Fluency
 		/// </summary>
 		public FluentBuilder()
 		{
-			IdGenerator = Fluency.Configuration.GetIdGenerator<T>();
+			IdGenerator = Fluency.Configuration.GetIdGenerator< T >();
 
 			_mocks = new MockRepository();
 			_prototype = _mocks.Stub< T >();
@@ -58,15 +58,15 @@ namespace Fluency
 		/// <returns></returns>
 		public T build()
 		{
-			if ( _executedBuildOnceAlready )
-				throw new Exception( "Cannot build more than once [" + GetType().FullName + "]." );
+//			if ( _executedBuildOnceAlready )
+//				throw new Exception( "Cannot build more than once [" + GetType().FullName + "]." );
 
 			// If this is to return a pre-built result, go ahead in return it.
-			if (_preBuiltResult != null)
+			if ( _preBuiltResult != null )
 				return _preBuiltResult;
 
 			// Populate the prototype with the result of executing each builder.
-			foreach ( var pair in _builders )
+			foreach ( KeyValuePair< string, IFluentBuilder > pair in _builders )
 			{
 				string propertyName = pair.Key;
 				IFluentBuilder builder = pair.Value;
@@ -75,12 +75,24 @@ namespace Fluency
 				_prototype.SetProperty( propertyName, propertyValue );
 			}
 
-			//_executedBuildOnceAlready = true;
+//			_executedBuildOnceAlready = true;
 
-			return (T)( (object)_preBuiltResult ?? _prototype.ShallowClone() ); //BuildFrom( _prototype );
+			var buildResult = (T)( _preBuiltResult ?? _prototype.ShallowClone() );
+
+			// Alow the client builder the ability to do some post-processing.
+			AfterBuilding( buildResult );
+
+			return buildResult;
 		}
 
 		#endregion
+
+
+		/// <summary>
+		/// Event that fires after the object is built to allow the builder to do post-processing.
+		/// </summary>
+		/// <param name="buildResult">The build result.</param>
+		protected virtual void AfterBuilding( T buildResult ) {}
 
 
 		/// <summary>
@@ -88,15 +100,15 @@ namespace Fluency
 		/// </summary>
 		/// <param name="propertyInfo">The property info.</param>
 		/// <returns></returns>
-		private object GetDefaultValue( PropertyInfo propertyInfo )
+		object GetDefaultValue( PropertyInfo propertyInfo )
 		{
 			object result = null;
 
 			// Check each of the conventions and apply them if necessary.
-			foreach ( var defaultConvention in _defaultConventions )
+			foreach ( IDefaultConvention defaultConvention in _defaultConventions )
 			{
 				// if more than one convention matches...last one wins.
-				if ( defaultConvention.AppliesTo(  propertyInfo) )
+				if ( defaultConvention.AppliesTo( propertyInfo ) )
 					result = defaultConvention.DefaultValue( propertyInfo );
 			}
 
@@ -121,11 +133,11 @@ namespace Fluency
 		protected void SetProperty< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression, TPropertyType propertyValue )
 		{
 			// Get the property to set
-			PropertyInfo property = ReflectionHelper.GetProperty(propertyExpression);
+			PropertyInfo property = ReflectionHelper.GetProperty( propertyExpression );
 
 			// If a builder already exists for this type, remove it.
-			if (_builders.ContainsKey(property.Name))
-				_builders.Remove(property.Name);
+			if ( _builders.ContainsKey( property.Name ) )
+				_builders.Remove( property.Name );
 
 			// Set the property on the prototype object.
 			Accessor accessor = ReflectionHelper.GetAccessor( propertyExpression );
@@ -231,7 +243,6 @@ namespace Fluency
 		}
 
 
-
 		/// <summary>
 		/// Gets the builder for the specified property.
 		/// </summary>
@@ -253,6 +264,7 @@ namespace Fluency
 		/// Builds an object of type T based on the specs specified in the builder.
 		/// </summary>
 		/// <returns></returns>
+		[Obsolete("Use AfterBuild() method to perform post-processinig.")]
 		protected virtual T BuildFrom( T values )
 		{
 			return new T();
