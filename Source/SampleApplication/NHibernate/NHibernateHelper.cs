@@ -1,5 +1,5 @@
 ﻿using System.IO;
-using FluentNHibernate.AutoMap;
+using FluentNHibernate.Automapping;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using NHibernate;
@@ -29,8 +29,8 @@ namespace SampleApplication.NHibernate
 					_sessionFactory =
 							Fluently.Configure()
 									.Database( SQLiteConfiguration.Standard.UsingFile( DbFile ) )
-									.Mappings( m => m.AutoMappings.Add(
-									                		AutoPersistenceModel.MapEntitiesFromAssemblyOf< ISampleApplicationAssembly >()
+									.Mappings( m => m.AutoMappings.Add( 
+									                		AutoMap.AssemblyOf< ISampleApplicationAssembly >()
 									                				.Where( t => t.Namespace == "SampleApplication.Domain" ) ) )
 									.ExposeConfiguration( BuildSchema )
 									.BuildSessionFactory();

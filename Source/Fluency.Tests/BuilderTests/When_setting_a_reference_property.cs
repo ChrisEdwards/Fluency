@@ -1,4 +1,5 @@
 using FluentObjectBuilder;
+using NUnit.Framework;
 using SpecUnit;
 
 
@@ -46,7 +47,7 @@ namespace Fluency.Tests.BuilderTests
 		{
 			var builder = new BuilderWithReferenceProperty_WithNoDefaultBuilder();
 			ClassWithReferenceProperty instance = builder.With( expectedValue ).build();
-			instance.ReferenceProperty.ShouldBeTheSameAs( expectedValue );
+			Assert.That( instance.ReferenceProperty, Is.SameAs( expectedValue ) );
 		}
 	}
 

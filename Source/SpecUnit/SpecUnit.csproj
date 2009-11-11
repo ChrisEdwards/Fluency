@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{F8CADD7C-6E49-476F-AF03-274507FA06B4}</ProjectGuid>
+    <ProjectGuid>{650A6CED-11AD-4DA2-984C-39FB773F88D3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Fluency.Tests</RootNamespace>
-    <AssemblyName>Fluency.Tests</AssemblyName>
+    <RootNamespace>SpecUnit</RootNamespace>
+    <AssemblyName>SpecUnit</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -31,14 +32,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="developwithpassion.bdd, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\ThirdParty\DevelopWithPassion.bdd\developwithpassion.bdd.dll</HintPath>
-    </Reference>
-    <Reference Include="MbUnit.Framework, Version=2.4.2.355, Culture=neutral, PublicKeyToken=5e72ecd30bc408d5">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\ThirdParty\DevelopWithPassion.bdd\MbUnit.Framework.dll</HintPath>
-    </Reference>
     <Reference Include="nunit.framework, Version=2.5.1.9189, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\ThirdParty\NUnit\nunit.framework.dll</HintPath>
@@ -47,38 +40,19 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System.Xml.Linq">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Data.DataSetExtensions">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BuilderTests\When_a_builder_builds_its_own_result.cs" />
-    <Compile Include="BuilderTests\When_building_two_consecutive_objects.cs" />
-    <Compile Include="BuilderTests\When_setting_a_reference_property.cs" />
-    <Compile Include="Conventions\ByName\FirstNameConventionSpecs1.cs" />
-    <Compile Include="Conventions\ByName\LastNameConventionSpecs.cs" />
-    <Compile Include="Conventions\ByName\FirstNameConventionSpecs.cs" />
-    <Compile Include="Conventions\ByType\DateTypeConventionSpecs.cs" />
-    <Compile Include="Conventions\ByType\IntegerTypeConventionSpecs.cs" />
-    <Compile Include="Conventions\ByType\StringTypeConventionSpecs.cs" />
-    <Compile Include="EmptyTestFixtureToAllowTestDrivenToWork.cs" />
-    <Compile Include="FluencyInitializationSpecs.cs" />
+    <Compile Include="Properties\CommonAssemblyInfo.cs" />
+    <Compile Include="ConcernAttribute.cs" />
+    <Compile Include="ContextSpecification.cs" />
+    <Compile Include="CleanUpContextAttribute.cs" />
+    <Compile Include="SpecAttribute.cs" />
+    <Compile Include="ContextAttribute.cs" />
+    <Compile Include="SpecificationAttribute.cs" />
+    <Compile Include="ObservationAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Fluency\Fluency.csproj">
-      <Project>{CA8DE273-AA4A-4FC1-9D41-B67B56A53433}</Project>
-      <Name>Fluency</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SpecUnit\SpecUnit.csproj">
-      <Project>{650A6CED-11AD-4DA2-984C-39FB773F88D3}</Project>
-      <Name>SpecUnit</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

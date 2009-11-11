@@ -1,4 +1,5 @@
 using Fluency.IdGenerators;
+using NUnit.Framework;
 using SpecUnit;
 
 
@@ -37,7 +38,7 @@ namespace Fluency.Tests.BuilderTests
 			ClassWithId object1 = new BuilderWithId().build();
 			ClassWithId object2 = new BuilderWithId().build();
 
-			object1.Id.ShouldNotEqual( object2.Id );
+			Assert.That( object1.Id, Is.Not.EqualTo( object2.Id ) );
 		}
 	}
 
@@ -66,7 +67,7 @@ namespace Fluency.Tests.BuilderTests
 			ClassWithId object1 = new BuilderWithId().build();
 			DifferentClassWithId object2 = new DifferentBuilderWithId().build();
 
-			object1.Id.ShouldEqual( object2.Id );
+			Assert.That( object1.Id, Is.EqualTo( object2.Id ) );
 		}
 	}
 }

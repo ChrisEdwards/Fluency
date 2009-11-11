@@ -36,10 +36,41 @@ namespace Fluency.Utils
 		}
 
 
-		public static void SetProperty( this object prototype, string propertyName, object propertyValue )
+		/// <summary>
+		/// Sets the property by name on a given instance.
+		/// </summary>
+		/// <param name="instance">The instance.</param>
+		/// <param name="propertyName">Name of the property.</param>
+		/// <param name="propertyValue">The property value.</param>
+		public static void SetProperty( this object instance, string propertyName, object propertyValue )
 		{
-			PropertyInfo property = prototype.GetType().GetProperty( propertyName );
-			property.SetValue( prototype, propertyValue, null );
+			PropertyInfo propertyInfo = instance.GetType().GetProperty( propertyName );
+			instance.SetProperty( propertyInfo, propertyValue );
+		}
+
+
+		/// <summary>
+		/// Sets the property on a given instance specified by its PropertyInfo.
+		/// </summary>
+		/// <param name="instance">The instance.</param>
+		/// <param name="propertyInfo">The property info.</param>
+		/// <param name="propertyValue">The property value.</param>
+		public static void SetProperty( this object instance, PropertyInfo propertyInfo, object propertyValue )
+		{
+			if (propertyInfo == null )
+				throw new ArgumentNullException( "propertyInfo", "PropertyInfo cannot be null" );
+
+			// Set the property value...throw meaningful error upon failure.
+			try
+			{
+				propertyInfo.SetValue(instance, propertyValue, null);
+			}
+			catch (Exception e)
+			{
+				throw new FluencyException("Error occurred while setting default value for property [" +
+				                           instance.GetType().FullName + "." + propertyInfo.Name + "] to value [" + propertyValue + "]",
+				                           e);
+			}
 		}
 
 

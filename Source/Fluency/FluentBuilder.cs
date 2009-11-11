@@ -16,15 +16,17 @@ using Rhino.Mocks;
 
 namespace Fluency
 {
+	/// <summary>
+	/// Exposes a fluent interface to build Fluent objects.
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
 	public class FluentBuilder< T > : IFluentBuilder< T > where T : class, new()
 	{
-		static bool _executedBuildOnceAlready;
-		static int _uniqueId = -10;
-		readonly Dictionary< string, IFluentBuilder > _builders = new Dictionary< string, IFluentBuilder >();
-		readonly MockRepository _mocks;
+		private readonly Dictionary< string, IFluentBuilder > _builders = new Dictionary< string, IFluentBuilder >();
+		private readonly MockRepository _mocks;
 		protected T _preBuiltResult;
 		protected T _prototype;
-		readonly IList< IDefaultConvention > _defaultConventions = new List< IDefaultConvention >();
+		private readonly IList< IDefaultConvention > _defaultConventions = new List< IDefaultConvention >();
 		protected IIdGenerator IdGenerator;
 
 
@@ -41,8 +43,13 @@ namespace Fluency
 			// Specify default values for each property based on conventions.
 			foreach ( PropertyInfo propertyInfo in typeof ( T ).GetProperties() )
 			{
+				// If the property is both Read and Write, set its value.
 				if ( propertyInfo.CanWrite && propertyInfo.CanRead )
-					propertyInfo.SetValue( _prototype, GetDefaultValue( propertyInfo ), null );
+				{
+					// Get the default value from the configured conventions and set the value.
+					object defaultValue = GetDefaultValue( propertyInfo );
+					_prototype.SetProperty( propertyInfo, defaultValue );
+				}
 			}
 
 			// Allow the builder to specify its own default values.
@@ -58,9 +65,6 @@ namespace Fluency
 		/// <returns></returns>
 		public T build()
 		{
-//			if ( _executedBuildOnceAlready )
-//				throw new Exception( "Cannot build more than once [" + GetType().FullName + "]." );
-
 			// If this is to return a pre-built result, go ahead in return it.
 			if ( _preBuiltResult != null )
 				return _preBuiltResult;
@@ -75,12 +79,16 @@ namespace Fluency
 				_prototype.SetProperty( propertyName, propertyValue );
 			}
 
-//			_executedBuildOnceAlready = true;
+			// Allow the client builder the opportunity to do some pre-processing.
+			BeforeBuilding();
 
-			var buildResult = (T)( _preBuiltResult ?? _prototype.ShallowClone() );
+			T buildResult = _preBuiltResult ?? _prototype.ShallowClone();
 
 			// Alow the client builder the ability to do some post-processing.
 			AfterBuilding( buildResult );
+
+			// Don't rebuild, but return this built item after first build.
+			_preBuiltResult = buildResult;
 
 			return buildResult;
 		}
@@ -91,8 +99,25 @@ namespace Fluency
 		/// <summary>
 		/// Event that fires after the object is built to allow the builder to do post-processing.
 		/// </summary>
+		protected virtual void BeforeBuilding() {}
+
+
+		/// <summary>
+		/// Event that fires after the object is built to allow the builder to do post-processing.
+		/// </summary>
 		/// <param name="buildResult">The build result.</param>
 		protected virtual void AfterBuilding( T buildResult ) {}
+
+
+		/// <summary>
+		/// Casts this builder to the specified builder type.
+		/// </summary>
+		/// <typeparam name="BUILDERTYPE">The type of the UILDERTYPE.</typeparam>
+		/// <returns></returns>
+		public BUILDERTYPE As< BUILDERTYPE >() where BUILDERTYPE : FluentBuilder< T >
+		{
+			return (BUILDERTYPE)this;
+		}
 
 
 		/// <summary>
@@ -100,7 +125,7 @@ namespace Fluency
 		/// </summary>
 		/// <param name="propertyInfo">The property info.</param>
 		/// <returns></returns>
-		object GetDefaultValue( PropertyInfo propertyInfo )
+		private object GetDefaultValue( PropertyInfo propertyInfo )
 		{
 			object result = null;
 
@@ -120,7 +145,6 @@ namespace Fluency
 		/// <summary>
 		/// Allows the builder to specify default values for fields in the object.
 		/// </summary>
-		/// <param name="defaults">The defaults.</param>
 		protected virtual void SetupDefaultValues() {}
 
 
@@ -130,8 +154,12 @@ namespace Fluency
 		/// <typeparam name="TPropertyType">The type of the property type.</typeparam>
 		/// <param name="propertyExpression">The property expression.</param>
 		/// <param name="propertyValue">The property value.</param>
-		protected void SetProperty< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression, TPropertyType propertyValue )
+		public void SetProperty< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression, TPropertyType propertyValue )
 		{
+			// If we try to change info after prebuilt result is set...throw error since the change wont be reflected in the prebuilt result.
+			if ( _preBuiltResult != null )
+				throw new FluencyException( "Cannot set property once a pre built result has been given. Property change will have no affect." );
+
 			// Get the property to set
 			PropertyInfo property = ReflectionHelper.GetProperty( propertyExpression );
 
@@ -151,13 +179,13 @@ namespace Fluency
 		/// <typeparam name="TPropertyType">The type of the property type.</typeparam>
 		/// <param name="propertyExpression">The property expression.</param>
 		/// <param name="builder">The builder.</param>
-		protected void SetProperty< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression, IFluentBuilder builder ) where TPropertyType : class, new()
+		public void SetProperty< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression, IFluentBuilder builder ) where TPropertyType : class, new()
 		{
 			// Due to lack of polymorphism in generic parameters.
 			if ( !( builder is FluentBuilder< TPropertyType > ) )
 			{
 				throw new ArgumentException(
-						"Invalid builder type. Builder type must be a builder of Property Type. \n  BuilderType='{0}'\n  PropertyType='{1}'".format_using( builder.GetType().FullName,
+						"Invalid builder type. Builder type must be a builder of Property Type. \n  BuilderType='{0}'\n  PropertyType='{1}'".format_using( builder.GetType().FullName, 
 						                                                                                                                                   typeof ( TPropertyType ).FullName ) );
 			}
 
@@ -188,7 +216,7 @@ namespace Fluency
 			if ( !( builder is IFluentBuilder< TPropertyType > ) )
 			{
 				throw new ArgumentException(
-						"Invalid builder type. Builder type must be a FluentListBuilder of Property Type. \n  BuilderType='{0}'\n  PropertyType='{1}'".format_using( builder.GetType().FullName,
+						"Invalid builder type. Builder type must be a FluentListBuilder of Property Type. \n  BuilderType='{0}'\n  PropertyType='{1}'".format_using( builder.GetType().FullName, 
 						                                                                                                                                             typeof ( TPropertyType ).FullName ) );
 			}
 
@@ -264,7 +292,7 @@ namespace Fluency
 		/// Builds an object of type T based on the specs specified in the builder.
 		/// </summary>
 		/// <returns></returns>
-		[Obsolete("Use AfterBuild() method to perform post-processinig.")]
+		[ Obsolete( "Use AfterBuild() method to perform post-processinig." ) ]
 		protected virtual T BuildFrom( T values )
 		{
 			return new T();
@@ -296,7 +324,12 @@ namespace Fluency
 		/// <summary>
 		/// Overrides the build result with the specified object. If this is called, the builder will not perform the build, but will rather, return the prebuilt result.
 		/// </summary>
-		/// <param name="buildResult">The build result.</param>
+		/// <param name="buildResult">
+		/// The build result.
+		/// </param>
+		/// <returns>
+		/// Builder that will return the specified result.
+		/// </returns>
 		public FluentBuilder< T > AliasFor( T buildResult )
 		{
 			return UsePreBuiltResult( buildResult );
