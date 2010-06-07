@@ -11,7 +11,7 @@ namespace SampleApplication.Tests.FluentBuilders
 		{
 			SetProperty( x=>x.Id, GenerateNewId() );
 			SetProperty(x=>x.Name, ARandom.Title( 100 )  );
-			SetProperty( x=>x.Description, ARandom.Text( 300 ) );
+			SetProperty( x=>x.Description, ARandom.Text( 200 ) );
 		}
 
 

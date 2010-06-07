@@ -39,6 +39,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\ThirdParty\FluentNHibernate\FluentNHibernate.dll</HintPath>
     </Reference>
+    <Reference Include="HibernatingRhinos.Profiler.Appender, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0774796e73ebf640, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\ThirdParty\NHProf\HibernatingRhinos.Profiler.Appender.dll</HintPath>
+    </Reference>
     <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\thirdparty\log4net\log4net.dll</HintPath>
@@ -51,6 +55,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\ThirdParty\FluentNHibernate\NHibernate.ByteCode.Castle.dll</HintPath>
     </Reference>
+    <Reference Include="NHibernate.LambdaExtensions, Version=1.0.8.0, Culture=neutral, PublicKeyToken=706dcfc1e2725d62, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Gen2\SourceCode\ExternalLibraries\NHLambdaExtensions\bin\NHibernate.LambdaExtensions.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -59,6 +67,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\thirdparty\System.Data.SqlLite\bin\System.Data.SQLite.DLL</HintPath>
     </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -90,6 +100,13 @@
     <Compile Include="NHibernate\Extensions\SessionExtensions.cs" />
     <Compile Include="NHibernate\NHibernateHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="NHibernate\Mappings\Customer.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="NHibernate\Mappings\nhibernate-configuration.xsd" />
+    <None Include="NHibernate\Mappings\nhibernate-mapping.xsd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

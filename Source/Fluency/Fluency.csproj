@@ -36,6 +36,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\ThirdParty\FluentNHibernate\FluentNHibernate.dll</HintPath>
     </Reference>
+    <Reference Include="JetBrains.Annotations, Version=5.0.1577.10, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\ThirdParty\JetBrains.Annotations\JetBrains.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="Machine.Specifications, Version=0.3.0.0, Culture=neutral, PublicKeyToken=5c474de7a495cff1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\ThirdParty\Machine.Specifications\Machine.Specifications.dll</HintPath>
+    </Reference>
     <Reference Include="NHibernate, Version=2.1.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\ThirdParty\FluentNHibernate\NHibernate.dll</HintPath>
@@ -71,8 +79,11 @@
     <Compile Include="Conventions\LastNameConvention.cs" />
     <Compile Include="Conventions\FirstNameConvention.cs" />
     <Compile Include="Conventions\IDefaultConvention.cs" />
+    <Compile Include="DynamicFluentBuilder.cs" />
     <Compile Include="Fluency.cs" />
+    <Compile Include="FluencyConfiguration.cs" />
     <Compile Include="FluencyException.cs" />
+    <Compile Include="InitializationExpression.cs" />
     <Compile Include="Utils\AssertionExtensions.cs" />
     <Compile Include="IdGenerators\DecrementingIdGenerator.cs" />
     <Compile Include="IdGenerators\IncrementingIdGenerator.cs" />
@@ -90,6 +101,7 @@
     <Compile Include="DataGeneration\SqlServerDefaultValuesAndConstraints.cs" />
     <Compile Include="DataGeneration\ValueConstraints.cs" />
     <Compile Include="DataGeneration\WaffleEngine.cs" />
+    <Compile Include="Utils\PropertyExpressionExtensions.cs" />
     <Compile Include="Utils\ReflectionExtensions.cs" />
     <Compile Include="FluentBuilder.cs" />
     <Compile Include="IdGenerators\StaticValueIdGenerator.cs" />

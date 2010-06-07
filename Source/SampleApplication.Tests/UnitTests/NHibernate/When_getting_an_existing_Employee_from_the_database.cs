@@ -19,7 +19,7 @@ namespace SampleApplication.Tests.Tests.NHibernate
 			_db.Add( _expectedCustomer )
 					.Persist();
 
-			_actualCustomer = _session.Get< Customer >( _expectedCustomer.Id );
+			_actualCustomer = _session.Load< Customer >( _expectedCustomer.Id );
 		}
 
 

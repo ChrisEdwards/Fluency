@@ -30,7 +30,7 @@ namespace Fluency.Utils
 					.ToArray();
 		}
 
-		public static PropertyInfo PropertyInfoFor<T, TPropertyType>(this T source, Expression<Func<T, TPropertyType>> propertyExpression)
+		public static PropertyInfo PropertyInfoFor<T, TPropertyType>(this T source, Expression< Func< T, TPropertyType > > propertyExpression)
 		{
 			return ReflectionHelper.GetProperty( propertyExpression );
 		}
@@ -101,6 +101,13 @@ namespace Fluency.Utils
 
 			// Return the new object.
 			return newObject;
+		}
+
+
+		public static void SetProperty< TPropertyType, T >( this T prototype, Expression< Func< T, TPropertyType > > propertyExpression, TPropertyType propertyValue ) where T : class, new()
+		{
+			Accessor accessor = ReflectionHelper.GetAccessor( propertyExpression );
+			accessor.SetValue( prototype, propertyValue );
 		}
 	}
 }

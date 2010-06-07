@@ -22,14 +22,14 @@ namespace SampleApplication.Tests
                         VALUES
                                     ({2});";
 
-//			if (hasIdentityColumn)
-//				sqlTemplate =
-//						@"
-//                    SET IDENTITY_INSERT {0} ON;
-//
-//                    " + sqlTemplate + @"
-//
-//                    SET IDENTITY_INSERT {0} OFF;";
+			if (hasIdentityColumn)
+				sqlTemplate =
+						@"
+                    SET IDENTITY_INSERT [{0}] ON;
+
+                    " + sqlTemplate + @"
+
+                    SET IDENTITY_INSERT [{0}] OFF;";
 
 			return GenerateInsertSql_FromTemplate( sqlTemplate, tableName, fieldNames );
 		}

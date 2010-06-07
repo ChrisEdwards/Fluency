@@ -6,6 +6,7 @@ using NHibernate;
 using NHibernate.Cfg;
 using NHibernate.Tool.hbm2ddl;
 using sampleapplication;
+using SampleApplication.Domain;
 
 
 namespace SampleApplication.NHibernate
@@ -28,12 +29,19 @@ namespace SampleApplication.NHibernate
 					// Configure NHibernate Session Factory using FluentNHibernate.
 					_sessionFactory =
 							Fluently.Configure()
-									.Database( SQLiteConfiguration.Standard.UsingFile( DbFile ) )
-									.Mappings( m => m.AutoMappings.Add( 
-									                		AutoMap.AssemblyOf< ISampleApplicationAssembly >()
-									                				.Where( t => t.Namespace == "SampleApplication.Domain" ) ) )
-									.ExposeConfiguration( BuildSchema )
+									//.Database( SQLiteConfiguration.Standard.UsingFile( DbFile ) )
+									.Database( MsSqlConfiguration.MsSql2005.ConnectionString( c=>c.Is( @"Data Source=localhost\BANCVUE;Initial Catalog=SampleApplication;Integrated Security=SSPI;")) )
+									.Mappings( m => {
+									                	m.AutoMappings.Add(
+									                	                  		AutoMap.AssemblyOf< ISampleApplicationAssembly >()
+									                	                  				.Where( t => t.Namespace == "SampleApplication.Domain" && t.Name != "Customer") );
+									                	m.HbmMappings.AddFromAssemblyOf< Customer >();
+									})
+									//.ExposeConfiguration( BuildSchema )
 									.BuildSessionFactory();
+
+					// Initialize NHProf.
+					HibernatingRhinos.Profiler.Appender.NHibernate.NHibernateProfiler.Initialize();
 				}
 
 				return _sessionFactory;

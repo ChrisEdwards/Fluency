@@ -13,16 +13,5 @@ namespace SampleApplication.Tests.FluentBuilders
 			SetProperty( x=>x.FirstName, ARandom.FirstName() );
 			SetProperty( x=>x.LastName, ARandom.LastName() );
 		}
-
-
-		protected override Customer BuildFrom( Customer values )
-		{
-			return new Customer
-			       	{
-			       			Id = values.Id,
-			       			FirstName = values.FirstName,
-			       			LastName = values.LastName
-			       	};
-		}
 	}
 }

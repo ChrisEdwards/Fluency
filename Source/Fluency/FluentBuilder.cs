@@ -7,8 +7,8 @@ using System.Reflection;
 using Fluency.Conventions;
 using Fluency.IdGenerators;
 using Fluency.Utils;
-using FluentNHibernate.Utils;
 using FluentObjectBuilder;
+using JetBrains.Annotations;
 using Rhino.Mocks;
 
 #endregion
@@ -36,10 +36,17 @@ namespace Fluency
 		public FluentBuilder()
 		{
 			IdGenerator = Fluency.Configuration.GetIdGenerator< T >();
+			_defaultConventions = Fluency.Configuration.DefaultValueConventions;
 
 			_mocks = new MockRepository();
 			_prototype = _mocks.Stub< T >();
 
+			Initialize();
+		}
+
+
+		private void Initialize()
+		{
 			// Specify default values for each property based on conventions.
 			foreach ( PropertyInfo propertyInfo in typeof ( T ).GetProperties() )
 			{
@@ -70,19 +77,12 @@ namespace Fluency
 				return _preBuiltResult;
 
 			// Populate the prototype with the result of executing each builder.
-			foreach ( KeyValuePair< string, IFluentBuilder > pair in _builders )
-			{
-				string propertyName = pair.Key;
-				IFluentBuilder builder = pair.Value;
-
-				object propertyValue = builder.InvokeMethod( "build" );
-				_prototype.SetProperty( propertyName, propertyValue );
-			}
+			PopulatePrototypeWithBuiltValues( _builders, _prototype );
 
 			// Allow the client builder the opportunity to do some pre-processing.
 			BeforeBuilding();
 
-			T buildResult = _preBuiltResult ?? _prototype.ShallowClone();
+			T buildResult = _prototype.ShallowClone();
 
 			// Alow the client builder the ability to do some post-processing.
 			AfterBuilding( buildResult );
@@ -93,7 +93,33 @@ namespace Fluency
 			return buildResult;
 		}
 
+
+		/// <summary>
+		/// Populates the prototype with built values.
+		/// </summary>
+		/// <param name="fluentBuilders">The fluent builders.</param>
+		/// <param name="prototype">The prototype.</param>
+		private static void PopulatePrototypeWithBuiltValues( Dictionary< string, IFluentBuilder > fluentBuilders, T prototype )
+		{
+			foreach ( KeyValuePair< string, IFluentBuilder > pair in fluentBuilders )
+			{
+				string propertyName = pair.Key;
+				IFluentBuilder builder = pair.Value;
+
+				object propertyValue = builder.InvokeMethod( "build" );
+				prototype.SetProperty( propertyName, propertyValue );
+			}
+		}
+
 		#endregion
+
+
+		#region Events
+
+		/// <summary>
+		/// Allows the builder to specify default values for fields in the object.
+		/// </summary>
+		protected virtual void SetupDefaultValues() {}
 
 
 		/// <summary>
@@ -110,43 +136,20 @@ namespace Fluency
 
 
 		/// <summary>
-		/// Casts this builder to the specified builder type.
+		/// Builds an object of type T based on the specs specified in the builder.
 		/// </summary>
-		/// <typeparam name="BUILDERTYPE">The type of the UILDERTYPE.</typeparam>
 		/// <returns></returns>
-		public BUILDERTYPE As< BUILDERTYPE >() where BUILDERTYPE : FluentBuilder< T >
+		[ Obsolete( "Use AfterBuild() method to perform post-processinig." ) ]
+		[ UsedImplicitly ]
+		protected virtual T BuildFrom( T values )
 		{
-			return (BUILDERTYPE)this;
+			return new T();
 		}
 
-
-		/// <summary>
-		/// Gets the default value for a specified property.
-		/// </summary>
-		/// <param name="propertyInfo">The property info.</param>
-		/// <returns></returns>
-		private object GetDefaultValue( PropertyInfo propertyInfo )
-		{
-			object result = null;
-
-			// Check each of the conventions and apply them if necessary.
-			foreach ( IDefaultConvention defaultConvention in _defaultConventions )
-			{
-				// if more than one convention matches...last one wins.
-				if ( defaultConvention.AppliesTo( propertyInfo ) )
-					result = defaultConvention.DefaultValue( propertyInfo );
-			}
-
-			// Returns null if no convention matched.
-			return result;
-		}
+		#endregion
 
 
-		/// <summary>
-		/// Allows the builder to specify default values for fields in the object.
-		/// </summary>
-		protected virtual void SetupDefaultValues() {}
-
+		#region Property Value Setters
 
 		/// <summary>
 		/// Sets the value to be built for the specified property.
@@ -154,22 +157,19 @@ namespace Fluency
 		/// <typeparam name="TPropertyType">The type of the property type.</typeparam>
 		/// <param name="propertyExpression">The property expression.</param>
 		/// <param name="propertyValue">The property value.</param>
-		public void SetProperty< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression, TPropertyType propertyValue )
+		protected void SetProperty< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression, TPropertyType propertyValue )
 		{
 			// If we try to change info after prebuilt result is set...throw error since the change wont be reflected in the prebuilt result.
 			if ( _preBuiltResult != null )
 				throw new FluencyException( "Cannot set property once a pre built result has been given. Property change will have no affect." );
 
 			// Get the property to set
-			PropertyInfo property = ReflectionHelper.GetProperty( propertyExpression );
+			PropertyInfo property = propertyExpression.GetPropertyInfo();
 
-			// If a builder already exists for this type, remove it.
-			if ( _builders.ContainsKey( property.Name ) )
-				_builders.Remove( property.Name );
+			RemoveBuilderFor( property );
 
 			// Set the property on the prototype object.
-			Accessor accessor = ReflectionHelper.GetAccessor( propertyExpression );
-			accessor.SetValue( _prototype, propertyValue );
+			_prototype.SetProperty( propertyExpression, propertyValue );
 		}
 
 
@@ -179,25 +179,17 @@ namespace Fluency
 		/// <typeparam name="TPropertyType">The type of the property type.</typeparam>
 		/// <param name="propertyExpression">The property expression.</param>
 		/// <param name="builder">The builder.</param>
-		public void SetProperty< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression, IFluentBuilder builder ) where TPropertyType : class, new()
+		protected void SetProperty< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression, IFluentBuilder builder ) where TPropertyType : class, new()
 		{
 			// Due to lack of polymorphism in generic parameters.
 			if ( !( builder is FluentBuilder< TPropertyType > ) )
 			{
 				throw new ArgumentException(
-						"Invalid builder type. Builder type must be a builder of Property Type. \n  BuilderType='{0}'\n  PropertyType='{1}'".format_using( builder.GetType().FullName, 
+						"Invalid builder type. Builder type must be a builder of Property Type. \n  BuilderType='{0}'\n  PropertyType='{1}'".format_using( builder.GetType().FullName,
 						                                                                                                                                   typeof ( TPropertyType ).FullName ) );
 			}
 
-			// Get the property to set
-			PropertyInfo property = ReflectionHelper.GetProperty( propertyExpression );
-
-			// Since we are adding a new builder for this property, remove the existing one if it exists.
-			if ( _builders.ContainsKey( property.Name ) )
-				_builders.Remove( property.Name );
-
-			// Add the new builder.
-			_builders.Add( property.Name, builder );
+			AddBuilderFor( propertyExpression, builder );
 		}
 
 
@@ -216,16 +208,11 @@ namespace Fluency
 			if ( !( builder is IFluentBuilder< TPropertyType > ) )
 			{
 				throw new ArgumentException(
-						"Invalid builder type. Builder type must be a FluentListBuilder of Property Type. \n  BuilderType='{0}'\n  PropertyType='{1}'".format_using( builder.GetType().FullName, 
+						"Invalid builder type. Builder type must be a FluentListBuilder of Property Type. \n  BuilderType='{0}'\n  PropertyType='{1}'".format_using( builder.GetType().FullName,
 						                                                                                                                                             typeof ( TPropertyType ).FullName ) );
 			}
 
-			PropertyInfo property = ReflectionHelper.GetProperty( propertyExpression );
-
-			if ( _builders.ContainsKey( property.Name ) )
-				_builders.Remove( property.Name );
-
-			_builders.Add( property.Name, builder );
+			AddBuilderFor( propertyExpression, builder );
 		}
 
 
@@ -253,6 +240,50 @@ namespace Fluency
 			ListBuilderFor( propertyExpression ).Add( value );
 		}
 
+		#endregion
+
+
+		#region Builder Accessors
+
+		/// <summary>
+		/// Removes the builder for the specified property if it exists.
+		/// </summary>
+		/// <param name="property">The property.</param>
+		private void RemoveBuilderFor( PropertyInfo property )
+		{
+			// If a builder already exists for this type, remove it.
+			if ( _builders.ContainsKey( property.Name ) )
+				_builders.Remove( property.Name );
+		}
+
+
+		/// <summary>
+		/// Adds the specified builder for the specified property...removing any builder that may have already been assigend.
+		/// </summary>
+		/// <typeparam name="TPropertyType">The type of the property type.</typeparam>
+		/// <param name="propertyExpression">The property expression.</param>
+		/// <param name="builder">The builder.</param>
+		private void AddBuilderFor< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression, IFluentBuilder builder )
+		{
+			PropertyInfo property = propertyExpression.GetPropertyInfo();
+			AddBuilderFor( property, builder );
+		}
+
+
+		/// <summary>
+		/// Adds the specified builder for the specified property...removing any builder that may have already been assigend.
+		/// </summary>
+		/// <param name="property">The property.</param>
+		/// <param name="builder">The builder.</param>
+		private void AddBuilderFor( PropertyInfo property, IFluentBuilder builder )
+		{
+			// Since we are adding a new builder for this property, remove the existing one if it exists.
+			RemoveBuilderFor( property );
+
+			// Add the new builder.
+			_builders.Add( property.Name, builder );
+		}
+
 
 		/// <summary>
 		/// Gets the list builder for the specified property.
@@ -262,7 +293,7 @@ namespace Fluency
 		/// <returns></returns>
 		public FluentListBuilder< TPropertyType > ListBuilderFor< TPropertyType >( Expression< Func< T, IList< TPropertyType > > > propertyExpression ) where TPropertyType : class, new()
 		{
-			PropertyInfo property = ReflectionHelper.GetProperty( propertyExpression );
+			PropertyInfo property = propertyExpression.GetPropertyInfo();
 
 			if ( !_builders.ContainsKey( property.Name ) )
 				throw new ArgumentException( "List Builder does not exist for property [" + property.Name + "]" );
@@ -279,7 +310,7 @@ namespace Fluency
 		/// <returns></returns>
 		public FluentBuilder< TPropertyType > BuilderFor< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression ) where TPropertyType : class, new()
 		{
-			PropertyInfo property = ReflectionHelper.GetProperty( propertyExpression );
+			PropertyInfo property = propertyExpression.GetPropertyInfo();
 
 			if ( !_builders.ContainsKey( property.Name ) )
 				throw new ArgumentException( "Builder does not exist for property [" + property.Name + "]" );
@@ -287,15 +318,17 @@ namespace Fluency
 			return (FluentBuilder< TPropertyType >)_builders[property.Name];
 		}
 
+		#endregion
+
 
 		/// <summary>
-		/// Builds an object of type T based on the specs specified in the builder.
+		/// Casts this builder to the specified builder type.
 		/// </summary>
+		/// <typeparam name="BUILDERTYPE">The type of the UILDERTYPE.</typeparam>
 		/// <returns></returns>
-		[ Obsolete( "Use AfterBuild() method to perform post-processinig." ) ]
-		protected virtual T BuildFrom( T values )
+		public BUILDERTYPE As< BUILDERTYPE >() where BUILDERTYPE : FluentBuilder< T >
 		{
-			return new T();
+			return (BUILDERTYPE)this;
 		}
 
 
@@ -321,6 +354,8 @@ namespace Fluency
 		}
 
 
+		#region SetPrebuiltResult
+
 		/// <summary>
 		/// Overrides the build result with the specified object. If this is called, the builder will not perform the build, but will rather, return the prebuilt result.
 		/// </summary>
@@ -345,5 +380,33 @@ namespace Fluency
 			_preBuiltResult = buildResult;
 			return this;
 		}
+
+		#endregion
+
+
+		#region Conventions
+
+		/// <summary>
+		/// Gets the default value for a specified property.
+		/// </summary>
+		/// <param name="propertyInfo">The property info.</param>
+		/// <returns></returns>
+		private object GetDefaultValue( PropertyInfo propertyInfo )
+		{
+			object result = null;
+
+			// Check each of the conventions and apply them if necessary.
+			foreach ( IDefaultConvention defaultConvention in _defaultConventions )
+			{
+				// if more than one convention matches...last one wins.
+				if ( defaultConvention.AppliesTo( propertyInfo ) )
+					result = defaultConvention.DefaultValue( propertyInfo );
+			}
+
+			// Returns null if no convention matched.
+			return result;
+		}
+
+		#endregion
 	}
 }

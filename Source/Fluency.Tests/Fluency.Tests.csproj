@@ -35,6 +35,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\ThirdParty\DevelopWithPassion.bdd\developwithpassion.bdd.dll</HintPath>
     </Reference>
+    <Reference Include="Machine.Specifications, Version=0.3.0.0, Culture=neutral, PublicKeyToken=5c474de7a495cff1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\ThirdParty\Machine.Specifications\Machine.Specifications.dll</HintPath>
+    </Reference>
     <Reference Include="MbUnit.Framework, Version=2.4.2.355, Culture=neutral, PublicKeyToken=5e72ecd30bc408d5">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\ThirdParty\DevelopWithPassion.bdd\MbUnit.Framework.dll</HintPath>
@@ -42,6 +46,10 @@
     <Reference Include="nunit.framework, Version=2.5.1.9189, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\ThirdParty\NUnit\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Should, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\ThirdParty\Should\Should.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -57,6 +65,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BuilderTests\DynamicFluentBuilderSpecs.cs" />
     <Compile Include="BuilderTests\When_a_builder_builds_its_own_result.cs" />
     <Compile Include="BuilderTests\When_building_two_consecutive_objects.cs" />
     <Compile Include="BuilderTests\When_setting_a_reference_property.cs" />

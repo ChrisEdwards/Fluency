@@ -27,6 +27,7 @@ namespace SampleApplication.Tests.Tests.NHibernate
 		[ Test ]
 		public void Should_retrieve_quantity()
 		{
+			var x = _actualLineItem.Order.OrderDate;
 			_actualLineItem.Quantity.should_be_equal_to( _expectedLineItem.Quantity );
 		}
 

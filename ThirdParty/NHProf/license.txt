@@ -1,0 +1,96 @@
+End User License Agreement
+
+YOU SHOULD CAREFULLY READ THE FOLLOWING END USER LICENSE AGREEMENT BEFORE INSTALLING THIS SOFTWARE PROGRAM. 
+BY INSTALLING, COPYING, OR OTHERWISE USING THE SOFTWARE PROGRAM, YOU AGREE TO BE BOUND BY THE TERMS OF THIS 
+AGREEMENT. IF YOU DO NOT AGREE TO THE TERMS OF THIS AGREEMENT, PLEASE CONTACT HIBERNATING RHINOS LTD AT 
+HTTP://WWW.HIBERNATINGRHINOS.COM TO ARRANGE A FULL REFUND.
+
+This software program, and any files that are delivered to you by Hibernating Rhinos Ltd (via on-line transmission 
+or otherwise) to "patch," update, or otherwise modify the software program, as well as any printed materials and any 
+on-line or electronic documentation (the "Manual"), and any and all copies and derivative works of such software program 
+and materials (collectively the "Software") are the copyrighted work of Hibernating Rhinos Ltd, or its suppliers and 
+licensors (collectively referred to herein as "Licensor"). All use of the Software is governed by the terms of this
+End User License Agreement ("License Agreement" or "Agreement"). The Software is distributed solely for use by authorized 
+end users according to the terms of the License Agreement. Any use, reproduction or redistribution of the Software not 
+expressly authorized by the terms of the License Agreement is expressly prohibited.
+
+1. Ownership.
+
+     A. All title, ownership rights and intellectual property rights in and to the Software and all copies thereof (including, 
+     but not limited to, any titles, computer code, artwork, any related documentation, executable code, shared libraries,
+     proprietery computer protocols  and "applets" incorporated into the Software) are owned or expressly licensed by Licensor. 
+     The Software is protected by the copyright laws of Israel, international copyright treaties and conventions, and other laws. 
+     All rights are reserved. The Software may contain certain licensed materials, and the licensors of those materials may enforce 
+     their rights in the event of any violation of this License Agreement.
+
+     B. Each license purchased for this Software allows the Software to be used on the behalf of one user only. You may not use the 
+     Software on the behalf of multiple users without obtaining, in advance, a new license for the new user and/or express written 
+     permission from Hibernating Rhinos Ltd. You may only permanently transfer ownership of the Software and all parts thereof, and 
+     all of your rights and obligations under the License Agreement, to another use, once you have notified Hibernating Rhinos Ltd. 
+     In this case Hibernating Rhinos Ltd will issue a license for the new user once it has been established that the old user is no 
+     longer making use of the software.
+     Note that is it expressly permitted to make use of the software on multiple macines on the behalf of a single user. User, in this
+     case, is the physical person making use of the software, not the user account associated with executing the program.
+
+2. Responsibilities of End User.
+
+Subject to the Grant of License hereinabove, you may NOT, in whole or in part, copy, photocopy, reproduce, translate, reverse engineer, 
+derive source code, modify, disassemble, decompile, or create derivative works based on the Software, or remove any proprietary notices 
+or labels on the Software, with the exception of the non-compiled source files provided with the Software, including but not limited to 
+template files and script files, which may be modified for use on the user specified in part 1 only. Failure to comply with the restrictions 
+and limitations contained in this Section 2 shall result in immediate, automatic termination of the license granted hereunder and may 
+subject you to civil and/or criminal liability. Notwithstanding the foregoing, you may make one (1) copy of the Software and the Manuals 
+for archival purposes only.
+
+3. Termination.
+
+This License Agreement is effective until terminated. You may terminate the License Agreement at any time by (i) removing the Software from your 
+hard drive; and (ii) notifying Licensor of your intention to terminate this License Agreement. Licensor may, at its discretion, terminate this 
+License agreement in the event that you fail to comply with the terms and conditions contained herein. In such event, you must immediately 
+remove the Software from your hard drive. Upon termination of this Agreement for any reason, all licenses granted herein shall immediately terminate.
+
+4. Limitation of Liability.
+
+NEITHER LICENSOR NOR ITS PARENT, SUBSIDIARIES OR AFFILIATES SHALL BE LIABLE IN ANY WAY FOR LOSS OR DAMAGE OF ANY KIND RESULTING FROM THE USE OF THE 
+SOFTWARE, INCLUDING, BUT NOT LIMITED TO, LOSS OF DATA, LOSS OF GOODWILL, IACCRUATE DATA, WORK STOPPAGE, COMPUTER FAILURE OR MALFUNCTION, OR ANY AND 
+ALL OTHER DAMAGES OR LOSSES. FURTHER, LICENSOR SHALL NOT BE LIABLE IN ANY WAY FOR THE LOSS OR DAMAGE TO PRODUCT DATA, LAYOUTS, TEMPLATES, ARTWORK, 
+PRICING AND OTHER INFORMATION STORED BY THE SOFTWARE. LICENSOR SHALL NOT BE RESPONSIBLE FOR ANY INTERRUPTIONS OF SERVICE, INCLUDING, BUT NOT LIMITED TO, 
+ISP DISRUPTIONS, SOFTWARE OR HARDWARE FAILURES OR ANY OTHER EVENT WHICH MAY RESULT IN A LOSS OF DATA OR DISRUPTION OF SERVICE. IN NO EVENT WILL LICENSOR 
+BE LIABLE TO YOU FOR ANY INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY OR CONSEQUENTIAL DAMAGES. Some countries and regions do not allow the exclusion or 
+limitation of incidental or consequential damages, so the above limitations may not apply to you.
+
+5. Equitable Remedies.
+
+You hereby agree that Licensor would be irreparably damaged if the terms of this License Agreement were not specifically enforced, and therefore you agree
+that Licensor shall be entitled, without bond, other security, or proof of damages, to appropriate equitable remedies with respect to breaches of this 
+License Agreement, in addition to such other remedies as Licensor may otherwise have available to it under applicable laws. In the event any litigation 
+is brought by either party in connection with this License Agreement, the prevailing party in such litigation shall be entitled to recover from the other 
+party all the costs, attorneys' fees and other expenses incurred by such prevailing party in the litigation.
+
+6. Changes to the Agreement.
+
+Hibernating Rhinos Ltd reserves the right, at its sole discretion, to change, modify, add to, supplement or delete any of the terms and conditions of this 
+License Agreement when Hibernating Rhinos Ltd upgrades the Software, effective upon prior notice as follows: Hibernating Rhinos Ltd will post notification 
+of any such changes to this License Agreement on the HibernateRhinos.com website and will post the revised version of this License Agreement in this location, and 
+may provide such other notice as Hibernating Rhinos Ltd may elect in its sole discretion, which may include by email, postal mail or pop-up screen.
+
+If any future changes to this License Agreement are unacceptable to you or cause you to no longer be in compliance with this License Agreement, you may 
+terminate this License Agreement in accordance with Section 3 herein. Your installation and use of any updated or modifications to the Software or your 
+continued use of the Software following notice of changes to this Agreement as described above will mean you accept any and all such changes. Hibernating Rhinos
+Ltd may change, modify, suspend, or discontinue any aspect of the Software at any time. Hibernating Rhinos Ltd may also impose limits on certain features or 
+restrict your access to parts or all of the Software without notice or liability. You have no interest, monetary or otherwise, in any feature or content 
+contained in the Software.
+
+7. Miscellaneous.
+
+This License Agreement shall be deemed to have been made and executed in Israel without regard to conflicts of law provisions, and any dispute arising hereunder
+shall be resolved in accordance with the law of Israel. You agree that any claim asserted in any legal proceeding by one of the parties against the other shall 
+be commenced and maintained in Israel, having subject matter jurisdiction with respect to the dispute between the parties. In the event that any provision of this 
+License Agreement shall be held by a court or other tribunal of competent jurisdiction to be unenforceable, such provision will be enforced to the maximum extent 
+permissible, and the remaining portions of this License Agreement shall remain in full force and effect. This License Agreement constitutes and contains the entire
+agreement between the parties with respect to the subject matter hereof and supersedes any prior oral or written agreements.
+
+I hereby acknowledge that I have read and understand the foregoing License Agreement and agree that the action of installing the Software is an acknowledgment of my 
+agreement to be bound by the terms and conditions of the License Agreement contained herein.
+
+© 2008-2009 Hibernating Rhinos Ltd. All rights reserved. 

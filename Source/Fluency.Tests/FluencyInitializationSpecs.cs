@@ -89,5 +89,34 @@ namespace Fluency.Tests
 				item.Id.should_be_equal_to( 0 );
 			}
 		}
-	}
+
+		[Concern("FluencyInitialization")]
+		public class when_no_default_value_conventions_are_specified : FluencySpecsContext
+		{
+			protected override void Context()
+			{
+			}
+
+			[Observation]
+			public void default_conventions_should_be_empty()
+			{
+				Fluency.Configuration.DefaultValueConventions.Count.should_be_equal_to( 0 );
+			}
+		}
+
+		[Concern("FluencyInitialization")]
+		public class when_default_value_conventions_are_specified : FluencySpecsContext
+		{
+			protected override void Context()
+			{
+				Fluency.Initialize( x=>x.UseDefaultValueConventions() );
+			}
+
+			[Observation]
+			public void default_conventions_should_be_used()
+			{
+				Fluency.Configuration.DefaultValueConventions.Count.should_be_equal_to( 5 );
+			}
+		}
+  	}
 }
