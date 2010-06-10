@@ -22,11 +22,11 @@ namespace Fluency
 	/// <typeparam name="T"></typeparam>
 	public class FluentBuilder< T > : IFluentBuilder< T > where T : class, new()
 	{
-		private readonly Dictionary< string, IFluentBuilder > _builders = new Dictionary< string, IFluentBuilder >();
-		private readonly MockRepository _mocks;
+		readonly Dictionary< string, IFluentBuilder > _builders = new Dictionary< string, IFluentBuilder >();
+		readonly MockRepository _mocks;
 		protected T _preBuiltResult;
 		protected T _prototype;
-		private readonly IList< IDefaultConvention > _defaultConventions = new List< IDefaultConvention >();
+		readonly IList< IDefaultConvention > _defaultConventions = new List< IDefaultConvention >();
 		protected IIdGenerator IdGenerator;
 
 
@@ -45,7 +45,7 @@ namespace Fluency
 		}
 
 
-		private void Initialize()
+		void Initialize()
 		{
 			// Specify default values for each property based on conventions.
 			foreach ( PropertyInfo propertyInfo in typeof ( T ).GetProperties() )
@@ -99,7 +99,7 @@ namespace Fluency
 		/// </summary>
 		/// <param name="fluentBuilders">The fluent builders.</param>
 		/// <param name="prototype">The prototype.</param>
-		private static void PopulatePrototypeWithBuiltValues( Dictionary< string, IFluentBuilder > fluentBuilders, T prototype )
+		static void PopulatePrototypeWithBuiltValues( Dictionary< string, IFluentBuilder > fluentBuilders, T prototype )
 		{
 			foreach ( KeyValuePair< string, IFluentBuilder > pair in fluentBuilders )
 			{
@@ -249,7 +249,7 @@ namespace Fluency
 		/// Removes the builder for the specified property if it exists.
 		/// </summary>
 		/// <param name="property">The property.</param>
-		private void RemoveBuilderFor( PropertyInfo property )
+		void RemoveBuilderFor( PropertyInfo property )
 		{
 			// If a builder already exists for this type, remove it.
 			if ( _builders.ContainsKey( property.Name ) )
@@ -263,7 +263,7 @@ namespace Fluency
 		/// <typeparam name="TPropertyType">The type of the property type.</typeparam>
 		/// <param name="propertyExpression">The property expression.</param>
 		/// <param name="builder">The builder.</param>
-		private void AddBuilderFor< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression, IFluentBuilder builder )
+		void AddBuilderFor< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression, IFluentBuilder builder )
 		{
 			PropertyInfo property = propertyExpression.GetPropertyInfo();
 			AddBuilderFor( property, builder );
@@ -275,7 +275,7 @@ namespace Fluency
 		/// </summary>
 		/// <param name="property">The property.</param>
 		/// <param name="builder">The builder.</param>
-		private void AddBuilderFor( PropertyInfo property, IFluentBuilder builder )
+		void AddBuilderFor( PropertyInfo property, IFluentBuilder builder )
 		{
 			// Since we are adding a new builder for this property, remove the existing one if it exists.
 			RemoveBuilderFor( property );
@@ -391,7 +391,7 @@ namespace Fluency
 		/// </summary>
 		/// <param name="propertyInfo">The property info.</param>
 		/// <returns></returns>
-		private object GetDefaultValue( PropertyInfo propertyInfo )
+		object GetDefaultValue( PropertyInfo propertyInfo )
 		{
 			object result = null;
 

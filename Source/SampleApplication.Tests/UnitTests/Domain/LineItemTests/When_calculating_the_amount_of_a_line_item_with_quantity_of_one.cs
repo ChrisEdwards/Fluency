@@ -1,8 +1,8 @@
 using Fluency.Utils;
-using FluentObjectBuilder;
 using NUnit.Framework;
 using SampleApplication.Domain;
 using SampleApplication.Tests.FluentBuilders;
+using Should;
 
 
 namespace SampleApplication.Tests.UnitTests.Domain.LineItemTests
@@ -16,7 +16,7 @@ namespace SampleApplication.Tests.UnitTests.Domain.LineItemTests
 			LineItem lineItem = a.LineItem.WithQuantity( 1 ).And.UnitPriceOf( 5.dollars() )
 					.build();
 
-			lineItem.Amount.should_be_equal_to( 5.dollars() );
+			lineItem.Amount.ShouldEqual( 5.dollars() );
 		}
 	}
 }

@@ -1,7 +1,7 @@
-using FluentObjectBuilder;
 using NUnit.Framework;
 using SampleApplication.Domain;
 using SampleApplication.Tests.FluentBuilders;
+using Should;
 
 
 namespace SampleApplication.Tests.UnitTests.FluentBuilders
@@ -22,21 +22,21 @@ namespace SampleApplication.Tests.UnitTests.FluentBuilders
 		#endregion
 
 
-		private LineItem _lineItem;
-		private Order _order;
+		LineItem _lineItem;
+		Order _order;
 
 
 		[ Test ]
 		public void Should_build_the_LineItem_with_reference_to_the_Order()
 		{
-			_lineItem.Order.should_be( _order );
+			_lineItem.Order.ShouldBeSameAs( ( _order ) );
 		}
 
 
 		[ Test ]
 		public void Should_build_the_Order_containing_new_LineItem()
 		{
-			_order.LineItems.should_contain( _lineItem );
+			_order.LineItems.ShouldContain( _lineItem );
 		}
 	}
 }

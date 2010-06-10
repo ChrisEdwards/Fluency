@@ -49,8 +49,7 @@ namespace Fluency.Tests.BuilderTests
 		}
 
 
-
-		[Subject(typeof(DynamicFluentBuilder<>))]
+		[ Subject( typeof ( DynamicFluentBuilder< > ) ) ]
 		public class When_building_the_object_after_specifying_dynamic_date_time_property_value : Given_a_DynamicFluentBuilder_that_uses_default_value_conventions
 		{
 			static TestClass _result;
@@ -68,7 +67,7 @@ namespace Fluency.Tests.BuilderTests
 		}
 
 
-		[Subject(typeof(DynamicFluentBuilder<>))]
+		[ Subject( typeof ( DynamicFluentBuilder< > ) ) ]
 		public class When_building_the_object_after_specifying_dynamic_integer_property_value : Given_a_DynamicFluentBuilder_that_uses_default_value_conventions
 		{
 			static TestClass _result;
@@ -86,7 +85,7 @@ namespace Fluency.Tests.BuilderTests
 		}
 
 
-		[Subject(typeof(DynamicFluentBuilder<>))]
+		[ Subject( typeof ( DynamicFluentBuilder< > ) ) ]
 		public class When_building_the_object_after_specifying_dynamic_string_property_value : Given_a_DynamicFluentBuilder_that_uses_default_value_conventions
 		{
 			static TestClass _result;
@@ -94,7 +93,7 @@ namespace Fluency.Tests.BuilderTests
 
 			Establish context = () =>
 			                    	{
-			                    		_expected = ARandom.String(20);
+			                    		_expected = ARandom.String( 20 );
 			                    		_builder.With( x => x.StringProperty, _expected );
 			                    	};
 

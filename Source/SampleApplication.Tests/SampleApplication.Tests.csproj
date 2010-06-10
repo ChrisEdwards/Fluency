@@ -51,6 +51,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\thirdparty\RhinoMocks\Rhino.Mocks.dll</HintPath>
     </Reference>
+    <Reference Include="Should, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\ThirdParty\Should\Should.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -98,6 +102,10 @@
     <Compile Include="Utils\IDbCommandExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Fluency.Tests\Fluency.Tests.csproj">
+      <Project>{F8CADD7C-6E49-476F-AF03-274507FA06B4}</Project>
+      <Name>Fluency.Tests</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Fluency\Fluency.csproj">
       <Project>{CA8DE273-AA4A-4FC1-9D41-B67B56A53433}</Project>
       <Name>Fluency</Name>

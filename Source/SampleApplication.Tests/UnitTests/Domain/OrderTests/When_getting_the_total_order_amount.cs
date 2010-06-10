@@ -1,8 +1,8 @@
 using Fluency.Utils;
-using FluentObjectBuilder;
 using NUnit.Framework;
 using SampleApplication.Domain;
 using SampleApplication.Tests.FluentBuilders;
+using Should;
 
 
 namespace SampleApplication.Tests.UnitTests.Domain.OrderTests
@@ -16,7 +16,7 @@ namespace SampleApplication.Tests.UnitTests.Domain.OrderTests
 			Order order = an.Order.With( a.LineItem.Costing( 10.dollars() ) )
 					.build();
 
-			order.TotalAmount.should_be_equal_to( 10.dollars() );
+			order.TotalAmount.ShouldEqual( 10.dollars() );
 		}
 	}
 }

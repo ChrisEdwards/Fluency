@@ -1,9 +1,9 @@
 using Fluency.Utils;
-using FluentObjectBuilder;
 using NUnit.Framework;
 using SampleApplication.Domain;
 using SampleApplication.Domain.DiscountCalculation;
 using SampleApplication.Tests.FluentBuilders;
+using Should;
 
 
 namespace SampleApplication.Tests.UnitTests.Domain.DiscountCalculation.DiscountCalculatorTests
@@ -11,7 +11,7 @@ namespace SampleApplication.Tests.UnitTests.Domain.DiscountCalculation.DiscountC
 	[ TestFixture ]
 	public class When_calculating_a_tiered_discount : AutoRollbackDatabaseTest
 	{
-		private DiscountCalculator _calculator;
+		DiscountCalculator _calculator;
 
 
 		protected override void TestSetUp()
@@ -37,7 +37,7 @@ namespace SampleApplication.Tests.UnitTests.Domain.DiscountCalculation.DiscountC
 
 			double discount = _calculator.CalculateDiscount( order );
 
-			discount.should_be_equal_to( 10.dollars() );
+			discount.ShouldEqual( 10.dollars() );
 		}
 	}
 }

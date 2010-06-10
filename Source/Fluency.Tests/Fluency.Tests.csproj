@@ -65,6 +65,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssertionExtensions.cs" />
     <Compile Include="BuilderTests\DynamicFluentBuilderSpecs.cs" />
     <Compile Include="BuilderTests\When_a_builder_builds_its_own_result.cs" />
     <Compile Include="BuilderTests\When_building_two_consecutive_objects.cs" />

@@ -40,10 +40,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\ThirdParty\JetBrains.Annotations\JetBrains.Annotations.dll</HintPath>
     </Reference>
-    <Reference Include="Machine.Specifications, Version=0.3.0.0, Culture=neutral, PublicKeyToken=5c474de7a495cff1, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\ThirdParty\Machine.Specifications\Machine.Specifications.dll</HintPath>
-    </Reference>
     <Reference Include="NHibernate, Version=2.1.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\ThirdParty\FluentNHibernate\NHibernate.dll</HintPath>
@@ -51,10 +47,6 @@
     <Reference Include="NHibernate.ByteCode.Castle, Version=2.1.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\ThirdParty\FluentNHibernate\NHibernate.ByteCode.Castle.dll</HintPath>
-    </Reference>
-    <Reference Include="nunit.framework, Version=2.5.1.9189, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\ThirdParty\NUnit\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="Rhino.Mocks, Version=3.5.0.1337, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -64,14 +56,6 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System.Xml.Linq">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Data.DataSetExtensions">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Conventions\Convention.cs" />
@@ -84,12 +68,12 @@
     <Compile Include="FluencyConfiguration.cs" />
     <Compile Include="FluencyException.cs" />
     <Compile Include="InitializationExpression.cs" />
-    <Compile Include="Utils\AssertionExtensions.cs" />
     <Compile Include="IdGenerators\DecrementingIdGenerator.cs" />
     <Compile Include="IdGenerators\IncrementingIdGenerator.cs" />
     <Compile Include="IFluentBuilder.cs" />
     <Compile Include="IdGenerators\IIdGenerator.cs" />
     <Compile Include="FluentListBuilder.cs" />
+    <Compile Include="Utils\IEnumerableExtensions.cs" />
     <Compile Include="Utils\NumericalExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DataGeneration\ARandom.cs" />
@@ -105,6 +89,7 @@
     <Compile Include="Utils\ReflectionExtensions.cs" />
     <Compile Include="FluentBuilder.cs" />
     <Compile Include="IdGenerators\StaticValueIdGenerator.cs" />
+    <Compile Include="Utils\StringExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
