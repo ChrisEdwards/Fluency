@@ -8,7 +8,6 @@ using Fluency.Conventions;
 using Fluency.IdGenerators;
 using Fluency.Utils;
 using FluentObjectBuilder;
-using JetBrains.Annotations;
 using Rhino.Mocks;
 
 #endregion
@@ -140,7 +139,6 @@ namespace Fluency
 		/// </summary>
 		/// <returns></returns>
 		[ Obsolete( "Use AfterBuild() method to perform post-processinig." ) ]
-		[ UsedImplicitly ]
 		protected virtual T BuildFrom( T values )
 		{
 			return new T();
