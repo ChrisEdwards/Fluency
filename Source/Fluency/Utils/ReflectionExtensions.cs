@@ -3,6 +3,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using FluentNHibernate.Utils;
+using FluentNHibernate.Utils.Reflection;
 
 
 namespace Fluency.Utils
@@ -109,5 +110,8 @@ namespace Fluency.Utils
 			Accessor accessor = ReflectionHelper.GetAccessor( propertyExpression );
 			accessor.SetValue( prototype, propertyValue );
 		}
+
+		// Fluent NHibernate Methods
+
 	}
 }

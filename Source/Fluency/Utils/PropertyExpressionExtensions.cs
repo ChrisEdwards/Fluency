@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
 using FluentNHibernate.Utils;
+using FluentNHibernate.Utils.Reflection;
 
 
 namespace Fluency.Utils
