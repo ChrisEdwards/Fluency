@@ -3,17 +3,12 @@ using System.Collections.Generic;
 using System.Text;
 using Fluency.Utils;
 
-// From ChrisEdwards.TestUtils
-// Depends upon Simpletalk.WaffleGenerator
-
 
 namespace Fluency.DataGeneration
 {
 	public static class ARandom
 	{
-		private static readonly Random _random = new Random();
-
-
+		static readonly Random _random = new Random();
 		public static IValueConstraints _valueConstraints = new SqlServerDefaultValuesAndConstraints();
 
 
@@ -108,7 +103,9 @@ namespace Fluency.DataGeneration
 				throw new ArgumentException( "Must be enum type." );
 
 			Array values = Enum.GetValues( typeof ( T ) );
-			return (T)values.GetValue( IntBetween( 0, values.Length - 1 ) );
+
+			int randomArrayIndex = IntBetween( 0, values.Length - 1 );
+			return (T)values.GetValue( randomArrayIndex );
 		}
 
 
@@ -143,9 +140,39 @@ namespace Fluency.DataGeneration
 		}
 
 
+		public static DateTime DateAfter( DateTime compareDateTime )
+		{
+			return DateTimeAfter( compareDateTime ).Date;
+		}
+
+
+		public static DateTime DateInPastSince( DateTime startDate )
+		{
+			return DateTimeInPastSince( startDate ).Date;
+		}
+
+
 		public static DateTime DateTimeInPast()
 		{
 			return DateTimeBefore( System.DateTime.Now );
+		}
+
+
+		public static DateTime DateInPast()
+		{
+			return DateTimeBefore( System.DateTime.Now ).Date;
+		}
+
+
+		public static DateTime DateTimeInPastYear()
+		{
+			return DateTimeInPastSince( 1.YearsAgo() );
+		}
+
+
+		public static DateTime DateInPastYear()
+		{
+			return DateTimeInPastYear().Date;
 		}
 
 
@@ -161,9 +188,35 @@ namespace Fluency.DataGeneration
 		}
 
 
-		public static double CurrencyAmount()
+		static string GetRandomizedPatternChar( char c )
+		{
+			switch ( c )
+			{
+				case '9':
+				case '#':
+					return IntBetween( 0, 9 ).ToString();
+
+				default:
+					return c.ToString();
+			}
+		}
+
+
+		public static decimal InterestRate()
+		{
+			return (decimal)DoubleBetween( 0, 10 );
+		}
+
+
+		public static decimal CurrencyAmount()
 		{
 			return IntBetween( 0, 999999999 ) + ( IntBetween( 0, 100 ) / 100 );
+		}
+
+
+		public static decimal CurrencyAmountLessThan( int maxAmount )
+		{
+			return IntBetween( 0, maxAmount - 1 ) + ( IntBetween( 0, 100 ) / 100 );
 		}
 
 
@@ -222,20 +275,13 @@ namespace Fluency.DataGeneration
 
 		public static DateTime BirthDate()
 		{
-			return DateTimeBetween( 75.YearsAgo(), 5.YearsAgo() );
+			return DateTimeBetween( 75.YearsAgo(), 5.YearsAgo() ).Date;
 		}
 
 
-		private static string GetRandomizedPatternChar( char c )
+		public static string ZipCode()
 		{
-			switch ( c )
-			{
-				case '9':
-					return IntBetween( 0, 9 ).ToString();
-
-				default:
-					return c.ToString();
-			}
+			return StringPattern( "99999" );
 		}
 	}
 }

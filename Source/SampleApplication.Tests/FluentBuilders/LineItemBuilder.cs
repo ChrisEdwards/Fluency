@@ -17,7 +17,7 @@ namespace SampleApplication.Tests.FluentBuilders
 		{
 			// TODO: Setup AutoPopulation of random values by type. Need a way to override defaults.
 			SetProperty( x => x.Id, GenerateNewId() );
-			SetProperty( x => x.UnitPrice, ARandom.CurrencyAmount() );
+			SetProperty( x => x.UnitPrice, (double)ARandom.CurrencyAmount() );
 			SetProperty( x => x.Quantity, 1 );
 			SetProperty( x => x.Product, new ProductBuilder() );
 			SetProperty( x => x.Order, new OrderBuilder() );
