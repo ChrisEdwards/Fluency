@@ -1,3 +1,7 @@
+@REM This script adds any untracked files and commits them and any changes to git.
+@REM It then pushes the git repository changes up to the "personalci" remote repository.
+@REM From there, a CI Server should pick up and run the build.
+
 @ECHO on
 @ECHO Auto-committing to Git Repository and push to PersonalCI after Successful Build.
 
@@ -13,13 +17,14 @@ call git commit -a -m "Auto-commit from successful build on %COMPUTERNAME% by %U
 call git push personalci master
 @if errorlevel 1 goto :error
 
+@ECHO.
 @ECHO SUCCESSFULY PUSHED TO PERSONAL CI.
 @goto :exit
 
 
 :error
+@ECHO.
 @ECHO AN ERROR OCCURRED - %errorLevel%
 
+
 :exit
-@ECHO.
-@ECHO.
