@@ -1,0 +1,7 @@
+To create a personal CI folder on your local machine:
+- Create a new folder "mkdir FluencyPersonalCi.git"
+- cd FluencyPersonalCi.git
+- git --bare init
+- Go back to your project dir...
+  - git remote add personalci /c/projects/FluencyPersonalCi.git
+  - git push personalci master
