@@ -18,13 +18,13 @@ call git push personalci master
 @if errorlevel 1 goto :error
 
 @ECHO.
-@ECHO SUCCESSFULY PUSHED TO PERSONAL CI.
+@ECHO SUCCESS: Pushed to Personal CI
 @goto :exit
 
 
 :error
 @ECHO.
-@ECHO AN ERROR OCCURRED - %errorLevel%
+@ECHO ERROR! -- ErrorLevel: %errorLevel%
 
 
 :exit
