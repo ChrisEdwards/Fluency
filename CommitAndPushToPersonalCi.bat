@@ -1,3 +1,4 @@
+@REM CommitAndPushToPersonalCI.bat
 @REM This script adds any untracked files and commits them and any changes to git.
 @REM It then pushes the git repository changes up to the "personalci" remote repository.
 @REM From there, a CI Server should pick up and run the build.
