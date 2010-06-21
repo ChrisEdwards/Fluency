@@ -30,3 +30,4 @@ call git push personalci master
 @ECHO An error occured - %errorLevel%
 
 :exit
+@ECHO.
