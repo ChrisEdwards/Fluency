@@ -1,8 +1,5 @@
 @ECHO on
-@ECHO.
-@ECHO.
-@ECHO Auto-committing to Git Repository after Successful Build.
-@ECHO ---------------------------------------------------------
+@ECHO Auto-committing to Git Repository and push to PersonalCI after Successful Build.
 
 @REM Add files that are outstanding to the local git repository.
 call git add . 
@@ -12,25 +9,16 @@ call git add .
 call git commit -a -m "Auto-commit from successful build on %COMPUTERNAME% by %USERNAME% at %TIME% on %DATE%"
 @if errorlevel 1 goto :error
 
-
-@ECHO.
-@ECHO.
-@ECHO Pushing to PersonalCi repository.
-@ECHO ---------------------------------
-
 @REM Push to the personalci remote repository.
 call git push personalci master
 @if errorlevel 1 goto :error
 
-
-@ECHO.
-@ECHO.
-@ECHO Completed Successfully!
+@ECHO SUCCESSFULY PUSHED TO PERSONAL CI.
 @goto :exit
 
 
 :error
-@ECHO An error occured - %errorLevel%
+@ECHO AN ERROR OCCURRED - %errorLevel%
 
 :exit
 @ECHO.
