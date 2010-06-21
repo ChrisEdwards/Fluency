@@ -1,5 +1,6 @@
 @ECHO on
 @ECHO.
+@ECHO.
 @ECHO Auto-committing to Git Repository after Successful Build.
 @ECHO ---------------------------------------------------------
 
@@ -13,6 +14,7 @@ call git commit -a -m "Auto-commit from successful build on %COMPUTERNAME% by %U
 
 
 @ECHO.
+@ECHO.
 @ECHO Pushing to PersonalCi repository.
 @ECHO ---------------------------------
 
@@ -22,6 +24,7 @@ call git push personalci master
 
 
 @ECHO.
+@ECHO.
 @ECHO Completed Successfully!
 @goto :exit
 
@@ -30,4 +33,5 @@ call git push personalci master
 @ECHO An error occured - %errorLevel%
 
 :exit
+@ECHO.
 @ECHO.
