@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fluency.Tests", "Fluency.Te
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpecUnit", "SpecUnit\SpecUnit.csproj", "{650A6CED-11AD-4DA2-984C-39FB773F88D3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shiloh.DataGeneration", "Shiloh.DataGeneration\Shiloh.DataGeneration.csproj", "{B5088BE7-78C5-4C63-8F64-9147308D4E45}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shiloh.DataGeneration.Tests", "Shiloh.DataGeneration.Tests\Shiloh.DataGeneration.Tests.csproj", "{9CC38069-57B8-4656-A1BD-118C59C6D49C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +41,14 @@ Global
 		{650A6CED-11AD-4DA2-984C-39FB773F88D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{650A6CED-11AD-4DA2-984C-39FB773F88D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{650A6CED-11AD-4DA2-984C-39FB773F88D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5088BE7-78C5-4C63-8F64-9147308D4E45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5088BE7-78C5-4C63-8F64-9147308D4E45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5088BE7-78C5-4C63-8F64-9147308D4E45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5088BE7-78C5-4C63-8F64-9147308D4E45}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9CC38069-57B8-4656-A1BD-118C59C6D49C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CC38069-57B8-4656-A1BD-118C59C6D49C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CC38069-57B8-4656-A1BD-118C59C6D49C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CC38069-57B8-4656-A1BD-118C59C6D49C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

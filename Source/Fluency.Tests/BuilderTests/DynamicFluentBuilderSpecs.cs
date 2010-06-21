@@ -101,6 +101,42 @@ namespace Fluency.Tests.BuilderTests
 
 			It should_use_the_provided_date_time = () => _result.StringProperty.ShouldEqual( _expected );
 		}
+
+
+		[ Subject( typeof ( DynamicFluentBuilder< > ) ) ]
+		public class When_building_the_object_after_specifying_dynamic_property_value_using_For : Given_a_DynamicFluentBuilder_that_uses_default_value_conventions
+		{
+			static TestClass _result;
+			static string _expected;
+
+			Establish context = () =>
+			                    	{
+			                    		_expected = ARandom.String( 20 );
+			                    		_builder.For( x => x.StringProperty, _expected );
+			                    	};
+
+			Because of = () => _result = _builder.build();
+
+			It should_use_the_provided_date_time = () => _result.StringProperty.ShouldEqual( _expected );
+		}
+
+
+		[ Subject( typeof ( DynamicFluentBuilder< > ) ) ]
+		public class When_building_the_object_after_specifying_dynamic_property_value_using_Having : Given_a_DynamicFluentBuilder_that_uses_default_value_conventions
+		{
+			static TestClass _result;
+			static string _expected;
+
+			Establish context = () =>
+			                    	{
+			                    		_expected = ARandom.String( 20 );
+			                    		_builder.Having( x => x.StringProperty, _expected );
+			                    	};
+
+			Because of = () => _result = _builder.build();
+
+			It should_use_the_provided_date_time = () => _result.StringProperty.ShouldEqual( _expected );
+		}
 	}
 }
 

@@ -64,6 +64,14 @@ namespace Fluency.DataGeneration
 			return IntBetween( 1, 9999 );
 		}
 
+		// TODO: Decimal???
+		// TODO: Byte???
+
+		public static int PositiveInt()
+		{
+			return IntBetween( 1, 9999 );
+		}
+
 
 		public static int IntBetween( int min, int max )
 		{

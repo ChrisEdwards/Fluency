@@ -1,0 +1,69 @@
+    Dim BuildWasSuccessful As Boolean
+    Dim BuildingSolution As Boolean
+
+
+    Private Sub BuildEvents_OnBuildBegin( ByVal Scope As EnvDTE.vsBuildScope, ByVal Action As EnvDTE.vsBuildAction ) Handles BuildEvents.OnBuildBegin
+
+        'Initialize the build to success.
+        BuildWasSuccessful = True
+        BuildingSolution = True
+
+    End Sub
+
+
+    Private Sub BuildEvents_OnBuildDone( ByVal Scope As EnvDTE.vsBuildScope, ByVal Action As EnvDTE.vsBuildAction ) Handles BuildEvents.OnBuildDone
+
+        'Don't run it if we just did a clean.
+        If Action = vsBuildAction.vsBuildActionClean Then
+            BuildingSolution = False
+            Exit Sub
+        End If
+
+        'Only run autocommit if the build passed. 
+        If BuildWasSuccessful And DTE.Solution.FullName.Contains( "AllProjects" ) Then
+            'Run the command to autocommit to git.
+            DTE.ExecuteCommand( "Tools.ExternalCommand1" )
+        End If
+
+        BuildingSolution = False
+
+    End Sub
+
+
+    Private Sub BuildEvents_OnBuildProjConfigDone( ByVal Project As String, ByVal ProjectConfig As String, ByVal Platform As String, ByVal SolutionConfig As String, ByVal Success As Boolean ) Handles BuildEvents.OnBuildProjConfigDone
+
+        If Success = False Then
+            'Set the build to failed.
+            BuildWasSuccessful = False
+
+            'The build failed...cancel any further builds.
+            DTE.ExecuteCommand( "Build.Cancel" )
+        End If
+
+        'Only commit project level builds if we are not building the whole solution
+        If Success = True And BuildingSolution = False And DTE.Solution.FullName.Contains( "AllProjects" ) Then
+            'Run the command to autocommit to git.
+            DTE.ExecuteCommand( "Tools.ExternalCommand1" )
+        End If
+
+    End Sub
+
+
+    Private Sub DocumentEvents_DocumentSaved( ByVal Document As EnvDTE.Document ) Handles DocumentEvents.DocumentSaved
+
+        If DTE.Solution.FullName.Contains( "Vanguard" ) Then
+
+            ' Auto-reformat code if the saved doc is a C# file.
+            If ( Right( Document.FullName, 3 ) = ".cs" ) Then
+
+                DTE.ExecuteCommand( "Resharper_SilentCleanupCode" )
+                ' If Reformat modifed the document, save it.
+                If Document.Saved = False Then
+                    Document.Save()
+                End If
+
+            End If
+
+        End If
+
+    End Sub

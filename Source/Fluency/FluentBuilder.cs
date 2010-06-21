@@ -1,5 +1,3 @@
-#region Usings
-
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -10,7 +8,6 @@ using Fluency.Utils;
 using FluentObjectBuilder;
 using Rhino.Mocks;
 
-#endregion
 
 
 namespace Fluency
