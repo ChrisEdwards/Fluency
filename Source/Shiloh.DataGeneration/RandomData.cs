@@ -1,4 +1,4 @@
-﻿namespace Fluency.DataGeneration
+﻿namespace Shiloh.DataGeneration
 {
 	public static class RandomData
 	{

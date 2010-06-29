@@ -54,25 +54,25 @@ namespace Shiloh.DataGeneration
 
 		public int Between( int lowerBound, int upperBound )
 		{
-			if ( lowerBound >= upperBound )
+			if ( lowerBound > upperBound )
 				throw new ArgumentException( "The lower bounds must be greater than the upper bound." );
 
-			return _random.Next( lowerBound + 1, upperBound - 1 );
+			return _random.Next( lowerBound, upperBound );
 		}
 
 
 		public int InRange( int lowerBound, int upperBound )
 		{
-			return BetweenInclusive( lowerBound, upperBound );
+			return BetweenExclusive( lowerBound, upperBound );
 		}
 
 
-		public int BetweenInclusive( int lowerBound, int upperBound )
+		public int BetweenExclusive( int lowerBound, int upperBound )
 		{
-			if ( lowerBound > upperBound )
+			if ( lowerBound >= upperBound )
 				throw new ArgumentException( "The lower bounds must be greater than the upper bound." );
 
-			return _random.Next( lowerBound, upperBound );
+			return _random.Next( lowerBound+1, upperBound-1 );
 		}
 
 

@@ -64,6 +64,7 @@ namespace Fluency.DataGeneration
 			return IntBetween( 1, 9999 );
 		}
 
+
 		// TODO: Decimal???
 		// TODO: Byte???
 

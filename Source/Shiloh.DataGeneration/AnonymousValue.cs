@@ -10,7 +10,7 @@ namespace Shiloh.DataGeneration
 
 		public T From<T>(IList<T> items)
 		{
-			return items[Anonymous.Int.BetweenInclusive(0, items.Count - 1)];
+			return items[Anonymous.Int.BetweenExclusive(0, items.Count - 1)];
 		}
 
 

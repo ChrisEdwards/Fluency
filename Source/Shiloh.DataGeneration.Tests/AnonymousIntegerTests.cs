@@ -88,8 +88,8 @@ namespace Shiloh.DataGeneration.Tests
 
 			Because of = () => _value = Anonymous.Integer.Between( _lowerBound, _upperBound );
 
-			It should_be_less_than_the_specified_upper_bound_value = () => _value.Should().Be.LessThan( _upperBound );
-			It should_be_greater_than_the_specified_lower_bound_value = () => _value.Should().Be.GreaterThan( _lowerBound );
+			It should_be_less_than_or_equal_tothe_specified_upper_bound_value = () => _value.Should().Be.LessThanOrEqualTo( _upperBound );
+			It should_be_greater_than_or_equal_to_the_specified_lower_bound_value = () => _value.Should().Be.GreaterThanOrEqualTo( _lowerBound );
 		}
 
 
@@ -103,7 +103,7 @@ namespace Shiloh.DataGeneration.Tests
 
 
 		[ Subject( typeof ( AnonymousInteger ) ) ]
-		public class When_getting_an_anonymous_integer_between_two_specified_values_inclusively
+		public class When_getting_an_anonymous_integer_between_two_specified_values_exclusively
 		{
 			static int _value;
 			static int _lowerBound;
@@ -115,18 +115,18 @@ namespace Shiloh.DataGeneration.Tests
 			                    		_upperBound = new Random().Next( _lowerBound, int.MaxValue );
 			                    	};
 
-			Because of = () => _value = Anonymous.Integer.BetweenInclusive( _lowerBound, _upperBound );
+			Because of = () => _value = Anonymous.Integer.BetweenExclusive( _lowerBound, _upperBound );
 
-			It should_be_less_than_or_equal_to_the_specified_upper_bound_value = () => _value.Should().Be.LessThanOrEqualTo( _upperBound );
-			It should_be_greater_than_or_equal_to_the_specified_lower_bound_value = () => _value.Should().Be.GreaterThanOrEqualTo( _lowerBound );
+			It should_be_less_than_the_specified_upper_bound_value = () => _value.Should().Be.LessThan( _upperBound );
+			It should_be_greater_than_the_specified_lower_bound_value = () => _value.Should().Be.GreaterThan( _lowerBound );
 		}
 
 
 		[ Subject( typeof ( AnonymousInteger ) ) ]
-		public class When_getting_an_anonymous_integer_between_two_specified_values_inclusively_where_the_lower_bound_is_greater_than_the_upper_bound
+		public class When_getting_an_anonymous_integer_between_two_specified_values_exclusively_where_the_lower_bound_is_greater_than_the_upper_bound
 		{
 			static Exception _exception;
-			Because of = () => _exception = Catch.Exception( () => Anonymous.Integer.BetweenInclusive( 100, 1 ) );
+			Because of = () => _exception = Catch.Exception( () => Anonymous.Integer.BetweenExclusive( 100, 1 ) );
 			It should_fail = () => _exception.Should().Be.OfType< ArgumentException >();
 		}
 
