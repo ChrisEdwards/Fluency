@@ -1,6 +1,6 @@
     Dim BuildWasSuccessful As Boolean
     Dim BuildingSolution As Boolean
-
+ 
 
     Private Sub BuildEvents_OnBuildBegin( ByVal Scope As EnvDTE.vsBuildScope, ByVal Action As EnvDTE.vsBuildAction ) Handles BuildEvents.OnBuildBegin
 
