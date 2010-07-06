@@ -7,8 +7,8 @@ namespace SampleApplication.Domain.DiscountCalculation
 	                                       ITieredDiscountStrategyBuilder_Then,
 	                                       ITieredDiscountStrategyBuilder_WhereOrBuild
 	{
-		private readonly IList< DiscountTier > discountTiers = new List< DiscountTier >();
-		private DiscountTier _tierUnderConstruction;
+		readonly IList< DiscountTier > discountTiers = new List< DiscountTier >();
+		DiscountTier _tierUnderConstruction;
 
 		public ITieredDiscountStrategyBuilder_Where Where
 		{

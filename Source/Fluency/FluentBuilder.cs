@@ -9,7 +9,6 @@ using FluentObjectBuilder;
 using Rhino.Mocks;
 
 
-
 namespace Fluency
 {
 	/// <summary>

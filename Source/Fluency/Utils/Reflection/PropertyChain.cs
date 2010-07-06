@@ -3,104 +3,102 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
 
+
 namespace FluentNHibernate.Utils
 {
-    public class PropertyChain : Accessor
-    {
-        private readonly PropertyInfo[] _chain;
-        private readonly SingleProperty _innerProperty;
+	public class PropertyChain : Accessor
+	{
+		readonly PropertyInfo[] _chain;
+		readonly SingleProperty _innerProperty;
 
-        public PropertyChain(PropertyInfo[] properties)
-        {
-            _chain = new PropertyInfo[properties.Length - 1];
-            for (int i = 0; i < _chain.Length; i++)
-            {
-                _chain[i] = properties[i];
-            }
 
-            _innerProperty = new SingleProperty(properties[properties.Length - 1]);
-        }
+		public PropertyChain( PropertyInfo[] properties )
+		{
+			_chain = new PropertyInfo[properties.Length - 1];
+			for ( int i = 0; i < _chain.Length; i++ )
+				_chain[i] = properties[i];
 
-        #region Accessor Members
+			_innerProperty = new SingleProperty( properties[properties.Length - 1] );
+		}
 
-        public void SetValue(object target, object propertyValue)
-        {
-            target = findInnerMostTarget(target);
-            if (target == null)
-            {
-                return;
-            }
 
-            _innerProperty.SetValue(target, propertyValue);
-        }
+		#region Accessor Members
 
-        public object GetValue(object target)
-        {
-            target = findInnerMostTarget(target);
+		public void SetValue( object target, object propertyValue )
+		{
+			target = findInnerMostTarget( target );
+			if ( target == null )
+				return;
 
-            if (target == null)
-            {
-                return null;
-            }
+			_innerProperty.SetValue( target, propertyValue );
+		}
 
-            return _innerProperty.GetValue(target);
-        }
 
-        public string FieldName
-        {
-            get { return _innerProperty.FieldName; }
-        }
+		public object GetValue( object target )
+		{
+			target = findInnerMostTarget( target );
 
-        public Type PropertyType
-        {
-            get { return _innerProperty.PropertyType; }
-        }
+			if ( target == null )
+				return null;
 
-        public PropertyInfo InnerProperty
-        {
-            get { return _innerProperty.InnerProperty; }
-        }
+			return _innerProperty.GetValue( target );
+		}
 
-        public Accessor GetChildAccessor<T>(Expression<Func<T, object>> expression)
-        {
-            PropertyInfo property = ReflectionHelper.GetProperty(expression);
-            var list = new List<PropertyInfo>(_chain);
-            list.Add(_innerProperty.InnerProperty);
-            list.Add(property);
 
-            return new PropertyChain(list.ToArray());
-        }
+		public string FieldName
+		{
+			get { return _innerProperty.FieldName; }
+		}
 
-        public string Name
-        {
-            get
-            {
-                string returnValue = string.Empty;
-                foreach (var info in _chain)
-                {
-                    returnValue += info.Name;
-                }
+		public Type PropertyType
+		{
+			get { return _innerProperty.PropertyType; }
+		}
 
-                returnValue += _innerProperty.Name;
+		public PropertyInfo InnerProperty
+		{
+			get { return _innerProperty.InnerProperty; }
+		}
 
-                return returnValue;
-            }
-        }
 
-        #endregion
+		public Accessor GetChildAccessor< T >( Expression< Func< T, object > > expression )
+		{
+			PropertyInfo property = ReflectionHelper.GetProperty( expression );
+			var list = new List< PropertyInfo >( _chain );
+			list.Add( _innerProperty.InnerProperty );
+			list.Add( property );
 
-        private object findInnerMostTarget(object target)
-        {
-            foreach (PropertyInfo info in _chain)
-            {
-                target = info.GetValue(target, null);
-                if (target == null)
-                {
-                    return null;
-                }
-            }
+			return new PropertyChain( list.ToArray() );
+		}
 
-            return target;
-        }
-    }
+
+		public string Name
+		{
+			get
+			{
+				string returnValue = string.Empty;
+				foreach ( PropertyInfo info in _chain )
+					returnValue += info.Name;
+
+				returnValue += _innerProperty.Name;
+
+				return returnValue;
+			}
+		}
+
+		#endregion
+
+
+		object findInnerMostTarget( object target )
+		{
+			foreach ( PropertyInfo info in _chain )
+			{
+				target = info.GetValue( target, null );
+				if ( target == null )
+					return null;
+			}
+
+			return target;
+		}
+	}
 }

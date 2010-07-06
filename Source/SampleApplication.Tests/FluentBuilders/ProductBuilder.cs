@@ -9,9 +9,9 @@ namespace SampleApplication.Tests.FluentBuilders
 	{
 		protected override void SetupDefaultValues()
 		{
-			SetProperty( x=>x.Id, GenerateNewId() );
-			SetProperty(x=>x.Name, ARandom.Title( 100 )  );
-			SetProperty( x=>x.Description, ARandom.Text( 200 ) );
+			SetProperty( x => x.Id, GenerateNewId() );
+			SetProperty( x => x.Name, ARandom.Title( 100 ) );
+			SetProperty( x => x.Description, ARandom.Text( 200 ) );
 		}
 
 

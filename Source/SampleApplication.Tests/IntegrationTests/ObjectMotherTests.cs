@@ -7,7 +7,7 @@ namespace SampleApplication.Tests.IntegrationTests
 	[ TestFixture ]
 	public class ObjectMotherTests : AutoRollbackDatabaseTest
 	{
-		private readonly Anonymous a = new Anonymous();
+		readonly Anonymous a = new Anonymous();
 
 
 		protected override void TestSetUp()

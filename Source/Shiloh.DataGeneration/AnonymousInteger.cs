@@ -72,7 +72,7 @@ namespace Shiloh.DataGeneration
 			if ( lowerBound >= upperBound )
 				throw new ArgumentException( "The lower bounds must be greater than the upper bound." );
 
-			return _random.Next( lowerBound+1, upperBound-1 );
+			return _random.Next( lowerBound + 1, upperBound - 1 );
 		}
 
 
@@ -82,7 +82,7 @@ namespace Shiloh.DataGeneration
 		}
 
 
-		public int From(params int[] list )
+		public int From( params int[] list )
 		{
 			return Anonymous.Value.From( list );
 		}

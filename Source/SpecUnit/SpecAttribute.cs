@@ -1,9 +1,4 @@
-using System;
-using NUnit.Framework;
-
 namespace SpecUnit
 {
-	public class SpecAttribute : SpecificationAttribute
-	{
-	}
+	public class SpecAttribute : SpecificationAttribute {}
 }

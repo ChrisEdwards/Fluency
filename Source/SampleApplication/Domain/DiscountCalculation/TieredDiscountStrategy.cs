@@ -6,7 +6,7 @@ namespace SampleApplication.Domain.DiscountCalculation
 {
 	public class TieredDiscountStrategy : IDiscountStrategy
 	{
-		private readonly IList< DiscountTier > _discountTiers;
+		readonly IList< DiscountTier > _discountTiers;
 
 
 		public TieredDiscountStrategy( IList< DiscountTier > discountTiers )

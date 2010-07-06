@@ -8,12 +8,12 @@ namespace SampleApplication.Tests
 {
 	public class TestDatabase
 	{
-		private readonly IList< Customer > _customers = new List< Customer >();
-		private readonly DbHelper _dbHelper;
-		private readonly IList< LineItem > _lineItems = new List< LineItem >();
-		private readonly IList< Order > _orders = new List< Order >();
-		private readonly IList< Product > _products = new List< Product >();
-		private readonly ISession _session;
+		readonly IList< Customer > _customers = new List< Customer >();
+		readonly DbHelper _dbHelper;
+		readonly IList< LineItem > _lineItems = new List< LineItem >();
+		readonly IList< Order > _orders = new List< Order >();
+		readonly IList< Product > _products = new List< Product >();
+		readonly ISession _session;
 
 
 		public TestDatabase( ISession session )

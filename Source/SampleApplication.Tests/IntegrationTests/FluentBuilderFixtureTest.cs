@@ -13,7 +13,7 @@ namespace SampleApplication.Tests.IntegrationTests
 			Order order =
 					an.Order
 							.With( a.LineItem.Costing( 1.60 ) )
-							.With(a.LineItem.WithQuantity(10).Costing(25.99))
+							.With( a.LineItem.WithQuantity( 10 ).Costing( 25.99 ) )
 							.build();
 		}
 

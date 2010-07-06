@@ -8,16 +8,17 @@ namespace Fluency
 {
 	internal class FluencyConfiguration
 	{
-		internal Func<IIdGenerator> ConstructIdGenerator { get; set; }
+		internal Func< IIdGenerator > ConstructIdGenerator { get; set; }
 
-		public List<IDefaultConvention> DefaultValueConventions {get; set;}
+		public List< IDefaultConvention > DefaultValueConventions { get; set; }
 
-		private Dictionary<Type, IIdGenerator> _idGenerators = new Dictionary< Type, IIdGenerator >();
+		readonly Dictionary< Type, IIdGenerator > _idGenerators = new Dictionary< Type, IIdGenerator >();
+
 
 		public FluencyConfiguration()
 		{
 			// Initialize default values.
-			ConstructIdGenerator= () => new StaticValueIdGenerator(0);
+			ConstructIdGenerator = () => new StaticValueIdGenerator( 0 );
 			DefaultValueConventions = new List< IDefaultConvention >();
 		}
 
@@ -29,8 +30,8 @@ namespace Fluency
 		/// <returns></returns>
 		internal IIdGenerator GetIdGenerator< T >()
 		{
-			if (!_idGenerators.ContainsKey(typeof(T)))
-				_idGenerators.Add( typeof(T), ConstructIdGenerator.Invoke() );
+			if ( !_idGenerators.ContainsKey( typeof ( T ) ) )
+				_idGenerators.Add( typeof ( T ), ConstructIdGenerator.Invoke() );
 
 			return _idGenerators[typeof ( T )];
 		}

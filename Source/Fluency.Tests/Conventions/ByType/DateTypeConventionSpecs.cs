@@ -15,47 +15,44 @@ namespace Fluency.Tests.Conventions.ByType
 			protected static IDefaultConvention convention;
 			protected static PropertyInfo property_info;
 
-			because b = () =>
-			            {
-			            	convention = Convention.DateType();
-			            };
+			because b = () => { convention = Convention.DateType(); };
 		}
 
 
 		public class when_given_a_property_of_type_date : concern
 		{
 			context c = () =>
-			            {
-			            	var person = new {DateProperty = DateTime.Now};
-			            	property_info = person.GetType().GetProperty( "DateProperty" );
-			            };
+			            	{
+			            		var person = new {DateProperty = DateTime.Now};
+			            		property_info = person.GetType().GetProperty( "DateProperty" );
+			            	};
 
-			it should_apply = () => convention.AppliesTo(property_info).should_be_true();
+			it should_apply = () => convention.AppliesTo( property_info ).should_be_true();
 
 			it should_return_a_random_date = () =>
-			{
-				object value = convention.DefaultValue(property_info);
-				value.should_not_be_null();
-				value.should_be_an_instance_of< DateTime >();
-			};
+			                                 	{
+			                                 		object value = convention.DefaultValue( property_info );
+			                                 		value.should_not_be_null();
+			                                 		value.should_be_an_instance_of< DateTime >();
+			                                 	};
 		}
 
 
 		public class when_given_a_property_of_type_other_than_date : concern
 		{
 			context c = () =>
-			            {
-			            	var person = new {NonDateProperty = 7};
-			            	property_info = person.GetType().GetProperty( "NonDateProperty" );
-			            };
+			            	{
+			            		var person = new {NonDateProperty = 7};
+			            		property_info = person.GetType().GetProperty( "NonDateProperty" );
+			            	};
 
-			it should_not_apply = () => convention.AppliesTo(property_info).should_be_false();
+			it should_not_apply = () => convention.AppliesTo( property_info ).should_be_false();
 
 			it should_return_nothing = () =>
-			{
-				object value = convention.DefaultValue(property_info);
-				value.should_be_null();
-			};
+			                           	{
+			                           		object value = convention.DefaultValue( property_info );
+			                           		value.should_be_null();
+			                           	};
 		}
 	}
 }

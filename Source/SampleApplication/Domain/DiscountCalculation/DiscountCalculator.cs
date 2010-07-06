@@ -2,7 +2,7 @@ namespace SampleApplication.Domain.DiscountCalculation
 {
 	public class DiscountCalculator
 	{
-		private readonly IDiscountStrategy _discountStrategy;
+		readonly IDiscountStrategy _discountStrategy;
 
 
 		public DiscountCalculator( IDiscountStrategy discountStrategy )

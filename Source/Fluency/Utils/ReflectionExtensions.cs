@@ -3,7 +3,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using FluentNHibernate.Utils;
-using FluentNHibernate.Utils.Reflection;
 
 
 namespace Fluency.Utils
@@ -31,7 +30,8 @@ namespace Fluency.Utils
 					.ToArray();
 		}
 
-		public static PropertyInfo PropertyInfoFor<T, TPropertyType>(this T source, Expression< Func< T, TPropertyType > > propertyExpression)
+
+		public static PropertyInfo PropertyInfoFor< T, TPropertyType >( this T source, Expression< Func< T, TPropertyType > > propertyExpression )
 		{
 			return ReflectionHelper.GetProperty( propertyExpression );
 		}
@@ -58,19 +58,19 @@ namespace Fluency.Utils
 		/// <param name="propertyValue">The property value.</param>
 		public static void SetProperty( this object instance, PropertyInfo propertyInfo, object propertyValue )
 		{
-			if (propertyInfo == null )
+			if ( propertyInfo == null )
 				throw new ArgumentNullException( "propertyInfo", "PropertyInfo cannot be null" );
 
 			// Set the property value...throw meaningful error upon failure.
 			try
 			{
-				propertyInfo.SetValue(instance, propertyValue, null);
+				propertyInfo.SetValue( instance, propertyValue, null );
 			}
-			catch (Exception e)
+			catch ( Exception e )
 			{
-				throw new FluencyException("Error occurred while setting default value for property [" +
-				                           instance.GetType().FullName + "." + propertyInfo.Name + "] to value [" + propertyValue + "]",
-				                           e);
+				throw new FluencyException( "Error occurred while setting default value for property [" +
+				                            instance.GetType().FullName + "." + propertyInfo.Name + "] to value [" + propertyValue + "]",
+				                            e );
 			}
 		}
 
@@ -105,13 +105,14 @@ namespace Fluency.Utils
 		}
 
 
-		public static void SetProperty< TPropertyType, T >( this T prototype, Expression< Func< T, TPropertyType > > propertyExpression, TPropertyType propertyValue ) where T : class, new()
+		public static void SetProperty< TPropertyType, T >( this T prototype, Expression< Func< T, TPropertyType > > propertyExpression, TPropertyType propertyValue )
+				where T : class, new()
 		{
 			Accessor accessor = ReflectionHelper.GetAccessor( propertyExpression );
 			accessor.SetValue( prototype, propertyValue );
 		}
 
-		// Fluent NHibernate Methods
 
+		// Fluent NHibernate Methods
 	}
 }

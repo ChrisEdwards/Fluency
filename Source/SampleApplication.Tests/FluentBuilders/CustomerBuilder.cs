@@ -10,8 +10,8 @@ namespace SampleApplication.Tests.FluentBuilders
 		protected override void SetupDefaultValues()
 		{
 			SetProperty( x => x.Id, GenerateNewId() );
-			SetProperty( x=>x.FirstName, ARandom.FirstName() );
-			SetProperty( x=>x.LastName, ARandom.LastName() );
+			SetProperty( x => x.FirstName, ARandom.FirstName() );
+			SetProperty( x => x.LastName, ARandom.LastName() );
 		}
 	}
 }

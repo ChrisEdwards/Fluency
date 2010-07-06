@@ -2,6 +2,7 @@
 using FluentNHibernate.Automapping;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
+using HibernatingRhinos.Profiler.Appender.NHibernate;
 using NHibernate;
 using NHibernate.Cfg;
 using NHibernate.Tool.hbm2ddl;
@@ -13,14 +14,14 @@ namespace SampleApplication.NHibernate
 {
 	public static class NHibernateHelper
 	{
-		private const string DbFile = "firstProject.db";
-		private static ISessionFactory _sessionFactory;
+		const string DbFile = "firstProject.db";
+		static ISessionFactory _sessionFactory;
 
 		/// <summary>
 		/// Gets the NHibernate session factory.
 		/// </summary>
 		/// <value>The session factory.</value>
-		private static ISessionFactory SessionFactory
+		static ISessionFactory SessionFactory
 		{
 			get
 			{
@@ -30,18 +31,19 @@ namespace SampleApplication.NHibernate
 					_sessionFactory =
 							Fluently.Configure()
 									//.Database( SQLiteConfiguration.Standard.UsingFile( DbFile ) )
-									.Database( MsSqlConfiguration.MsSql2005.ConnectionString( c=>c.Is( @"Data Source=localhost\BANCVUE;Initial Catalog=SampleApplication;Integrated Security=SSPI;")) )
-									.Mappings( m => {
-									                	m.AutoMappings.Add(
-									                	                  		AutoMap.AssemblyOf< ISampleApplicationAssembly >()
-									                	                  				.Where( t => t.Namespace == "SampleApplication.Domain" && t.Name != "Customer") );
-									                	m.HbmMappings.AddFromAssemblyOf< Customer >();
-									})
+									.Database( MsSqlConfiguration.MsSql2005.ConnectionString( c => c.Is( @"Data Source=localhost\BANCVUE;Initial Catalog=SampleApplication;Integrated Security=SSPI;" ) ) )
+									.Mappings( m =>
+									           	{
+									           		m.AutoMappings.Add(
+									           				AutoMap.AssemblyOf< ISampleApplicationAssembly >()
+									           						.Where( t => t.Namespace == "SampleApplication.Domain" && t.Name != "Customer" ) );
+									           		m.HbmMappings.AddFromAssemblyOf< Customer >();
+									           	} )
 									//.ExposeConfiguration( BuildSchema )
 									.BuildSessionFactory();
 
 					// Initialize NHProf.
-					HibernatingRhinos.Profiler.Appender.NHibernate.NHibernateProfiler.Initialize();
+					NHibernateProfiler.Initialize();
 				}
 
 				return _sessionFactory;
@@ -53,7 +55,7 @@ namespace SampleApplication.NHibernate
 		/// Builds the schema.
 		/// </summary>
 		/// <param name="config">The config.</param>
-		private static void BuildSchema( Configuration config )
+		static void BuildSchema( Configuration config )
 		{
 			// delete the existing db on each run  
 			if ( File.Exists( DbFile ) )

@@ -7,7 +7,6 @@ namespace SampleApplication.Tests.IntegrationTests
 	[ TestFixture ]
 	public class InlineFixtureTest : AutoRollbackDatabaseTest
 	{
-
 		protected override void TestSetUp()
 		{
 			_session.ExecuteSql( @"INSERT INTO Customers (Id, FirstName, LastName) VALUES (1, 'Bob', 'Smith')" );
@@ -17,12 +16,11 @@ namespace SampleApplication.Tests.IntegrationTests
 		}
 
 
-		[Test]
-		[Ignore("This is a sample...not meant to run")]
+		[ Test ]
+		[ Ignore( "This is a sample...not meant to run" ) ]
 		public void TestThis()
 		{
 			// Test using db.
 		}
-
 	}
 }

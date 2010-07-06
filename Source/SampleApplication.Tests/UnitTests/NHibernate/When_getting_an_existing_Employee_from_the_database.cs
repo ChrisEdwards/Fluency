@@ -8,8 +8,8 @@ namespace SampleApplication.Tests.Tests.NHibernate
 	[ TestFixture ]
 	public class When_getting_an_existing_Customer_from_the_database : AutoRollbackDatabaseTest
 	{
-		private Customer _expectedCustomer;
-		private Customer _actualCustomer;
+		Customer _expectedCustomer;
+		Customer _actualCustomer;
 
 
 		protected override void TestSetUp()

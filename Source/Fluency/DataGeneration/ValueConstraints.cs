@@ -18,7 +18,7 @@ namespace Fluency.DataGeneration
 		/// The RandomGenerator uses these constraints to generate data that we will insert into a Sql database, we 
 		/// need to default to enforce Sql limits or we risk throwing an error by inserting an invalid date time value.
 		/// </summary>
-		private static IValueConstraints _currentValueConstraints = new SqlServerDefaultValuesAndConstraints();
+		static IValueConstraints _currentValueConstraints = new SqlServerDefaultValuesAndConstraints();
 
 
 		/// <summary>

@@ -10,25 +10,28 @@ namespace Fluency
 	{
 		readonly FluencyConfiguration config = new FluencyConfiguration();
 
+
 		internal FluencyConfiguration GetConfiguration()
 		{
 			return config;
 		}
+
 
 		public void IdGeneratorIsConstructedBy( Func< IIdGenerator > func )
 		{
 			config.ConstructIdGenerator = func;
 		}
 
+
 		public void UseDefaultValueConventions()
 		{
-			config.DefaultValueConventions = new List<IDefaultConvention>()
+			config.DefaultValueConventions = new List< IDefaultConvention >
 			                                 	{
-														Convention.DateType(),
-														Convention.IntegerType(),
-														Convention.String( 20 ),
+			                                 			Convention.DateType(),
+			                                 			Convention.IntegerType(),
+			                                 			Convention.String( 20 ),
 			                                 			Convention.FirstName(),
-														Convention.LastName()
+			                                 			Convention.LastName()
 			                                 	};
 		}
 	}

@@ -5,7 +5,7 @@ namespace Fluency.IdGenerators
 	/// </summary>
 	public class IncrementingIdGenerator : IIdGenerator
 	{
-		private int _id;
+		int _id;
 
 		public IncrementingIdGenerator() {}
 

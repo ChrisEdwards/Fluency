@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using Fluency;
 using SampleApplication.Domain;
 
@@ -29,14 +27,14 @@ namespace SampleApplication.Tests.FluentBuilders
 
 		public OrderBuilder With( LineItemBuilder lineItemBuilder )
 		{
-			AddListItem( x=>x.LineItems, lineItemBuilder );
+			AddListItem( x => x.LineItems, lineItemBuilder );
 			return this;
 		}
 
 
 		public OrderBuilder With( LineItem lineItem )
 		{
-			AddListItem(x => x.LineItems, lineItem);
+			AddListItem( x => x.LineItems, lineItem );
 			//AddListItem(x => x.LineItems, new LineItemBuilder().AliasFor( lineItem ));
 			return this;
 		}

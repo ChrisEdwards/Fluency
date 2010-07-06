@@ -22,7 +22,8 @@ namespace SampleApplication.Tests
                         VALUES
                                     ({2});";
 
-			if (hasIdentityColumn)
+			if ( hasIdentityColumn )
+			{
 				sqlTemplate =
 						@"
                     SET IDENTITY_INSERT [{0}] ON;
@@ -30,6 +31,7 @@ namespace SampleApplication.Tests
                     " + sqlTemplate + @"
 
                     SET IDENTITY_INSERT [{0}] OFF;";
+			}
 
 			return GenerateInsertSql_FromTemplate( sqlTemplate, tableName, fieldNames );
 		}
@@ -42,7 +44,7 @@ namespace SampleApplication.Tests
 		/// <param name="tableName">Name of the table.</param>
 		/// <param name="fieldNames">The field names.</param>
 		/// <returns></returns>
-		private static string GenerateInsertSql_FromTemplate( string insertSqlTemplate, string tableName, string[] fieldNames )
+		static string GenerateInsertSql_FromTemplate( string insertSqlTemplate, string tableName, string[] fieldNames )
 		{
 			return String.Format(
 					insertSqlTemplate,
@@ -57,7 +59,7 @@ namespace SampleApplication.Tests
 		/// </summary>
 		/// <param name="fieldNames">The field names.</param>
 		/// <returns></returns>
-		private static string SqlFieldsListFrom( string[] fieldNames )
+		static string SqlFieldsListFrom( string[] fieldNames )
 		{
 			return String.Join( ", ", fieldNames );
 		}
@@ -68,7 +70,7 @@ namespace SampleApplication.Tests
 		/// </summary>
 		/// <param name="fieldNames">The field names.</param>
 		/// <returns></returns>
-		private static string ParametersListFrom( IEnumerable< string > fieldNames )
+		static string ParametersListFrom( IEnumerable< string > fieldNames )
 		{
 			string[] fieldNamesFormattedAsSqlParameters = (
 			                                              		from fieldName in fieldNames

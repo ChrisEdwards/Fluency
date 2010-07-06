@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Fluency.DataGeneration;
 using SampleApplication.Domain;
@@ -8,7 +7,7 @@ namespace SampleApplication.Tests
 {
 	public class Anonymous
 	{
-		private int _uniqueId = -1;
+		int _uniqueId = -1;
 
 
 		public int GetUniqueId()
@@ -23,15 +22,16 @@ namespace SampleApplication.Tests
 			            	{
 			            			Id = GetUniqueId(),
 			            			Customer = Customer(),
-									OrderDate = ARandom.DateTime(),
-									LineItems = LineItems(3)
+			            			OrderDate = ARandom.DateTime(),
+			            			LineItems = LineItems( 3 )
 			            	};
 			return order;
 		}
 
-		public Order Order_ForCustomer(Customer customer)
+
+		public Order Order_ForCustomer( Customer customer )
 		{
-			var order = Order();
+			Order order = Order();
 			order.Customer = customer;
 			return order;
 		}
@@ -41,9 +41,7 @@ namespace SampleApplication.Tests
 		{
 			var result = new List< LineItem >();
 			for ( int i = 0; i < howMany; i++ )
-			{
 				result.Add( LineItem() );
-			}
 			return result;
 		}
 
@@ -52,25 +50,26 @@ namespace SampleApplication.Tests
 		{
 			return new LineItem
 			       	{
-			       				Id = GetUniqueId(),
-								Order = Order(),
-								Product = Product(),
-								Quantity = ARandom.IntBetween( 1,10 ),
-								UnitPrice = ARandom.DoubleBetween( 1,100 )
+			       			Id = GetUniqueId(),
+			       			Order = Order(),
+			       			Product = Product(),
+			       			Quantity = ARandom.IntBetween( 1, 10 ),
+			       			UnitPrice = ARandom.DoubleBetween( 1, 100 )
 			       	};
 		}
 
 
 		public LineItem LineItem_ForOrder( Order order )
 		{
-			var lineItem = LineItem();
+			LineItem lineItem = LineItem();
 			lineItem.Order = order;
 			return lineItem;
 		}
 
-		public LineItem LineItem_ForOrder( Order order , int quantity, double price)
+
+		public LineItem LineItem_ForOrder( Order order, int quantity, double price )
 		{
-			var lineItem = LineItem_ForOrder(order);
+			LineItem lineItem = LineItem_ForOrder( order );
 			lineItem.Quantity = quantity;
 			lineItem.UnitPrice = price;
 			return lineItem;
@@ -79,7 +78,7 @@ namespace SampleApplication.Tests
 
 		public LineItem LineItem_ForOrderAndProduct( Order order, Product product )
 		{
-			var lineItem = LineItem_ForOrder( order );
+			LineItem lineItem = LineItem_ForOrder( order );
 			lineItem.Product = product;
 			return lineItem;
 		}
@@ -90,8 +89,8 @@ namespace SampleApplication.Tests
 			return new Product
 			       	{
 			       			Id = GetUniqueId(),
-							Name = ARandom.Title( 30 ),
-							Description = ARandom.Text( 200 )
+			       			Name = ARandom.Title( 30 ),
+			       			Description = ARandom.Text( 200 )
 			       	};
 		}
 

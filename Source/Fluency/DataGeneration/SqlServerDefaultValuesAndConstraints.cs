@@ -5,7 +5,7 @@ namespace Fluency.DataGeneration
 {
 	public class SqlServerDefaultValuesAndConstraints : IValueConstraints, IDefaultValues
 	{
-		private static readonly DateTime _minimumValidDateTimeForSqlServer = DateTime.Parse( @"1/1/1753 12:00:00 AM" );
+		static readonly DateTime _minimumValidDateTimeForSqlServer = DateTime.Parse( @"1/1/1753 12:00:00 AM" );
 
 
 		#region IDefaultValues Members

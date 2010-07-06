@@ -7,15 +7,10 @@ namespace SampleApplication.Domain
 {
 	public class Order
 	{
-		private IList< LineItem > _lineItems = new List< LineItem >();
-		private Customer _customer;
+		readonly IList< LineItem > _lineItems = new List< LineItem >();
 
 		public virtual int Id { get; set; }
-		public virtual Customer Customer
-		{
-			get { return _customer; }
-			set { _customer = value; }
-		}
+		public virtual Customer Customer { get; set; }
 
 		public virtual DateTime OrderDate { get; set; }
 
@@ -25,13 +20,13 @@ namespace SampleApplication.Domain
 			set
 			{
 				LineItems.Clear();
-				foreach (LineItem lineItem in value)
+				foreach ( LineItem lineItem in value )
 					Add( lineItem );
 			}
 		}
 
 
-		private void Add( LineItem lineItem )
+		void Add( LineItem lineItem )
 		{
 			LineItems.Add( lineItem );
 			lineItem.Order = this;

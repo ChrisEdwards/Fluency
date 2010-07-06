@@ -14,7 +14,7 @@ namespace Fluency.DataGeneration
 	public static class DefaultValues
 	{
 		// Default to using SqlServer Default Values.
-		private static IDefaultValues _currentDefaultValues = new SqlServerDefaultValuesAndConstraints();
+		static IDefaultValues _currentDefaultValues = new SqlServerDefaultValuesAndConstraints();
 
 
 		/// <summary>

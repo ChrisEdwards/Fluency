@@ -7,12 +7,13 @@ namespace Fluency
 	{
 		internal static FluencyConfiguration Configuration = new FluencyConfiguration();
 
+
 		public static void Initialize( Action< InitializationExpression > action )
 		{
-			lock (typeof(Fluency))
+			lock ( typeof ( Fluency ) )
 			{
 				var expression = new InitializationExpression();
-				action(expression);
+				action( expression );
 
 				Configuration = expression.GetConfiguration();
 			}

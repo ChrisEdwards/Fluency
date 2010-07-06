@@ -1,9 +1,7 @@
-using System;
 using NUnit.Framework;
+
 
 namespace SpecUnit
 {
-	public class ContextAttribute : SetUpAttribute
-	{
-	}
+	public class ContextAttribute : SetUpAttribute {}
 }

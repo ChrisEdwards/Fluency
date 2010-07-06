@@ -1,28 +1,32 @@
 using System;
 using NUnit.Framework;
 
+
 namespace SpecUnit
 {
 	public class ConcernAttribute : TestFixtureAttribute
 	{
-		private readonly string _name;
+		readonly string _name;
 
 		public string Name
 		{
 			get { return _name; }
 		}
 
-		public ConcernAttribute(Type type)
+
+		public ConcernAttribute( Type type )
 		{
 			_name = type.Name;
 		}
 
-		public ConcernAttribute(Type type, string clarification)
+
+		public ConcernAttribute( Type type, string clarification )
 		{
 			_name = type.Name + " (" + clarification + ")";
 		}
 
-		public ConcernAttribute(string name)
+
+		public ConcernAttribute( string name )
 		{
 			_name = name;
 		}

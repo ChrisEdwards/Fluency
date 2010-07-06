@@ -13,9 +13,9 @@ namespace SampleApplication.Tests
 	{
 		public const bool HasIdentityColumn = true;
 		public const bool HasNoIdentityColumn = false;
-		private static readonly ILog log = LogManager.GetLogger( MethodBase.GetCurrentMethod().DeclaringType );
+		static readonly ILog log = LogManager.GetLogger( MethodBase.GetCurrentMethod().DeclaringType );
 
-		private readonly ISession _session;
+		readonly ISession _session;
 
 
 		public DbHelper( ISession session )
@@ -24,7 +24,7 @@ namespace SampleApplication.Tests
 		}
 
 
-		private static void LogCommand( IDbCommand command )
+		static void LogCommand( IDbCommand command )
 		{
 			// Log command call.
 			log.Debug( "SQL COMMAND: " + command.CommandText );
@@ -35,7 +35,7 @@ namespace SampleApplication.Tests
 		}
 
 
-		private static bool IsPreExistingId( int id )
+		static bool IsPreExistingId( int id )
 		{
 			return id >= 0;
 		}

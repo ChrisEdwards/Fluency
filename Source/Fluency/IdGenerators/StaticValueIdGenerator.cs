@@ -5,7 +5,7 @@ namespace Fluency.IdGenerators
 	/// </summary>
 	public class StaticValueIdGenerator : IIdGenerator
 	{
-		private readonly int _staticIdValue;
+		readonly int _staticIdValue;
 
 
 		public StaticValueIdGenerator( int staticIdValue )

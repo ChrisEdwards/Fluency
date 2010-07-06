@@ -6,8 +6,8 @@ namespace Fluency
 {
 	public class FluentListBuilder< T > : IFluentBuilder< IList< T > > where T : class, new()
 	{
-		private readonly IList< IFluentBuilder< T > > _builders = new List< IFluentBuilder< T > >();
-		private readonly IList< T > _directItems = new List< T >();
+		readonly IList< IFluentBuilder< T > > _builders = new List< IFluentBuilder< T > >();
+		readonly IList< T > _directItems = new List< T >();
 
 
 		#region IFluentBuilder<IList<T>> Members
