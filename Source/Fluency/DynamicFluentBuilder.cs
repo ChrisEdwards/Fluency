@@ -13,15 +13,39 @@ namespace Fluency
 		}
 
 
+		public DynamicFluentBuilder< T > With< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression, FluentBuilder< TPropertyType > propertyValue )
+				where TPropertyType : class, new()
+		{
+			SetProperty( propertyExpression, propertyValue );
+			return this;
+		}
+
+
 		public DynamicFluentBuilder< T > Having< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression, TPropertyType propertyValue )
 		{
 			return With( propertyExpression, propertyValue );
 		}
 
 
+		public DynamicFluentBuilder< T > Having< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression, FluentBuilder< TPropertyType > propertyValue )
+				where TPropertyType : class, new()
+		{
+			SetProperty( propertyExpression, propertyValue );
+			return this;
+		}
+
+
 		public DynamicFluentBuilder< T > For< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression, TPropertyType propertyValue )
 		{
 			return With( propertyExpression, propertyValue );
+		}
+
+
+		public DynamicFluentBuilder< T > For< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression, FluentBuilder< TPropertyType > propertyValue )
+				where TPropertyType : class, new()
+		{
+			SetProperty( propertyExpression, propertyValue );
+			return this;
 		}
 	}
 }
