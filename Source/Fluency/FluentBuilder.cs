@@ -143,6 +143,19 @@ namespace Fluency
 		#endregion
 
 
+		/// <summary>
+		/// Gets the value the builder will create for the specified property.
+		/// </summary>
+		/// <typeparam name="TPropertyType">The type of the property type.</typeparam>
+		/// <param name="propertyExpression">The property expression.</param>
+		/// <param name="propertyValue">The property value.</param>
+		/// <returns></returns>
+		public TPropertyType GetValue< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression, TPropertyType propertyValue )
+		{
+			return _prototype.GetProperty( propertyExpression );
+		}
+
+
 		#region Property Value Setters
 
 		/// <summary>
@@ -151,7 +164,7 @@ namespace Fluency
 		/// <typeparam name="TPropertyType">The type of the property type.</typeparam>
 		/// <param name="propertyExpression">The property expression.</param>
 		/// <param name="propertyValue">The property value.</param>
-		protected void SetProperty< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression, TPropertyType propertyValue )
+		public void SetProperty< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression, TPropertyType propertyValue )
 		{
 			// If we try to change info after prebuilt result is set...throw error since the change wont be reflected in the prebuilt result.
 			if ( _preBuiltResult != null )

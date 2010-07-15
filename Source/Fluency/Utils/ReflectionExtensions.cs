@@ -113,6 +113,14 @@ namespace Fluency.Utils
 		}
 
 
+		public static TPropertyType GetProperty< TPropertyType, T >( this T prototype, Expression< Func< T, TPropertyType > > propertyExpression )
+				where T : class, new()
+		{
+			Accessor accessor = ReflectionHelper.GetAccessor( propertyExpression );
+			return (TPropertyType)accessor.GetValue( prototype );
+		}
+
+
 		// Fluent NHibernate Methods
 	}
 }
