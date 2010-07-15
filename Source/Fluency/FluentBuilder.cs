@@ -150,7 +150,7 @@ namespace Fluency
 		/// <param name="propertyExpression">The property expression.</param>
 		/// <param name="propertyValue">The property value.</param>
 		/// <returns></returns>
-		public TPropertyType GetValue< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression, TPropertyType propertyValue )
+		public TPropertyType GetValue< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression )
 		{
 			return _prototype.GetProperty( propertyExpression );
 		}
