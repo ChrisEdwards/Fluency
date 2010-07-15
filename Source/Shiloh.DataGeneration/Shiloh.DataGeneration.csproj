@@ -38,6 +38,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Anonymous.cs" />
+    <Compile Include="AnonymousBase.cs" />
+    <Compile Include="AnonymousDate.cs" />
     <Compile Include="AnonymousInteger.cs" />
     <Compile Include="AnonymousValue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
