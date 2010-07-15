@@ -45,6 +45,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnonymousDateTests.cs" />
     <Compile Include="AnonymousIntegerTests.cs" />
     <Compile Include="AnonymousTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

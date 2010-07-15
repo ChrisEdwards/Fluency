@@ -44,6 +44,12 @@
     <Compile Include="AnonymousValue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RandomData.cs" />
+    <Compile Include="ValueConstraints\CSharpDefaultValuesAndConstraints.cs" />
+    <Compile Include="ValueConstraints\DefaultValues.cs" />
+    <Compile Include="ValueConstraints\IDefaultValues.cs" />
+    <Compile Include="ValueConstraints\IValueConstraints.cs" />
+    <Compile Include="ValueConstraints\SqlServerDefaultValuesAndConstraints.cs" />
+    <Compile Include="ValueConstraints\ValueConstraints.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

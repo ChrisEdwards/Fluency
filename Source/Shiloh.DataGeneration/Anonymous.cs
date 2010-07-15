@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using Shiloh.DataGeneration.ValueConstraints;
 
 
 namespace Shiloh.DataGeneration
@@ -7,6 +8,8 @@ namespace Shiloh.DataGeneration
 	public static class Anonymous
 	{
 		static readonly Random _random = new Random();
+
+		public static IValueConstraints ValueConstraints = new SqlServerDefaultValuesAndConstraints();
 
 		public static AnonymousInteger Integer
 		{
@@ -21,6 +24,11 @@ namespace Shiloh.DataGeneration
 		public static AnonymousValue Value
 		{
 			get { return new AnonymousValue(); }
+		}
+
+		public static DateTime Date
+		{
+			get { return new AnonymousDate(); }
 		}
 
 
