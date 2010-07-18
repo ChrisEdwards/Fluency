@@ -127,7 +127,7 @@ namespace Fluency.DataGeneration
 		public static DateTime DateTimeBetween( DateTime min, DateTime max )
 		{
 			if ( max <= min )
-				throw new ArgumentException( "Max must be greater than min." );
+				throw new ArgumentException( string.Format( "Max [{0}] must be greater than min [{1}].", max, min ) );
 
 			double startTick = min.Ticks;
 			double endTick = max.Ticks;
