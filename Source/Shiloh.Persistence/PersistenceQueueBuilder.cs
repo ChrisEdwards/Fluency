@@ -29,7 +29,7 @@ namespace Shiloh.Persistence
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <returns></returns>
-		internal InstanceQueueBuilder< T > ForType< T >() where T : class
+		public InstanceQueueBuilder< T > ForType< T >() where T : class
 		{
 			var builder = new InstanceQueueBuilder< T >();
 			InstanceQueueBuilders.Add( builder );
