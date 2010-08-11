@@ -8,12 +8,16 @@ namespace Fluency
 		internal static FluencyConfiguration Configuration = new FluencyConfiguration();
 
 
-		public static void Initialize( Action< InitializationExpression > action )
+		/// <summary>
+		/// Initializes Fluency with the specified configuration.
+		/// </summary>
+		/// <param name="configurationAction">The configuration action.</param>
+		public static void Initialize( Action< InitializationExpression > configurationAction )
 		{
 			lock ( typeof ( Fluency ) )
 			{
 				var expression = new InitializationExpression();
-				action( expression );
+				configurationAction(expression);
 
 				Configuration = expression.GetConfiguration();
 			}

@@ -181,7 +181,7 @@ namespace Fluency.DataGeneration
 
 		public static DateTime DateInPastYear()
 		{
-			return DateTimeInPastYear().Date;
+			return DateTimeInPastYear().Date;  
 		}
 
 
