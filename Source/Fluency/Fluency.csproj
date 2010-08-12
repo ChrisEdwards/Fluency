@@ -45,8 +45,6 @@
     <Compile Include="Conventions\Convention.cs" />
     <Compile Include="Conventions\DefaultConvention.cs" />
     <Compile Include="Conventions\LambdaConvention.cs" />
-    <Compile Include="Conventions\LastNameConvention.cs" />
-    <Compile Include="Conventions\FirstNameConvention.cs" />
     <Compile Include="Conventions\IDefaultConvention.cs" />
     <Compile Include="DataGeneration\ARandom.cs" />
     <Compile Include="DataGeneration\CSharpDefaultValuesAndConstraints.cs" />

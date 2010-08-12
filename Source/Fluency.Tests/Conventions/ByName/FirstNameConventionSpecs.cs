@@ -13,19 +13,14 @@ namespace Fluency.Tests.Conventions.ByName
 	{
 		public abstract class When_getting_the_default_value_for_a_property_having_a_first_name_convention_applied
 		{
-			protected static IDefaultConvention<string> convention;
+			protected static IDefaultConvention< string > convention;
 			protected static PropertyInfo propertyInfo;
-			protected static object defaultValue;
 
-			Because of = () =>
-			             	{
-			             		convention = Convention.FirstName();
-			             		defaultValue = convention.DefaultValue( propertyInfo );
-			             	};
+			Because of = () => { convention = Convention.FirstName(); };
 		}
 
 
-		[Subject(typeof(Convention))]
+		[ Subject( typeof ( Convention ), "FirstName" ) ]
 		public class When_property_name_is_lowercase_firstname : When_getting_the_default_value_for_a_property_having_a_first_name_convention_applied
 		{
 			Establish context = () =>
@@ -35,11 +30,11 @@ namespace Fluency.Tests.Conventions.ByName
 			                    	};
 
 			It should_apply = () => convention.AppliesTo( propertyInfo ).Should().Be.True();
-			It should_return_a_random_first_name = () => defaultValue.ToString().Length.Should().Be.GreaterThan( 0 );
+			It should_return_a_random_first_name = () => convention.DefaultValue( propertyInfo ).Should().Not.Be.Empty();
 		}
 
 
-		[Subject(typeof(Convention))]
+		[Subject(typeof(Convention), "FirstName")]
 		public class When_property_name_is_mixed_case_FirstName : When_getting_the_default_value_for_a_property_having_a_first_name_convention_applied
 		{
 			Establish context = () =>
@@ -49,11 +44,11 @@ namespace Fluency.Tests.Conventions.ByName
 			                    	};
 
 			It should_apply = () => convention.AppliesTo( propertyInfo ).Should().Be.True();
-			It should_return_a_random_first_name = () => defaultValue.ToString().Length.Should().Be.GreaterThan( 0 );
+			It should_return_a_random_first_name = () => convention.DefaultValue( propertyInfo ).Should().Not.Be.Empty();
 		}
 
 
-		[Subject(typeof(Convention))]
+		[Subject(typeof(Convention), "FirstName")]
 		public class When_property_name_contains_lowercase_firstname : When_getting_the_default_value_for_a_property_having_a_first_name_convention_applied
 		{
 			Establish context = () =>
@@ -63,11 +58,11 @@ namespace Fluency.Tests.Conventions.ByName
 			                    	};
 
 			It should_apply = () => convention.AppliesTo( propertyInfo ).Should().Be.True();
-			It should_return_a_random_first_name = () => defaultValue.ToString().Length.Should().Be.GreaterThan( 0 );
+			It should_return_a_random_first_name = () => convention.DefaultValue( propertyInfo ).Should().Not.Be.Empty();
 		}
 
 
-		[Subject(typeof(Convention))]
+		[Subject(typeof(Convention), "FirstName")]
 		public class When_property_name_contains_mixed_case_FirstName : When_getting_the_default_value_for_a_property_having_a_first_name_convention_applied
 		{
 			Establish context = () =>
@@ -77,11 +72,11 @@ namespace Fluency.Tests.Conventions.ByName
 			                    	};
 
 			It should_apply = () => convention.AppliesTo( propertyInfo ).Should().Be.True();
-			It should_return_a_random_first_name = () => defaultValue.ToString().Length.Should().Be.GreaterThan( 0 );
+			It should_return_a_random_first_name = () => convention.DefaultValue( propertyInfo ).Should().Not.Be.Empty();
 		}
 
 
-		[Subject(typeof(Convention))]
+		[Subject(typeof(Convention), "FirstName")]
 		public class When_given_a_property_with_name_other_than_firstname : When_getting_the_default_value_for_a_property_having_a_first_name_convention_applied
 		{
 			Establish context = () =>
@@ -91,7 +86,7 @@ namespace Fluency.Tests.Conventions.ByName
 			                    	};
 
 			It should_not_apply = () => convention.AppliesTo( propertyInfo ).Should().Be.False();
-			It should_return_nothing = () => defaultValue.Should().Be.Null();
+			It should_return_nothing = () => convention.DefaultValue( propertyInfo ).Should().Be.Null();
 		}
 	}
 }
