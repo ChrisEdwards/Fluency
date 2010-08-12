@@ -72,6 +72,7 @@
     <Compile Include="BuilderTests\When_setting_a_reference_property.cs" />
     <Compile Include="Conventions\ByName\FirstNameConventionSpecs1.cs" />
     <Compile Include="Conventions\ByName\LastNameConventionSpecs.cs" />
+    <Compile Include="Conventions\ByName\LastNameConventionSpecs1.cs" />
     <Compile Include="Conventions\ByName\FirstNameConventionSpecs.cs" />
     <Compile Include="Conventions\ByType\DateTypeConventionSpecs.cs" />
     <Compile Include="Conventions\ByType\IntegerTypeConventionSpecs.cs" />

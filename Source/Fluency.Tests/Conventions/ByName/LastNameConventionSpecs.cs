@@ -1,83 +1,100 @@
 using System.Reflection;
-using developwithpassion.bdd.contexts;
-using developwithpassion.bdd.mbunit.standard.observations;
 using Fluency.Conventions;
-using FluentObjectBuilder;
+using Fluency.Utils;
 using Machine.Specifications;
+using SharpTestsEx;
+
+// ReSharper disable InconsistentNaming
 
 
 namespace Fluency.Tests.Conventions.ByName
 {
 	public class LastNameConventionSpecs
 	{
-		public class When_gettin_the_default_value_from_a_last_name_convention
+		public abstract class When_getting_the_default_value_for_a_property_having_a_last_name_convention_applied
 		{
 			protected static IDefaultConvention convention;
-			protected static PropertyInfo property_info;
-			Because of = () => convention = Convention.LastName();
+			protected static PropertyInfo propertyInfo;
+			protected static object defaultValue;
+
+			Because of = () =>
+			{
+				convention = Convention.LastName();
+				defaultValue = convention.DefaultValue(propertyInfo);
+			};
 		}
 
 
-		public abstract class concern : observations_for_a_sut_with_a_contract< IDefaultConvention, LambdaConvention >
-		{
-			protected static IDefaultConvention convention;
-			protected static PropertyInfo property_info;
-
-			because b = () => { convention = Convention.LastName(); };
-		}
-
-
-		[ Subject( typeof ( Convention ) ) ]
-		public class when_given_a_property_with_name_of_LastName : When_gettin_the_default_value_from_a_last_name_convention
+		[Subject(typeof(LastNameConvention))]
+		public class When_property_name_is_lowercase_lastname : When_getting_the_default_value_for_a_property_having_a_last_name_convention_applied
 		{
 			Establish context = () =>
-			                    	{
-			                    		var person = new {LastName = "bob"};
-			                    		property_info = person.GetType().GetProperty( "LastName" );
-			                    	};
+			{
+				var person = new { lastname = "bob" };
+				propertyInfo = person.PropertyInfoFor(x => x.lastname);
+			};
 
-
-			it should_apply = () => convention.AppliesTo( property_info ).should_be_true();
-
-			it should_return_a_random_last_name = () =>
-			                                      	{
-			                                      		string value = convention.DefaultValue( property_info ).ToString();
-			                                      		value.should_not_be_null();
-			                                      		value.Length.should_be_greater_than( 0 );
-			                                      	};
+			It should_apply = () => convention.AppliesTo(propertyInfo).Should().Be.True();
+			It should_return_a_random_last_name = () => defaultValue.ToString().Length.Should().Be.GreaterThan(0);
 		}
 
 
-		public class when_given_a_property_with_name_of_lastname : concern
+		[Subject(typeof(LastNameConvention))]
+		public class When_property_name_is_mixed_case_LastName : When_getting_the_default_value_for_a_property_having_a_last_name_convention_applied
 		{
-			context c = () =>
-			            	{
-			            		var person = new {lastname = "bob"};
-			            		property_info = person.GetType().GetProperty( "lastname" );
-			            	};
+			Establish context = () =>
+			{
+				var person = new { LastName = "bob" };
+				propertyInfo = person.PropertyInfoFor(x => x.LastName);
+			};
 
-			it should_apply = () => convention.AppliesTo( property_info ).should_be_true();
-
-			it should_return_a_random_last_name = () =>
-			                                      	{
-			                                      		string value = convention.DefaultValue( property_info ).ToString();
-			                                      		value.should_not_be_null();
-			                                      		value.Length.should_be_greater_than( 0 );
-			                                      	};
+			It should_apply = () => convention.AppliesTo(propertyInfo).Should().Be.True();
+			It should_return_a_random_last_name = () => defaultValue.ToString().Length.Should().Be.GreaterThan(0);
 		}
 
 
-		public class when_given_a_property_with_name_other_than_lastname : concern
+		[Subject(typeof(LastNameConvention))]
+		public class When_property_name_contains_lowercase_lastname : When_getting_the_default_value_for_a_property_having_a_last_name_convention_applied
 		{
-			context c = () =>
-			            	{
-			            		var person = new {firstname = "bob"};
-			            		property_info = person.GetType().GetProperty( "firstname" );
-			            	};
+			Establish context = () =>
+			{
+				var person = new { customerlastname = "bob" };
+				propertyInfo = person.PropertyInfoFor(x => x.customerlastname);
+			};
 
-			it should_not_apply = () => convention.AppliesTo( property_info ).should_be_false();
+			It should_apply = () => convention.AppliesTo(propertyInfo).Should().Be.True();
+			It should_return_a_random_first_name = () => defaultValue.ToString().Length.Should().Be.GreaterThan(0);
+		}
 
-			it should_return_nothing = () => convention.DefaultValue( property_info ).should_be_null();
+
+		[Subject(typeof(LastNameConvention))]
+		public class When_property_name_contains_mixed_case_LastName : When_getting_the_default_value_for_a_property_having_a_last_name_convention_applied
+		{
+			Establish context = () =>
+			{
+				var person = new { CustomerLastName = "bob" };
+				propertyInfo = person.PropertyInfoFor(x => x.CustomerLastName);
+			};
+
+			It should_apply = () => convention.AppliesTo(propertyInfo).Should().Be.True();
+			It should_return_a_random_first_name = () => defaultValue.ToString().Length.Should().Be.GreaterThan(0);
+		}
+
+
+		[Subject(typeof(LastNameConvention))]
+		public class When_given_a_property_with_name_other_than_lastname : When_getting_the_default_value_for_a_property_having_a_last_name_convention_applied
+		{
+			Establish context = () =>
+			{
+				var person = new { othername = "bob" };
+				propertyInfo = person.PropertyInfoFor(x => x.othername);
+			};
+
+			It should_not_apply = () => convention.AppliesTo(propertyInfo).Should().Be.False();
+			It should_return_nothing = () => defaultValue.Should().Be.Null();
 		}
 	}
 }
+
+
+// ReSharper restore InconsistentNaming
