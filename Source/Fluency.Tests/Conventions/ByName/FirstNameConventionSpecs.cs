@@ -2,6 +2,7 @@ using System.Reflection;
 using Fluency.Conventions;
 using Machine.Specifications;
 using SharpTestsEx;
+using Fluency.Utils;
 
 // ReSharper disable InconsistentNaming
 
@@ -30,11 +31,10 @@ namespace Fluency.Tests.Conventions.ByName
 			Establish context = () =>
 			                    	{
 			                    		var person = new {FirstName = "bob"};
-			                    		propertyInfo = person.GetType().GetProperty( "FirstName" );
+			                    		propertyInfo = person.PropertyInfoFor( x => x.FirstName );
 			                    	};
 
 			It should_apply = () => convention.AppliesTo( propertyInfo ).Should().Be.True();
-
 			It should_return_a_random_first_name = () =>
 			                                       	{
 			                                       		defaultValue.Should().Not.Be.Null();
@@ -53,7 +53,6 @@ namespace Fluency.Tests.Conventions.ByName
 			                    	};
 
 			It should_apply = () => convention.AppliesTo( propertyInfo ).Should().Be.True();
-
 			It should_return_a_random_first_name = () =>
 			                                       	{
 			                                       		defaultValue.Should().Not.Be.Null();
@@ -72,7 +71,6 @@ namespace Fluency.Tests.Conventions.ByName
 			                    	};
 
 			It should_apply = () => convention.AppliesTo( propertyInfo ).Should().Be.True();
-
 			It should_return_a_random_first_name = () =>
 			                                       	{
 			                                       		defaultValue.Should().Not.Be.Null();
@@ -91,7 +89,6 @@ namespace Fluency.Tests.Conventions.ByName
 			                    	};
 
 			It should_apply = () => convention.AppliesTo( propertyInfo ).Should().Be.True();
-
 			It should_return_a_random_first_name = () =>
 			                                       	{
 			                                       		defaultValue.Should().Not.Be.Null();
@@ -110,7 +107,6 @@ namespace Fluency.Tests.Conventions.ByName
 			                    	};
 
 			It should_apply = () => convention.AppliesTo( propertyInfo ).Should().Be.True();
-
 			It should_return_a_random_first_name = () =>
 			                                       	{
 			                                       		defaultValue.Should().Not.Be.Null();
@@ -129,7 +125,6 @@ namespace Fluency.Tests.Conventions.ByName
 			                    	};
 
 			It should_not_apply = () => convention.AppliesTo( propertyInfo ).Should().Be.False();
-
 			It should_return_nothing = () => convention.DefaultValue( propertyInfo ).Should().Be.Null();
 		}
 	}
