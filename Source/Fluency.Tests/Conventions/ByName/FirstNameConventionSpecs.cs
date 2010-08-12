@@ -23,16 +23,10 @@ namespace Fluency.Tests.Conventions.ByName
 			             		defaultValue = convention.DefaultValue( propertyInfo );
 			             	};
 		}
-		
-		public abstract class FirstName_convention_should_apply_and_generate_random_first_name: When_getting_the_default_value_for_a_property_having_a_first_name_convention_applied
-		{
-			public It should_apply = () => convention.AppliesTo(propertyInfo).Should().Be.True();
-			public It should_return_a_random_first_name = () => defaultValue.ToString().Length.Should().Be.GreaterThan(0);
-		}
 
 
 		[ Subject( typeof ( FirstNameConvention ) ) ]
-		public class When_property_name_is_lowercase_firstname : FirstName_convention_should_apply_and_generate_random_first_name
+		public class When_property_name_is_lowercase_firstname : When_getting_the_default_value_for_a_property_having_a_first_name_convention_applied
 		{
 			Establish context = () =>
 			                    	{
@@ -40,6 +34,8 @@ namespace Fluency.Tests.Conventions.ByName
 			                    		propertyInfo = person.PropertyInfoFor( x => x.firstname );
 			                    	};
 
+			It should_apply = () => convention.AppliesTo( propertyInfo ).Should().Be.True();
+			It should_return_a_random_first_name = () => defaultValue.ToString().Length.Should().Be.GreaterThan( 0 );
 		}
 
 
