@@ -31,6 +31,7 @@ namespace Fluency.Tests.BuilderTests
 			public string LastName { get; set; }
 			public int IntegerProperty { get; set; }
 			public DateTime DateTimeProperty { get; set; }
+			public TestClass ReferenceProperty { get; set; }
 		}
 
 
@@ -136,6 +137,27 @@ namespace Fluency.Tests.BuilderTests
 			Because of = () => _result = _builder.build();
 
 			It should_use_the_provided_date_time = () => _result.StringProperty.ShouldEqual( _expected );
+		}
+
+
+		[ Subject( typeof ( DynamicFluentBuilder< > ) ) ]
+		public class When_building_the_object_after_specifying_dynamic_property_builder_using_With : Given_a_DynamicFluentBuilder_that_uses_default_value_conventions
+		{
+			static TestClass _result;
+			static TestClass _expectedValue;
+
+			Establish context = () =>
+			                    	{
+			                    		// Create a builder that will return the expected value.
+			                    		_expectedValue = new TestClass {FirstName = "Bob", LastName = "Smith"};
+			                    		FluentBuilder< TestClass > propertyBuilder = new DynamicFluentBuilder< TestClass >().AliasFor( _expectedValue );
+
+			                    		_builder.With( x => x.ReferenceProperty, propertyBuilder );
+			                    	};
+
+			Because of = () => _result = _builder.build();
+
+			It should_use_the_provided_builder_to_build_the_result = () => _result.ReferenceProperty.ShouldEqual( _expectedValue );
 		}
 	}
 }
