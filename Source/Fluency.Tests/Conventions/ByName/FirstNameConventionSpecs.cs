@@ -34,7 +34,7 @@ namespace Fluency.Tests.Conventions.ByName
 		}
 
 
-		[Subject(typeof(Convention), "FirstName")]
+		[ Subject( typeof ( Convention ), "FirstName" ) ]
 		public class When_property_name_is_mixed_case_FirstName : When_getting_the_default_value_for_a_property_having_a_first_name_convention_applied
 		{
 			Establish context = () =>
@@ -48,7 +48,7 @@ namespace Fluency.Tests.Conventions.ByName
 		}
 
 
-		[Subject(typeof(Convention), "FirstName")]
+		[ Subject( typeof ( Convention ), "FirstName" ) ]
 		public class When_property_name_contains_lowercase_firstname : When_getting_the_default_value_for_a_property_having_a_first_name_convention_applied
 		{
 			Establish context = () =>
@@ -62,7 +62,7 @@ namespace Fluency.Tests.Conventions.ByName
 		}
 
 
-		[Subject(typeof(Convention), "FirstName")]
+		[ Subject( typeof ( Convention ), "FirstName" ) ]
 		public class When_property_name_contains_mixed_case_FirstName : When_getting_the_default_value_for_a_property_having_a_first_name_convention_applied
 		{
 			Establish context = () =>
@@ -76,7 +76,7 @@ namespace Fluency.Tests.Conventions.ByName
 		}
 
 
-		[Subject(typeof(Convention), "FirstName")]
+		[ Subject( typeof ( Convention ), "FirstName" ) ]
 		public class When_given_a_property_with_name_other_than_firstname : When_getting_the_default_value_for_a_property_having_a_first_name_convention_applied
 		{
 			Establish context = () =>
