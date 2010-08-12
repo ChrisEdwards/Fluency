@@ -15,13 +15,8 @@ namespace Fluency.Tests.Conventions.ByName
 		{
 			protected static IDefaultConvention< string > convention;
 			protected static PropertyInfo propertyInfo;
-			protected static object defaultValue;
 
-			Because of = () =>
-			             	{
-			             		convention = Convention.LastName();
-			             		defaultValue = convention.DefaultValue( propertyInfo );
-			             	};
+			Because of = () => { convention = Convention.LastName(); };
 		}
 
 
@@ -35,7 +30,7 @@ namespace Fluency.Tests.Conventions.ByName
 			                    	};
 
 			It should_apply = () => convention.AppliesTo( propertyInfo ).Should().Be.True();
-			It should_return_a_random_last_name = () => defaultValue.ToString().Length.Should().Be.GreaterThan( 0 );
+			It should_return_a_random_last_name = () => convention.DefaultValue( propertyInfo ).Should().Not.Be.Empty();
 		}
 
 
@@ -49,7 +44,7 @@ namespace Fluency.Tests.Conventions.ByName
 			                    	};
 
 			It should_apply = () => convention.AppliesTo( propertyInfo ).Should().Be.True();
-			It should_return_a_random_last_name = () => defaultValue.ToString().Length.Should().Be.GreaterThan( 0 );
+			It should_return_a_random_last_name = () => convention.DefaultValue( propertyInfo ).Should().Not.Be.Empty();
 		}
 
 
@@ -63,7 +58,7 @@ namespace Fluency.Tests.Conventions.ByName
 			                    	};
 
 			It should_apply = () => convention.AppliesTo( propertyInfo ).Should().Be.True();
-			It should_return_a_random_first_name = () => defaultValue.ToString().Length.Should().Be.GreaterThan( 0 );
+			It should_return_a_random_last_name = () => convention.DefaultValue( propertyInfo ).Should().Not.Be.Empty();
 		}
 
 
@@ -77,7 +72,7 @@ namespace Fluency.Tests.Conventions.ByName
 			                    	};
 
 			It should_apply = () => convention.AppliesTo( propertyInfo ).Should().Be.True();
-			It should_return_a_random_first_name = () => defaultValue.ToString().Length.Should().Be.GreaterThan( 0 );
+			It should_return_a_random_last_name = () => convention.DefaultValue( propertyInfo ).Should().Not.Be.Empty();
 		}
 
 
@@ -91,7 +86,7 @@ namespace Fluency.Tests.Conventions.ByName
 			                    	};
 
 			It should_not_apply = () => convention.AppliesTo( propertyInfo ).Should().Be.False();
-			It should_return_nothing = () => defaultValue.Should().Be.Null();
+			It should_return_nothing = () => convention.DefaultValue( propertyInfo ).Should().Be.Null();
 		}
 	}
 }
