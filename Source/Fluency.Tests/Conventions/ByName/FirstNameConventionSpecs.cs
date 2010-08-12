@@ -80,6 +80,46 @@ namespace Fluency.Tests.Conventions.ByName
 
 
 		[ Subject( typeof ( FirstNameConvention ) ) ]
+		public class When_property_name_contains_lowercase_firstname : When_getting_the_default_value_for_a_property_having_a_first_name_convention_applied
+		{
+			Establish context = () =>
+			                    	{
+			                    		var person = new {customerfirstname = "bob"};
+			                    		propertyInfo = person.GetType().GetProperty( "customerfirstname" );
+			                    	};
+
+			It should_apply = () => convention.AppliesTo( propertyInfo ).Should().Be.True();
+
+			It should_return_a_random_first_name = () =>
+			                                       	{
+			                                       		string value = convention.DefaultValue( propertyInfo ).ToString();
+			                                       		value.Should().Not.Be.Null();
+			                                       		value.Length.Should().Be.GreaterThan( 0 );
+			                                       	};
+		}
+
+
+		[ Subject( typeof ( FirstNameConvention ) ) ]
+		public class When_property_name_contains_mixed_case_FirstName : When_getting_the_default_value_for_a_property_having_a_first_name_convention_applied
+		{
+			Establish context = () =>
+			                    	{
+			                    		var person = new {CustomerFirstName = "bob"};
+			                    		propertyInfo = person.GetType().GetProperty( "CustomerFirstName" );
+			                    	};
+
+			It should_apply = () => convention.AppliesTo( propertyInfo ).Should().Be.True();
+
+			It should_return_a_random_first_name = () =>
+			                                       	{
+			                                       		string value = convention.DefaultValue( propertyInfo ).ToString();
+			                                       		value.Should().Not.Be.Null();
+			                                       		value.Length.Should().Be.GreaterThan( 0 );
+			                                       	};
+		}
+
+
+		[ Subject( typeof ( FirstNameConvention ) ) ]
 		public class When_given_a_property_with_name_other_than_firstname : When_getting_the_default_value_for_a_property_having_a_first_name_convention_applied
 		{
 			Establish context = () =>
