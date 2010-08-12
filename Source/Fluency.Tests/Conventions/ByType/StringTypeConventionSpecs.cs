@@ -1,53 +1,54 @@
 using System.Reflection;
-using developwithpassion.bdd.contexts;
-using developwithpassion.bdd.mbunit;
-using developwithpassion.bdd.mbunit.standard.observations;
 using Fluency.Conventions;
+using Fluency.Utils;
+using Machine.Specifications;
+using SharpTestsEx;
+
+// ReSharper disable InconsistentNaming
 
 
 namespace Fluency.Tests.Conventions.ByType
 {
-	public class TypeStringConventionSpecs
+	public class StringTypeConventionsSpecs
 	{
-		public abstract class concern : observations_for_a_sut_with_a_contract< IDefaultConvention<string>, LambdaConvention<string> >
+		public abstract class When_getting_the_default_value_for_a_property_having_a_string_type_convention_applied
 		{
 			protected static IDefaultConvention<string> convention;
-			protected static PropertyInfo property_info;
+			protected static PropertyInfo propertyInfo;
+			protected const int expectedLength = 10;
 
-			because b = () => { convention = Convention.String( 20 ); };
+			Because of = () => { convention = Convention.String( expectedLength ); };
 		}
 
 
-		public class when_given_a_property_of_type_string : concern
+		[Subject(typeof(Convention), "ByType<DateTime>")]
+		public class When_property_is_a_String_type : When_getting_the_default_value_for_a_property_having_a_string_type_convention_applied
 		{
-			context c = () =>
-			            	{
-			            		var person = new {StringProperty = "string"};
-			            		property_info = person.GetType().GetProperty( "StringProperty" );
-			            	};
+			Establish context = () =>
+			{
+				var person = new { StringProperty = "bob" };
+				propertyInfo = person.PropertyInfoFor(x => x.StringProperty);
+			};
 
-			it should_apply = () => convention.AppliesTo( property_info ).should_be_true();
-
-			it should_return_a_random_string = () =>
-			                                   	{
-			                                   		string value = convention.DefaultValue( property_info ).ToString();
-			                                   		value.should_not_be_null();
-			                                   		value.Length.should_be_greater_than( 0 );
-			                                   	};
+			It should_apply = () => convention.AppliesTo(propertyInfo).Should().Be.True();
+			It should_return_a_random_string_of_the_specified_length = () => convention.DefaultValue(propertyInfo).Length.Should().Be.EqualTo(expectedLength);
 		}
 
 
-		public class when_given_a_property_of_type_other_than_string : concern
+		[Subject(typeof(Convention), "ByType<DateTime>")]
+		public class When_property_is_not_a_String_type : When_getting_the_default_value_for_a_property_having_a_string_type_convention_applied
 		{
-			context c = () =>
-			            	{
-			            		var person = new {BoolProperty = false};
-			            		property_info = person.GetType().GetProperty( "BoolProperty" );
-			            	};
+			Establish context = () =>
+			{
+				var person = new { NonStringProperty = 123 };
+				propertyInfo = person.PropertyInfoFor(x => x.NonStringProperty);
+			};
 
-			it should_apply = () => convention.AppliesTo( property_info ).should_be_false();
-
-			it should_return_nothing = () => convention.DefaultValue( property_info ).should_be_null();
+			It should_not_apply = () => convention.AppliesTo(propertyInfo).Should().Be.False();
+			It should_return_nothing = () => convention.DefaultValue(propertyInfo).Should().Be.Null();
 		}
 	}
 }
+
+
+// ReSharper restore InconsistentNaming
