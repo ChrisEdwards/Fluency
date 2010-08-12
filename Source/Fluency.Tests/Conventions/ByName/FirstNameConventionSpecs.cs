@@ -55,10 +55,9 @@ namespace Fluency.Tests.Conventions.ByName
 			It should_apply = () => convention.AppliesTo( propertyInfo ).Should().Be.True();
 
 			It should_return_a_random_first_name = () =>
-			                                       	{
-			                                       		string value = convention.DefaultValue( propertyInfo ).ToString();
-			                                       		value.Should().Not.Be.Null();
-			                                       		value.Length.Should().Be.GreaterThan( 0 );
+			{
+				_defaultValue.Should().Not.Be.Null();
+				_defaultValue.Length.Should().Be.GreaterThan(0);
 			                                       	};
 		}
 
@@ -75,10 +74,9 @@ namespace Fluency.Tests.Conventions.ByName
 			It should_apply = () => convention.AppliesTo( propertyInfo ).Should().Be.True();
 
 			It should_return_a_random_first_name = () =>
-			                                       	{
-			                                       		string value = convention.DefaultValue( propertyInfo ).ToString();
-			                                       		value.Should().Not.Be.Null();
-			                                       		value.Length.Should().Be.GreaterThan( 0 );
+			{
+				_defaultValue.Should().Not.Be.Null();
+				_defaultValue.Length.Should().Be.GreaterThan(0);
 			                                       	};
 		}
 
@@ -95,10 +93,9 @@ namespace Fluency.Tests.Conventions.ByName
 			It should_apply = () => convention.AppliesTo( propertyInfo ).Should().Be.True();
 
 			It should_return_a_random_first_name = () =>
-			                                       	{
-			                                       		string value = convention.DefaultValue( propertyInfo ).ToString();
-			                                       		value.Should().Not.Be.Null();
-			                                       		value.Length.Should().Be.GreaterThan( 0 );
+			{
+				_defaultValue.Should().Not.Be.Null();
+				_defaultValue.Length.Should().Be.GreaterThan(0);
 			                                       	};
 		}
 
@@ -115,10 +112,9 @@ namespace Fluency.Tests.Conventions.ByName
 			It should_apply = () => convention.AppliesTo( propertyInfo ).Should().Be.True();
 
 			It should_return_a_random_first_name = () =>
-			                                       	{
-			                                       		string value = convention.DefaultValue( propertyInfo ).ToString();
-			                                       		value.Should().Not.Be.Null();
-			                                       		value.Length.Should().Be.GreaterThan( 0 );
+			{
+				_defaultValue.Should().Not.Be.Null();
+				_defaultValue.Length.Should().Be.GreaterThan(0);
 			                                       	};
 		}
 
