@@ -1,8 +1,9 @@
 using System;
+using System.Linq;
 using Fluency.DataGeneration;
 using FluentObjectBuilder;
 using Machine.Specifications;
-using Should.Assertions;
+using SharpTestsEx;
 
 // ReSharper disable InconsistentNaming
 
@@ -42,11 +43,11 @@ namespace Fluency.Tests.BuilderTests
 
 			Because of = () => _result = _builder.build();
 
-			It should_use_default_convention_for_a_first_name_property = () => Assert.Contains( _result.FirstName, RandomData.FirstNames );
-			It should_use_default_convention_for_a_last_name_property = () => Assert.Contains( _result.LastName, RandomData.LastNames );
-			It should_use_default_convention_for_date_property = () => _result.DateTimeProperty.should_not_be_equal_to( new DateTime() );
-			It should_use_default_convention_for_integer_property = () => _result.IntegerProperty.should_not_be_equal_to( 0 );
-			It should_use_default_convention_for_string_property = () => _result.StringProperty.Length.should_be_equal_to( 20 );
+			It should_use_default_convention_for_a_first_name_property = () => _result.FirstName.Satisfy( x => RandomData.FirstNames.Contains( x ) );
+			It should_use_default_convention_for_a_last_name_property = () => _result.LastName.Satisfy( x => RandomData.LastNames.Contains( x ) );
+			It should_use_default_convention_for_date_property = () => _result.DateTimeProperty.Should().Not.Be.EqualTo( default( DateTime ) );
+			It should_use_default_convention_for_integer_property = () => _result.IntegerProperty.Should().Not.Be.EqualTo( 0 );
+			It should_use_default_convention_for_string_property = () => _result.StringProperty.Length.Should().Be.EqualTo( 20 );
 		}
 
 
@@ -64,7 +65,7 @@ namespace Fluency.Tests.BuilderTests
 
 			Because of = () => _result = _builder.build();
 
-			It should_use_the_provided_date_time = () => _result.DateTimeProperty.ShouldEqual( _dateTime );
+			It should_use_the_provided_date_time = () => _result.DateTimeProperty.Should().Be.EqualTo(_dateTime);
 		}
 
 
@@ -82,7 +83,7 @@ namespace Fluency.Tests.BuilderTests
 
 			Because of = () => _result = _builder.build();
 
-			It should_use_the_provided_date_time = () => _result.IntegerProperty.ShouldEqual( _expected );
+			It should_use_the_provided_date_time = () => _result.IntegerProperty.Should().Be.EqualTo( _expected );
 		}
 
 
@@ -100,7 +101,7 @@ namespace Fluency.Tests.BuilderTests
 
 			Because of = () => _result = _builder.build();
 
-			It should_use_the_provided_date_time = () => _result.StringProperty.ShouldEqual( _expected );
+			It should_use_the_provided_date_time = () => _result.StringProperty.Should().Be.EqualTo(_expected);
 		}
 
 
@@ -118,7 +119,7 @@ namespace Fluency.Tests.BuilderTests
 
 			Because of = () => _result = _builder.build();
 
-			It should_use_the_provided_date_time = () => _result.StringProperty.ShouldEqual( _expected );
+			It should_use_the_provided_date_time = () => _result.StringProperty.Should().Be.EqualTo(_expected);
 		}
 
 
@@ -136,7 +137,7 @@ namespace Fluency.Tests.BuilderTests
 
 			Because of = () => _result = _builder.build();
 
-			It should_use_the_provided_date_time = () => _result.StringProperty.ShouldEqual( _expected );
+			It should_use_the_provided_date_time = () => _result.StringProperty.Should().Be.EqualTo(_expected);
 		}
 
 
@@ -157,7 +158,7 @@ namespace Fluency.Tests.BuilderTests
 
 			Because of = () => _result = _builder.build();
 
-			It should_use_the_provided_builder_to_build_the_result = () => _result.ReferenceProperty.ShouldEqual( _expectedValue );
+			It should_use_the_provided_builder_to_build_the_result = () => _result.ReferenceProperty.Should().Be.EqualTo(_expectedValue);
 		}
 
 
@@ -178,7 +179,7 @@ namespace Fluency.Tests.BuilderTests
 
 			Because of = () => _result = _builder.build();
 
-			It should_use_the_provided_builder_to_build_the_result = () => _result.ReferenceProperty.ShouldEqual( _expectedValue );
+			It should_use_the_provided_builder_to_build_the_result = () => _result.ReferenceProperty.Should().Be.EqualTo(_expectedValue);
 		}
 
 
@@ -199,7 +200,7 @@ namespace Fluency.Tests.BuilderTests
 
 			Because of = () => _result = _builder.build();
 
-			It should_use_the_provided_builder_to_build_the_result = () => _result.ReferenceProperty.ShouldEqual( _expectedValue );
+			It should_use_the_provided_builder_to_build_the_result = () => _result.ReferenceProperty.Should().Be.EqualTo(_expectedValue);
 		}
 	}
 }

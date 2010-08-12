@@ -31,10 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="developwithpassion.bdd, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\ThirdParty\DevelopWithPassion.bdd\developwithpassion.bdd.dll</HintPath>
-    </Reference>
     <Reference Include="Machine.Specifications, Version=0.3.0.0, Culture=neutral, PublicKeyToken=5c474de7a495cff1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\ThirdParty\Machine.Specifications\Machine.Specifications.dll</HintPath>
@@ -75,8 +71,6 @@
     <Compile Include="Conventions\ByType\DateTypeConventionSpecs.cs" />
     <Compile Include="Conventions\ByType\IntegerTypeConventionSpecs.cs" />
     <Compile Include="Conventions\ByType\StringTypeConventionSpecs.cs" />
-    <Compile Include="Conventions\ByType\StringTypeConventionSpecs1.cs" />
-    <Compile Include="EmptyTestFixtureToAllowTestDrivenToWork.cs" />
     <Compile Include="FluencyInitializationSpecs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
