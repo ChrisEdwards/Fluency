@@ -159,6 +159,48 @@ namespace Fluency.Tests.BuilderTests
 
 			It should_use_the_provided_builder_to_build_the_result = () => _result.ReferenceProperty.ShouldEqual( _expectedValue );
 		}
+
+
+		[ Subject( typeof ( DynamicFluentBuilder< > ) ) ]
+		public class When_building_the_object_after_specifying_dynamic_property_builder_using_For : Given_a_DynamicFluentBuilder_that_uses_default_value_conventions
+		{
+			static TestClass _result;
+			static TestClass _expectedValue;
+
+			Establish context = () =>
+			                    	{
+			                    		// Create a builder that will return the expected value.
+			                    		_expectedValue = new TestClass {FirstName = "Bob", LastName = "Smith"};
+			                    		FluentBuilder< TestClass > propertyBuilder = new DynamicFluentBuilder< TestClass >().AliasFor( _expectedValue );
+
+			                    		_builder.For( x => x.ReferenceProperty, propertyBuilder );
+			                    	};
+
+			Because of = () => _result = _builder.build();
+
+			It should_use_the_provided_builder_to_build_the_result = () => _result.ReferenceProperty.ShouldEqual( _expectedValue );
+		}
+
+
+		[ Subject( typeof ( DynamicFluentBuilder< > ) ) ]
+		public class When_building_the_object_after_specifying_dynamic_property_builder_using_Having : Given_a_DynamicFluentBuilder_that_uses_default_value_conventions
+		{
+			static TestClass _result;
+			static TestClass _expectedValue;
+
+			Establish context = () =>
+			                    	{
+			                    		// Create a builder that will return the expected value.
+			                    		_expectedValue = new TestClass {FirstName = "Bob", LastName = "Smith"};
+			                    		FluentBuilder< TestClass > propertyBuilder = new DynamicFluentBuilder< TestClass >().AliasFor( _expectedValue );
+
+			                    		_builder.Having( x => x.ReferenceProperty, propertyBuilder );
+			                    	};
+
+			Because of = () => _result = _builder.build();
+
+			It should_use_the_provided_builder_to_build_the_result = () => _result.ReferenceProperty.ShouldEqual( _expectedValue );
+		}
 	}
 }
 
