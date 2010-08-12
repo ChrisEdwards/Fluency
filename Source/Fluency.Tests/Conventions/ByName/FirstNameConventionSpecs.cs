@@ -14,8 +14,13 @@ namespace Fluency.Tests.Conventions.ByName
 		{
 			protected static IDefaultConvention convention;
 			protected static PropertyInfo propertyInfo;
+			protected static string _defaultValue;
 
-			Because of = () => { convention = Convention.FirstName(); };
+			Because of = () =>
+			             	{
+			             		convention = Convention.FirstName();
+								_defaultValue = convention.DefaultValue(propertyInfo).ToString();
+			             	};
 		}
 
 
@@ -32,9 +37,8 @@ namespace Fluency.Tests.Conventions.ByName
 
 			It should_return_a_random_first_name = () =>
 			                                       	{
-			                                       		string value = convention.DefaultValue( propertyInfo ).ToString();
-			                                       		value.Should().Not.Be.Null();
-			                                       		value.Length.Should().Be.GreaterThan( 0 );
+			                                       		_defaultValue.Should().Not.Be.Null();
+			                                       		_defaultValue.Length.Should().Be.GreaterThan( 0 );
 			                                       	};
 		}
 
