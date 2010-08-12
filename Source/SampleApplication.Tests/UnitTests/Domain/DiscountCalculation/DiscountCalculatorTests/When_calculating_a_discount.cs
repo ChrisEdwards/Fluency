@@ -3,7 +3,7 @@ using NUnit.Framework;
 using SampleApplication.Domain;
 using SampleApplication.Domain.DiscountCalculation;
 using SampleApplication.Tests.FluentBuilders;
-using Should;
+using SharpTestsEx;
 
 
 namespace SampleApplication.Tests.UnitTests.Domain.DiscountCalculation.DiscountCalculatorTests
@@ -37,7 +37,7 @@ namespace SampleApplication.Tests.UnitTests.Domain.DiscountCalculation.DiscountC
 
 			double discount = _calculator.CalculateDiscount( order );
 
-			discount.ShouldEqual( 10.dollars() );
+			discount.Should().Be.EqualTo(10.dollars());
 		}
 	}
 }

@@ -1,7 +1,7 @@
 using NUnit.Framework;
 using SampleApplication.Domain;
 using SampleApplication.Tests.FluentBuilders;
-using Should;
+using SharpTestsEx;
 
 
 namespace SampleApplication.Tests.UnitTests.FluentBuilders
@@ -29,14 +29,14 @@ namespace SampleApplication.Tests.UnitTests.FluentBuilders
 		[ Test ]
 		public void Should_build_the_LineItem_with_reference_to_the_Order()
 		{
-			_lineItem.Order.ShouldBeSameAs( ( _order ) );
+			_lineItem.Order.Should().Be.SameInstanceAs( _order );
 		}
 
 
 		[ Test ]
 		public void Should_build_the_Order_containing_new_LineItem()
 		{
-			_order.LineItems.ShouldContain( _lineItem );
+			_order.LineItems.Should().Contain( _lineItem );
 		}
 	}
 }

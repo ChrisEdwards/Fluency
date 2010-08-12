@@ -51,9 +51,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\thirdparty\RhinoMocks\Rhino.Mocks.dll</HintPath>
     </Reference>
-    <Reference Include="Should, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="SharpTestsEx, Version=1.0.0.0, Culture=neutral, PublicKeyToken=8c60d8070630b1c1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\ThirdParty\Should\Should.dll</HintPath>
+      <HintPath>..\..\ThirdParty\SharpTestEx\SharpTestsEx.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">

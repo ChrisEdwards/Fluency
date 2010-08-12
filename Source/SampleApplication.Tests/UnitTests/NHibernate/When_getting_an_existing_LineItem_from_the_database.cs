@@ -2,10 +2,10 @@ using System;
 using NUnit.Framework;
 using SampleApplication.Domain;
 using SampleApplication.Tests.FluentBuilders;
-using Should;
+using SharpTestsEx;
 
 
-namespace SampleApplication.Tests.Tests.NHibernate
+namespace SampleApplication.Tests.UnitTests.NHibernate
 {
 	[ TestFixture ]
 	public class When_getting_an_existing_LineItem_from_the_database : AutoRollbackDatabaseTest
@@ -29,14 +29,14 @@ namespace SampleApplication.Tests.Tests.NHibernate
 		public void Should_retrieve_quantity()
 		{
 			DateTime x = _actualLineItem.Order.OrderDate;
-			_actualLineItem.Quantity.ShouldEqual( _expectedLineItem.Quantity );
+			_actualLineItem.Quantity.Should().Be.EqualTo( _expectedLineItem.Quantity );
 		}
 
 
 		[ Test ]
 		public void Should_retrieve_unit_price()
 		{
-			_actualLineItem.UnitPrice.ShouldEqual( _expectedLineItem.UnitPrice );
+			_actualLineItem.UnitPrice.Should().Be.EqualTo( _expectedLineItem.UnitPrice );
 		}
 	}
 }

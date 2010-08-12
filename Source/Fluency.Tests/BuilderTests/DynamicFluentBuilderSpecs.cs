@@ -1,7 +1,6 @@
 using System;
 using System.Linq;
 using Fluency.DataGeneration;
-using FluentObjectBuilder;
 using Machine.Specifications;
 using SharpTestsEx;
 
@@ -65,7 +64,7 @@ namespace Fluency.Tests.BuilderTests
 
 			Because of = () => _result = _builder.build();
 
-			It should_use_the_provided_date_time = () => _result.DateTimeProperty.Should().Be.EqualTo(_dateTime);
+			It should_use_the_provided_date_time = () => _result.DateTimeProperty.Should().Be.EqualTo( _dateTime );
 		}
 
 
@@ -101,7 +100,7 @@ namespace Fluency.Tests.BuilderTests
 
 			Because of = () => _result = _builder.build();
 
-			It should_use_the_provided_date_time = () => _result.StringProperty.Should().Be.EqualTo(_expected);
+			It should_use_the_provided_date_time = () => _result.StringProperty.Should().Be.EqualTo( _expected );
 		}
 
 
@@ -119,7 +118,7 @@ namespace Fluency.Tests.BuilderTests
 
 			Because of = () => _result = _builder.build();
 
-			It should_use_the_provided_date_time = () => _result.StringProperty.Should().Be.EqualTo(_expected);
+			It should_use_the_provided_date_time = () => _result.StringProperty.Should().Be.EqualTo( _expected );
 		}
 
 
@@ -137,7 +136,7 @@ namespace Fluency.Tests.BuilderTests
 
 			Because of = () => _result = _builder.build();
 
-			It should_use_the_provided_date_time = () => _result.StringProperty.Should().Be.EqualTo(_expected);
+			It should_use_the_provided_date_time = () => _result.StringProperty.Should().Be.EqualTo( _expected );
 		}
 
 
@@ -158,7 +157,7 @@ namespace Fluency.Tests.BuilderTests
 
 			Because of = () => _result = _builder.build();
 
-			It should_use_the_provided_builder_to_build_the_result = () => _result.ReferenceProperty.Should().Be.EqualTo(_expectedValue);
+			It should_use_the_provided_builder_to_build_the_result = () => _result.ReferenceProperty.Should().Be.EqualTo( _expectedValue );
 		}
 
 
@@ -179,7 +178,7 @@ namespace Fluency.Tests.BuilderTests
 
 			Because of = () => _result = _builder.build();
 
-			It should_use_the_provided_builder_to_build_the_result = () => _result.ReferenceProperty.Should().Be.EqualTo(_expectedValue);
+			It should_use_the_provided_builder_to_build_the_result = () => _result.ReferenceProperty.Should().Be.EqualTo( _expectedValue );
 		}
 
 
@@ -200,7 +199,7 @@ namespace Fluency.Tests.BuilderTests
 
 			Because of = () => _result = _builder.build();
 
-			It should_use_the_provided_builder_to_build_the_result = () => _result.ReferenceProperty.Should().Be.EqualTo(_expectedValue);
+			It should_use_the_provided_builder_to_build_the_result = () => _result.ReferenceProperty.Should().Be.EqualTo( _expectedValue );
 		}
 	}
 }
