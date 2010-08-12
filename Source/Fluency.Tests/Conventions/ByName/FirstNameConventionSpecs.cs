@@ -14,12 +14,12 @@ namespace Fluency.Tests.Conventions.ByName
 		{
 			protected static IDefaultConvention convention;
 			protected static PropertyInfo propertyInfo;
-			protected static string _defaultValue;
+			protected static object defaultValue;
 
 			Because of = () =>
 			             	{
 			             		convention = Convention.FirstName();
-								_defaultValue = convention.DefaultValue(propertyInfo).ToString();
+			             		defaultValue = convention.DefaultValue( propertyInfo );
 			             	};
 		}
 
@@ -37,8 +37,8 @@ namespace Fluency.Tests.Conventions.ByName
 
 			It should_return_a_random_first_name = () =>
 			                                       	{
-			                                       		_defaultValue.Should().Not.Be.Null();
-			                                       		_defaultValue.Length.Should().Be.GreaterThan( 0 );
+			                                       		defaultValue.Should().Not.Be.Null();
+			                                       		defaultValue.ToString().Length.Should().Be.GreaterThan( 0 );
 			                                       	};
 		}
 
@@ -55,9 +55,9 @@ namespace Fluency.Tests.Conventions.ByName
 			It should_apply = () => convention.AppliesTo( propertyInfo ).Should().Be.True();
 
 			It should_return_a_random_first_name = () =>
-			{
-				_defaultValue.Should().Not.Be.Null();
-				_defaultValue.Length.Should().Be.GreaterThan(0);
+			                                       	{
+			                                       		defaultValue.Should().Not.Be.Null();
+														defaultValue.ToString().Length.Should().Be.GreaterThan(0);
 			                                       	};
 		}
 
@@ -74,9 +74,9 @@ namespace Fluency.Tests.Conventions.ByName
 			It should_apply = () => convention.AppliesTo( propertyInfo ).Should().Be.True();
 
 			It should_return_a_random_first_name = () =>
-			{
-				_defaultValue.Should().Not.Be.Null();
-				_defaultValue.Length.Should().Be.GreaterThan(0);
+			                                       	{
+			                                       		defaultValue.Should().Not.Be.Null();
+														defaultValue.ToString().Length.Should().Be.GreaterThan(0);
 			                                       	};
 		}
 
@@ -93,9 +93,9 @@ namespace Fluency.Tests.Conventions.ByName
 			It should_apply = () => convention.AppliesTo( propertyInfo ).Should().Be.True();
 
 			It should_return_a_random_first_name = () =>
-			{
-				_defaultValue.Should().Not.Be.Null();
-				_defaultValue.Length.Should().Be.GreaterThan(0);
+			                                       	{
+			                                       		defaultValue.Should().Not.Be.Null();
+														defaultValue.ToString().Length.Should().Be.GreaterThan(0);
 			                                       	};
 		}
 
@@ -112,9 +112,9 @@ namespace Fluency.Tests.Conventions.ByName
 			It should_apply = () => convention.AppliesTo( propertyInfo ).Should().Be.True();
 
 			It should_return_a_random_first_name = () =>
-			{
-				_defaultValue.Should().Not.Be.Null();
-				_defaultValue.Length.Should().Be.GreaterThan(0);
+			                                       	{
+			                                       		defaultValue.Should().Not.Be.Null();
+														defaultValue.ToString().Length.Should().Be.GreaterThan(0);
 			                                       	};
 		}
 
