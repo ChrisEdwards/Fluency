@@ -13,7 +13,7 @@ namespace Fluency.Tests.Conventions.ByName
 	{
 		public abstract class When_getting_the_default_value_for_a_property_having_a_last_name_convention_applied
 		{
-			protected static IDefaultConvention convention;
+			protected static IDefaultConvention<string> convention;
 			protected static PropertyInfo propertyInfo;
 			protected static object defaultValue;
 

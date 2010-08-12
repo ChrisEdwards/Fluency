@@ -17,10 +17,10 @@ namespace Fluency.Conventions
 		/// <typeparam name="T">The type of property to mactch on.</typeparam>
 		/// <param name="propertyName">The property name to match on.</param>
 		/// <param name="defaultValue">The default value to provide when the property name matches.</param>
-		/// <returns>The constructed <see cref="IDefaultConvention"/></returns>
-		public static LambdaConvention ByName< T >( string propertyName, Func< PropertyInfo, object > defaultValue )
+		/// <returns>The constructed <see cref="IDefaultConvention{T}"/></returns>
+		public static LambdaConvention< T > ByName< T >( string propertyName, Func< PropertyInfo, T > defaultValue )
 		{
-			return new LambdaConvention(
+			return new LambdaConvention< T >(
 					p => p.PropertyType == typeof ( T ) && p.Name.ToLower().Contains( propertyName.ToLower() ),
 					defaultValue );
 		}
@@ -32,10 +32,10 @@ namespace Fluency.Conventions
 		/// </summary>
 		/// <typeparam name="T">The type of property to match on.</typeparam>
 		/// <param name="defaultValue">The default value to provide for matching properties.</param>
-		/// <returns>The constructed <see cref="IDefaultConvention"/></returns>
-		public static LambdaConvention ByType< T >( Func< PropertyInfo, object > defaultValue )
+		/// <returns>The constructed <see cref="IDefaultConvention{T}"/></returns>
+		public static LambdaConvention< T > ByType< T >( Func< PropertyInfo, T > defaultValue )
 		{
-			return new LambdaConvention(
+			return new LambdaConvention< T >(
 					p => p.PropertyType == typeof ( T ),
 					defaultValue );
 		}
@@ -45,10 +45,10 @@ namespace Fluency.Conventions
 		/// Creates a convention to automatically assign a default value to a property:<br/>
 		/// Assign a random first name when the property name contains "firstname" (case-insensitive)
 		/// </summary>
-		/// <returns>The constructed <see cref="IDefaultConvention"/></returns>
-		public static IDefaultConvention FirstName()
+		/// <returns>The constructed <see cref="IDefaultConvention{T}"/></returns>
+		public static IDefaultConvention< string > FirstName()
 		{
-			return ByName< string >( "FirstName", p => ARandom.FirstName() );
+			return ByName( "FirstName", p => ARandom.FirstName() );
 		}
 
 
@@ -57,10 +57,10 @@ namespace Fluency.Conventions
 		/// Assign a random <see cref="string"/> (of a specifed length) when the property is a <see cref="string"/>.
 		/// </summary>
 		/// <param name="length">The length of the string to create for the default value.</param>
-		/// <returns>The constructed <see cref="IDefaultConvention"/></returns>
-		public static IDefaultConvention String( int length )
+		/// <returns>The constructed <see cref="IDefaultConvention{T}"/></returns>
+		public static IDefaultConvention< string > String( int length )
 		{
-			return ByType< string >( p => ARandom.String( length ) );
+			return ByType( p => ARandom.String( length ) );
 		}
 
 
@@ -68,10 +68,10 @@ namespace Fluency.Conventions
 		/// Creates a convention to automatically assign a default value to a property:<br/>
 		/// Assign a random last name as when the property name contains "lastname" (case-insensitive).
 		/// </summary>
-		/// <returns>The constructed <see cref="IDefaultConvention"/></returns>
-		public static IDefaultConvention LastName()
+		/// <returns>The constructed <see cref="IDefaultConvention{T}"/></returns>
+		public static IDefaultConvention< string > LastName()
 		{
-			return ByName< string >( "LastName", p => ARandom.LastName() );
+			return ByName( "LastName", p => ARandom.LastName() );
 		}
 
 
@@ -79,10 +79,10 @@ namespace Fluency.Conventions
 		/// Creates a convention to automatically assign a default value to a property:<br/>
 		/// Assign a random <see cref="DateTime"/> (with time component set to midnight) when the property type is <see cref="DateTime"/>.
 		/// </summary>
-		/// <returns>The constructed <see cref="IDefaultConvention"/></returns>
-		public static IDefaultConvention DateType()
+		/// <returns>The constructed <see cref="IDefaultConvention{T}"/></returns>
+		public static IDefaultConvention< DateTime > DateType()
 		{
-			return ByType< DateTime >( p => ARandom.DateTime().Date );
+			return ByType( p => ARandom.DateTime().Date );
 		}
 
 
@@ -90,10 +90,10 @@ namespace Fluency.Conventions
 		/// Creates a convention to automatically assign a default value to a property:<br/>
 		/// Assign a random <see cref="int"/> when the property type is <see cref="int"/>.
 		/// </summary>
-		/// <returns>The constructed <see cref="IDefaultConvention"/></returns>
-		public static IDefaultConvention IntegerType()
+		/// <returns>The constructed <see cref="IDefaultConvention{T}"/></returns>
+		public static IDefaultConvention< int > IntegerType()
 		{
-			return ByType< int >( p => ARandom.Int() );
+			return ByType( p => ARandom.Int() );
 		}
 	}
 }

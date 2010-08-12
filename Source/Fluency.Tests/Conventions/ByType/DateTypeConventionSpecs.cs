@@ -10,9 +10,9 @@ namespace Fluency.Tests.Conventions.ByType
 {
 	public class DateTypeConventionSpecs
 	{
-		public abstract class concern : observations_for_a_sut_with_a_contract< IDefaultConvention, LambdaConvention >
+		public abstract class concern : observations_for_a_sut_with_a_contract< IDefaultConvention<DateTime>, LambdaConvention<DateTime> >
 		{
-			protected static IDefaultConvention convention;
+			protected static IDefaultConvention<DateTime> convention;
 			protected static PropertyInfo property_info;
 
 			because b = () => { convention = Convention.DateType(); };

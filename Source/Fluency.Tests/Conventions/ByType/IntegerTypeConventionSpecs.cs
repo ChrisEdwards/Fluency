@@ -9,9 +9,9 @@ namespace Fluency.Tests.Conventions.ByType
 {
 	public class IntegerTypeConventionSpecs
 	{
-		public abstract class concern : observations_for_a_sut_with_a_contract< IDefaultConvention, LambdaConvention >
+		public abstract class concern : observations_for_a_sut_with_a_contract< IDefaultConvention<int>, LambdaConvention<int> >
 		{
-			protected static IDefaultConvention convention;
+			protected static IDefaultConvention<int> convention;
 			protected static PropertyInfo property_info;
 
 			because b = () => { convention = Convention.IntegerType(); };

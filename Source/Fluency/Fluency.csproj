@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Conventions\Convention.cs" />
+    <Compile Include="Conventions\DefaultConvention.cs" />
     <Compile Include="Conventions\LambdaConvention.cs" />
     <Compile Include="Conventions\LastNameConvention.cs" />
     <Compile Include="Conventions\FirstNameConvention.cs" />

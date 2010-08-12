@@ -9,9 +9,9 @@ namespace Fluency.Tests.Conventions.ByType
 {
 	public class TypeStringConventionSpecs
 	{
-		public abstract class concern : observations_for_a_sut_with_a_contract< IDefaultConvention, LambdaConvention >
+		public abstract class concern : observations_for_a_sut_with_a_contract< IDefaultConvention<string>, LambdaConvention<string> >
 		{
-			protected static IDefaultConvention convention;
+			protected static IDefaultConvention<string> convention;
 			protected static PropertyInfo property_info;
 
 			because b = () => { convention = Convention.String( 20 ); };
