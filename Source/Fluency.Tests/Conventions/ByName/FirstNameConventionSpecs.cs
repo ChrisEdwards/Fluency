@@ -1,8 +1,8 @@
 using System.Reflection;
 using Fluency.Conventions;
+using Fluency.Utils;
 using Machine.Specifications;
 using SharpTestsEx;
-using Fluency.Utils;
 
 // ReSharper disable InconsistentNaming
 
@@ -26,38 +26,16 @@ namespace Fluency.Tests.Conventions.ByName
 
 
 		[ Subject( typeof ( FirstNameConvention ) ) ]
-		public class When_given_a_property_with_name_of_FirstName : When_getting_the_default_value_for_a_property_having_a_first_name_convention_applied
-		{
-			Establish context = () =>
-			                    	{
-			                    		var person = new {FirstName = "bob"};
-			                    		propertyInfo = person.PropertyInfoFor( x => x.FirstName );
-			                    	};
-
-			It should_apply = () => convention.AppliesTo( propertyInfo ).Should().Be.True();
-			It should_return_a_random_first_name = () =>
-			                                       	{
-			                                       		defaultValue.Should().Not.Be.Null();
-			                                       		defaultValue.ToString().Length.Should().Be.GreaterThan( 0 );
-			                                       	};
-		}
-
-
-		[ Subject( typeof ( FirstNameConvention ) ) ]
 		public class When_property_name_is_lowercase_firstname : When_getting_the_default_value_for_a_property_having_a_first_name_convention_applied
 		{
 			Establish context = () =>
 			                    	{
 			                    		var person = new {firstname = "bob"};
-			                    		propertyInfo = person.GetType().GetProperty( "firstname" );
+			                    		propertyInfo = person.PropertyInfoFor( x => x.firstname );
 			                    	};
 
 			It should_apply = () => convention.AppliesTo( propertyInfo ).Should().Be.True();
-			It should_return_a_random_first_name = () =>
-			                                       	{
-			                                       		defaultValue.Should().Not.Be.Null();
-														defaultValue.ToString().Length.Should().Be.GreaterThan(0);
-			                                       	};
+			It should_return_a_random_first_name = () => defaultValue.ToString().Length.Should().Be.GreaterThan( 0 );
 		}
 
 
@@ -67,15 +45,11 @@ namespace Fluency.Tests.Conventions.ByName
 			Establish context = () =>
 			                    	{
 			                    		var person = new {FirstName = "bob"};
-			                    		propertyInfo = person.GetType().GetProperty( "FirstName" );
+			                    		propertyInfo = person.PropertyInfoFor( x => x.FirstName );
 			                    	};
 
 			It should_apply = () => convention.AppliesTo( propertyInfo ).Should().Be.True();
-			It should_return_a_random_first_name = () =>
-			                                       	{
-			                                       		defaultValue.Should().Not.Be.Null();
-														defaultValue.ToString().Length.Should().Be.GreaterThan(0);
-			                                       	};
+			It should_return_a_random_first_name = () => defaultValue.ToString().Length.Should().Be.GreaterThan( 0 );
 		}
 
 
@@ -85,15 +59,11 @@ namespace Fluency.Tests.Conventions.ByName
 			Establish context = () =>
 			                    	{
 			                    		var person = new {customerfirstname = "bob"};
-			                    		propertyInfo = person.GetType().GetProperty( "customerfirstname" );
+			                    		propertyInfo = person.PropertyInfoFor( x => x.customerfirstname );
 			                    	};
 
 			It should_apply = () => convention.AppliesTo( propertyInfo ).Should().Be.True();
-			It should_return_a_random_first_name = () =>
-			                                       	{
-			                                       		defaultValue.Should().Not.Be.Null();
-														defaultValue.ToString().Length.Should().Be.GreaterThan(0);
-			                                       	};
+			It should_return_a_random_first_name = () => defaultValue.ToString().Length.Should().Be.GreaterThan( 0 );
 		}
 
 
@@ -103,15 +73,11 @@ namespace Fluency.Tests.Conventions.ByName
 			Establish context = () =>
 			                    	{
 			                    		var person = new {CustomerFirstName = "bob"};
-			                    		propertyInfo = person.GetType().GetProperty( "CustomerFirstName" );
+			                    		propertyInfo = person.PropertyInfoFor( x => x.CustomerFirstName );
 			                    	};
 
 			It should_apply = () => convention.AppliesTo( propertyInfo ).Should().Be.True();
-			It should_return_a_random_first_name = () =>
-			                                       	{
-			                                       		defaultValue.Should().Not.Be.Null();
-														defaultValue.ToString().Length.Should().Be.GreaterThan(0);
-			                                       	};
+			It should_return_a_random_first_name = () => defaultValue.ToString().Length.Should().Be.GreaterThan( 0 );
 		}
 
 
@@ -121,11 +87,11 @@ namespace Fluency.Tests.Conventions.ByName
 			Establish context = () =>
 			                    	{
 			                    		var person = new {lastname = "bob"};
-			                    		propertyInfo = person.GetType().GetProperty( "lastname" );
+			                    		propertyInfo = person.PropertyInfoFor( x => x.lastname );
 			                    	};
 
 			It should_not_apply = () => convention.AppliesTo( propertyInfo ).Should().Be.False();
-			It should_return_nothing = () => convention.DefaultValue( propertyInfo ).Should().Be.Null();
+			It should_return_nothing = () => defaultValue.Should().Be.Null();
 		}
 	}
 }
