@@ -30,7 +30,7 @@ namespace Fluency.Tests.Conventions.ByType
 			                    	};
 
 			It should_apply = () => convention.AppliesTo( propertyInfo ).Should().Be.True();
-			It should_return_a_random_last_name = () => convention.DefaultValue( propertyInfo ).Should().Not.Be.EqualTo( 0 );
+			It should_return_a_random_integer = () => convention.DefaultValue( propertyInfo ).Should().Not.Be.EqualTo( 0 );
 		}
 
 
@@ -44,7 +44,7 @@ namespace Fluency.Tests.Conventions.ByType
 			                    	};
 
 			It should_not_apply = () => convention.AppliesTo( propertyInfo ).Should().Be.False();
-			It should_return_the_default_datetime_value = () => convention.DefaultValue( propertyInfo ).Should().Be.EqualTo( 0 );
+			It should_return_the_zero = () => convention.DefaultValue( propertyInfo ).Should().Be.EqualTo( 0 );
 		}
 	}
 }
