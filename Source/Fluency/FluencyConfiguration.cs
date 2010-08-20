@@ -6,7 +6,7 @@ using Fluency.IdGenerators;
 
 namespace Fluency
 {
-	internal class FluencyConfiguration
+	public class FluencyConfiguration
 	{
 		internal Func< IIdGenerator > ConstructIdGenerator { get; set; }
 

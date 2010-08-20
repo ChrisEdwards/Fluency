@@ -5,7 +5,7 @@ namespace Fluency
 {
 	public static class Fluency
 	{
-		internal static FluencyConfiguration Configuration = new FluencyConfiguration();
+		public static FluencyConfiguration Configuration = new FluencyConfiguration();
 
 
 		/// <summary>
