@@ -340,7 +340,7 @@ namespace Fluency
 
 
 		/// <summary>
-		/// Performs an implicit conversion from <see cref="BancVue.Tests.Common.TestDataBuilders.FluentBuilder&lt;T&gt;"/> to <see cref="T"/>.
+		/// Performs an implicit conversion from <see cref="FluentBuilder&lt;T&gt;"/> to <see cref="T"/>.
 		/// This is so we don't have to explicitly call "build()" in the code.
 		/// </summary>
 		/// <param name="builder">The builder.</param>

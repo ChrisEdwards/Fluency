@@ -12,7 +12,7 @@ namespace SampleApplication
 	public class Log4NetConfiguration
 	{
 		/// <summary>
-		/// Configures Log4Net to write to the file C:\BancVue.log
+		/// Configures Log4Net to write to the file C:\Application.log
 		/// 
 		/// After configuring, for each class you want to log from, add the following property to it:
 		///    private static readonly ILog log = LogManager.GetLogger( MethodBase.GetCurrentMethod().DeclaringType );

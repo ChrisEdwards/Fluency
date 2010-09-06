@@ -66,7 +66,7 @@ namespace Shiloh.Persistence
 			{
 				throw new ArgumentException( "Attempting to access type [" + instanceType.FullName + "] that has not been defined for PersistenceQueue.\n" +
 				                             "You must configure the type information for this type before using it in the PersistenceQueue.\n" +
-				                             "Types are configured by the BancVue.Tests.Common.PersistenceConfiguration.ConfigurePersistenceQueue() method.\n" );
+				                             "Types are usually configured by the PersistenceConfiguration.ConfigurePersistenceQueue() method.\n" );
 			}
 
 			return InstanceQueues[instanceType];

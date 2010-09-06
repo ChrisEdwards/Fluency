@@ -30,8 +30,8 @@ namespace SampleApplication.NHibernate
 					// Configure NHibernate Session Factory using FluentNHibernate.
 					_sessionFactory =
 							Fluently.Configure()
-									//.Database( SQLiteConfiguration.Standard.UsingFile( DbFile ) )
-									.Database( MsSqlConfiguration.MsSql2005.ConnectionString( c => c.Is( @"Data Source=localhost\BANCVUE;Initial Catalog=SampleApplication;Integrated Security=SSPI;" ) ) )
+									.Database( SQLiteConfiguration.Standard.UsingFile( DbFile ) )
+									//.Database( MsSqlConfiguration.MsSql2005.ConnectionString( c => c.Is( @"Data Source=localhost;Initial Catalog=SampleApplication;Integrated Security=SSPI;" ) ) )
 									.Mappings( m =>
 									           	{
 									           		m.AutoMappings.Add(
@@ -39,7 +39,7 @@ namespace SampleApplication.NHibernate
 									           						.Where( t => t.Namespace == "SampleApplication.Domain" && t.Name != "Customer" ) );
 									           		m.HbmMappings.AddFromAssemblyOf< Customer >();
 									           	} )
-									//.ExposeConfiguration( BuildSchema )
+									.ExposeConfiguration( BuildSchema )
 									.BuildSessionFactory();
 
 					// Initialize NHProf.

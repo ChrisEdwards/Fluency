@@ -52,7 +52,8 @@ namespace SampleApplication.Tests
 								"Id",
 								"Customer_id"
 						},
-					HasIdentityColumn );
+					//HasIdentityColumn );
+					HasNoIdentityColumn );
 
 			command.SetParameter( "@Id", order.Id );
 			command.SetParameter( "@Customer_id", order.Customer.Id );
@@ -76,7 +77,8 @@ namespace SampleApplication.Tests
 								"Quantity",
 								"UnitPrice"
 						},
-					HasIdentityColumn );
+//					HasIdentityColumn );
+					HasNoIdentityColumn );
 
 			command.SetParameter( "@Id", lineItem.Id );
 			command.SetParameter( "@Order_id", lineItem.Order.Id );
@@ -101,7 +103,8 @@ namespace SampleApplication.Tests
 								"FirstName",
 								"LastName"
 						},
-					HasIdentityColumn );
+//					HasIdentityColumn );
+					HasNoIdentityColumn );
 
 			command.SetParameter( "@Id", customer.Id );
 			command.SetParameter( "@FirstName", customer.FirstName );
@@ -124,7 +127,8 @@ namespace SampleApplication.Tests
 								"Name",
 								"Description"
 						},
-					HasIdentityColumn );
+//					HasIdentityColumn );
+					HasNoIdentityColumn );
 
 			command.SetParameter( "@Id", product.Id );
 			command.SetParameter( "@Name", product.Name );
