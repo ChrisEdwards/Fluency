@@ -173,7 +173,7 @@ When you add the ability to nest objects, you can see how it would be easy to ge
 	{
 		var service = new SomeAuthenticationServiceWeAreTesting();
 		
-		var userUnder18 = a.User.WhoseAgeIs( 5 );
+		var userUnder18 = a.User.WhoseAgeIs( 5 ).build();
 		
 		Assert.That( service.AuthenticateUser( userUnder18 ), Is.False() );
 	}
