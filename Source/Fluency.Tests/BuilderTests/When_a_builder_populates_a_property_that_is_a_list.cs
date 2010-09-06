@@ -33,7 +33,7 @@ namespace Fluency.Tests.BuilderTests
 		{
 			public ClassWithListPropertyBuilder()
 			{
-				SetList( x => x.Strings, new FluentListBuilder< DynamicFluentBuilderSpecs.TestClass >() );
+				SetList( x => x.TestClasses, new FluentListBuilder< DynamicFluentBuilderSpecs.TestClass >() );
 			}
 
 
