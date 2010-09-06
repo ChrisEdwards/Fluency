@@ -89,7 +89,10 @@ I wanted to introduce this since I will be using this syntax going forward to si
 
 Nesting Builders
 ----------------
-Nesting builders greatly simplifies building object graphs and creating a more expressive fluent interface. Here's an example.
+Nesting builders greatly simplifies building object graphs and creating a more expressive fluent interface. 
+
+###By Passing a Builder Parameter
+Here's an example that just passes a builder for the nested object.
 	var config = a.Config
 					.ForUser( a.User.FirstName( "Bob" )
 									.LastName( "Smith " )
@@ -106,7 +109,8 @@ To do this, MyConfiguration would need a User property, we would create a`UserBu
 	}
 	
 When using the `SetProperty()` method for reference types, it will accept either an instance of the type (i.e. `SetProperty( x => x.User, new User() )`), or a builder for that type (as we see above). If a builder is passed in, it will be built whenever `build()` is called on this builder. 
-	
+
+###By Exposing a Builder Through an Action Parameter
 An alternative approach would be to accept an action as the parameter for the `ForUser()` method. This gives you the following.
 	var config = a.Config
 					.ForUser( u => u.FirstName( "Bob" )
