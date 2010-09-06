@@ -60,6 +60,7 @@
     <Compile Include="AssertionExtensions.cs" />
     <Compile Include="BuilderTests\DynamicFluentBuilderSpecs.cs" />
     <Compile Include="BuilderTests\When_a_builder_builds_its_own_result.cs" />
+    <Compile Include="BuilderTests\When_a_builder_populates_a_property_that_is_a_list.cs" />
     <Compile Include="BuilderTests\When_building_two_consecutive_objects.cs" />
     <Compile Include="BuilderTests\When_setting_a_reference_property.cs" />
     <Compile Include="Conventions\ByName\LastNameConventionSpecs.cs" />

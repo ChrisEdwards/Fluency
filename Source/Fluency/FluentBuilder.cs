@@ -201,7 +201,7 @@ namespace Fluency
 
 
 		/// <summary>
-		/// Sets the list builder.
+		/// Sets the list builder for the specified property. Use this to assign a FluentBuilder<IList<PropertyType>> to build the list for the property whose type is IList<PropertyType>.
 		/// </summary>
 		/// <typeparam name="TPropertyType">The type of the property type.</typeparam>
 		/// <param name="propertyExpression">The property expression.</param>
