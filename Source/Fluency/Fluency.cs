@@ -18,7 +18,7 @@ namespace Fluency
 			{
 				// Execute the user-defined configuration code against the initialization expression and get the configuration data from it.
 				var expression = new InitializationExpression();
-				configurationAction(expression);
+				configurationAction( expression );
 
 				Configuration = expression.GetConfiguration();
 			}

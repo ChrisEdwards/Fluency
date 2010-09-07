@@ -3,22 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 
 
-namespace FluentObjectBuilder
+namespace Fluency.Utils
 {
-	public static class IEnumerableExtensions
+	public static class EnumerableExtensions
 	{
-		public static IEnumerable< T > one_at_a_time< T >( this IEnumerable< T > items )
-		{
-			return items.Select( item => item );
-		}
-
-
+		/// <summary>
+		/// Perform the specified action on each item in the enumerable.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="items">The items.</param>
+		/// <param name="action">The action.</param>
 		public static void each< T >( this IEnumerable< T > items, Action< T > action )
 		{
 			foreach ( T item in items ) action( item );
 		}
 
 
+		/// <summary>
+		/// Yields an <see cref="IEnumerable{int}" />  containing the sequence of integers in the specified range.
+		/// </summary>
+		/// <param name="start">The start of the range.</param>
+		/// <param name="end">The end of the range.</param>
+		/// <returns></returns>
 		public static IEnumerable< int > to( this int start, int end )
 		{
 			for ( int i = start; i <= end; i++ ) yield return i;

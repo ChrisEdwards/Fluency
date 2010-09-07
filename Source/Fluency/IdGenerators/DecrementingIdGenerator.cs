@@ -7,6 +7,7 @@ namespace Fluency.IdGenerators
 	{
 		int _id = -1;
 
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="DecrementingIdGenerator"/> class. By default, the first Id value that will be used is -1.
 		/// </summary>

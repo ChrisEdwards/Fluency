@@ -72,7 +72,7 @@ namespace Fluency
 		public DynamicFluentBuilder< T > Having< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression, FluentBuilder< TPropertyType > propertyValueBuilder )
 				where TPropertyType : class, new()
 		{
-			return With(propertyExpression, propertyValueBuilder);
+			return With( propertyExpression, propertyValueBuilder );
 		}
 
 
@@ -103,7 +103,7 @@ namespace Fluency
 		public DynamicFluentBuilder< T > For< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression, FluentBuilder< TPropertyType > propertyValueBuilder )
 				where TPropertyType : class, new()
 		{
-			return With(propertyExpression, propertyValueBuilder );
+			return With( propertyExpression, propertyValueBuilder );
 		}
 	}
 }

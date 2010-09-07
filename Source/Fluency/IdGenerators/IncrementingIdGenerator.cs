@@ -18,6 +18,10 @@ namespace Fluency.IdGenerators
 
 		#region IIdGenerator Members
 
+		/// <summary>
+		/// Gets the next Id.
+		/// </summary>
+		/// <returns></returns>
 		public int GetNextId()
 		{
 			return _id++;

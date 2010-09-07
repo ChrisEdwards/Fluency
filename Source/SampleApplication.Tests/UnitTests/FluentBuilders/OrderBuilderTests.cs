@@ -3,6 +3,8 @@ using SampleApplication.Domain;
 using SampleApplication.Tests.FluentBuilders;
 using SharpTestsEx;
 
+// ReSharper disable InconsistentNaming
+
 
 namespace SampleApplication.Tests.UnitTests.FluentBuilders
 {
@@ -40,3 +42,6 @@ namespace SampleApplication.Tests.UnitTests.FluentBuilders
 		}
 	}
 }
+
+
+// ReSharper restore InconsistentNaming

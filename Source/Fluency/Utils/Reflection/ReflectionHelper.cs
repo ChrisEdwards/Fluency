@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
 
+// Copied from FluentNHibernate source to remove dependency on FluentNHibernate. Need to remove dependency on this code.
+
 
 namespace FluentNHibernate.Utils
 {

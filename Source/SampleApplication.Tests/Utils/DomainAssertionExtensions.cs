@@ -1,4 +1,4 @@
-using FluentObjectBuilder;
+using Fluency.Tests;
 using SampleApplication.Domain;
 using SharpTestsEx;
 

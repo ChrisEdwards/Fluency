@@ -1,10 +1,9 @@
-using System;
 using System.Reflection;
 
 
 namespace Fluency.Conventions
 {
-	public abstract class DefaultConvention<T>:IDefaultConvention<T>
+	public abstract class DefaultConvention< T > : IDefaultConvention< T >
 	{
 		public abstract bool AppliesTo( PropertyInfo propertyInfo );
 		public abstract T DefaultValue( PropertyInfo propertyInfo );

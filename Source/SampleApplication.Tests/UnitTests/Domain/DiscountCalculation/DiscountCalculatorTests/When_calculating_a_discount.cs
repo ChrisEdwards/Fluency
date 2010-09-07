@@ -17,7 +17,7 @@ namespace SampleApplication.Tests.UnitTests.Domain.DiscountCalculation.DiscountC
 		protected override void TestSetUp()
 		{
 			IDiscountStrategy tieredDiscountStrategy = DiscountStrategyBuilder.BuildTieredStrategy()
-					.Where.OrdersGreaterThanOrEqualTo( 100.dollars() ).GetDiscountOf( 10.percent() )
+					.Where.OrdersGreaterThanOrEqualTo( 100.dollars() ).GetDiscountOf( 10.Percent() )
 					.Build();
 
 			_calculator = new DiscountCalculator( tieredDiscountStrategy );
@@ -37,7 +37,7 @@ namespace SampleApplication.Tests.UnitTests.Domain.DiscountCalculation.DiscountC
 
 			double discount = _calculator.CalculateDiscount( order );
 
-			discount.Should().Be.EqualTo(10.dollars());
+			discount.Should().Be.EqualTo( 10.dollars() );
 		}
 	}
 }

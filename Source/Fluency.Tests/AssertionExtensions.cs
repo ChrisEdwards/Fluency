@@ -1,19 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Fluency.Utils;
 using NUnit.Framework;
 
 
-namespace FluentObjectBuilder
+namespace Fluency.Tests
 {
 	public static class AssertionExtensions
 	{
-		public static void force_traversal< T >( this IEnumerable< T > items )
-		{
-			items.Count();
-		}
-
-
 		public static void should_be_null( this object item )
 		{
 			Assert.IsNull( item );

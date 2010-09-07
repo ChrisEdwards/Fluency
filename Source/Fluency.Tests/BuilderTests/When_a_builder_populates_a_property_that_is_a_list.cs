@@ -25,7 +25,7 @@ namespace Fluency.Tests.BuilderTests
 		public class ClassWithListProperty
 		{
 			public IList< string > Strings { get; set; }
-			public IList<DynamicFluentBuilderSpecs.TestClass> TestClasses { get; set; }
+			public IList< DynamicFluentBuilderSpecs.TestClass > TestClasses { get; set; }
 		}
 
 
@@ -37,7 +37,7 @@ namespace Fluency.Tests.BuilderTests
 			}
 
 
-			public ClassWithListPropertyBuilder Having(DynamicFluentBuilderSpecs.TestClass item)
+			public ClassWithListPropertyBuilder Having( DynamicFluentBuilderSpecs.TestClass item )
 			{
 				AddListItem( x => x.TestClasses, item );
 				return this;
@@ -53,13 +53,13 @@ namespace Fluency.Tests.BuilderTests
 
 			Establish context = () =>
 			                    	{
-										_expectedListItem = new DynamicFluentBuilderSpecs.TestClass();
+			                    		_expectedListItem = new DynamicFluentBuilderSpecs.TestClass();
 
 			                    		// Calls "AddItem" on the list builder.
 			                    		_builder.Having( _expectedListItem );
 			                    	};
 
-			Because of = () =>  _result = _builder.build();
+			Because of = () => _result = _builder.build();
 
 			It should_build_a_list_with_the_expected_list_item = () => _result.TestClasses.Should().Contain( _expectedListItem );
 		}

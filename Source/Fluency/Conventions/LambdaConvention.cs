@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace Fluency.Conventions
 {
-	public class LambdaConvention<T> : IDefaultConvention<T>
+	public class LambdaConvention< T > : IDefaultConvention< T >
 	{
 		readonly Func< PropertyInfo, T > _defaultValue;
 		readonly Predicate< PropertyInfo > _appliesTo;
@@ -31,7 +31,7 @@ namespace Fluency.Conventions
 
 		public T DefaultValue( PropertyInfo propertyInfo )
 		{
-			return AppliesTo( propertyInfo ) ? _defaultValue.Invoke( propertyInfo ) : default(T);
+			return AppliesTo( propertyInfo ) ? _defaultValue.Invoke( propertyInfo ) : default( T );
 		}
 	}
 }

@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using FluentObjectBuilder;
+using Fluency.Utils;
 using NHibernate;
 using SampleApplication.Domain;
 

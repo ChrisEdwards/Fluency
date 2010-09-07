@@ -3,7 +3,7 @@ using SampleApplication.Domain;
 using SampleApplication.Tests.FluentBuilders;
 
 
-namespace SampleApplication.Tests.Tests.FluentBuilders
+namespace SampleApplication.Tests.UnitTests.FluentBuilders
 {
 	[ TestFixture ]
 	public class EmployeeBuilderTests

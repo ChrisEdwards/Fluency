@@ -5,7 +5,6 @@ using System.Reflection;
 using Fluency.Conventions;
 using Fluency.IdGenerators;
 using Fluency.Utils;
-using FluentObjectBuilder;
 using Rhino.Mocks;
 
 

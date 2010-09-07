@@ -40,8 +40,8 @@ namespace Fluency.Tests.Conventions.ByType
 		{
 			Establish context = () =>
 			                    	{
-										var person = new { NonDateProperty = "bob" };
-			                    		propertyInfo = person.PropertyInfoFor( x => x.NonDateProperty);
+			                    		var person = new {NonDateProperty = "bob"};
+			                    		propertyInfo = person.PropertyInfoFor( x => x.NonDateProperty );
 			                    	};
 
 			It should_not_apply = () => convention.AppliesTo( propertyInfo ).Should().Be.False();

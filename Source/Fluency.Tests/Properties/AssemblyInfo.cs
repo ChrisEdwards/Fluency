@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 
-[ assembly: AssemblyTitle( "fluentobjectbuilder.tests" ) ]
+[ assembly: AssemblyTitle( "Fluency.Tests" ) ]
 [ assembly: AssemblyDescription( "" ) ]
 [ assembly: AssemblyConfiguration( "" ) ]
-[ assembly: AssemblyCompany( "" ) ]
-[ assembly: AssemblyProduct( "fluentobjectbuilder.tests" ) ]
+[ assembly: AssemblyCompany( "Chris Edwards" ) ]
+[ assembly: AssemblyProduct( "Fluency.Tests" ) ]
 [ assembly: AssemblyCopyright( "Copyright ©  2009" ) ]
 [ assembly: AssemblyTrademark( "" ) ]
 [ assembly: AssemblyCulture( "" ) ]

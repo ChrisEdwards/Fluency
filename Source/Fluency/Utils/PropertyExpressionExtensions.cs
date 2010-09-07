@@ -10,7 +10,7 @@ namespace Fluency.Utils
 	public static class PropertyExpressionExtensions
 	{
 		/// <summary>
-		/// Gets the property info.
+		/// Gets the property info for the specified expression targeting a generic list.
 		/// </summary>
 		/// <typeparam name="TPropertyType">The type of the property type.</typeparam>
 		/// <param name="propertyExpression">The property expression.</param>
@@ -21,6 +21,12 @@ namespace Fluency.Utils
 		}
 
 
+		/// <summary>
+		/// Gets the property info for the specified expression.
+		/// </summary>
+		/// <typeparam name="TPropertyType">The type of the property type.</typeparam>
+		/// <param name="propertyExpression">The property expression.</param>
+		/// <returns></returns>
 		public static PropertyInfo GetPropertyInfo< TPropertyType, T >( this Expression< Func< T, TPropertyType > > propertyExpression ) where T : class, new()
 		{
 			return ReflectionHelper.GetProperty( propertyExpression );

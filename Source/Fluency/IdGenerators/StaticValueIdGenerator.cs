@@ -8,6 +8,10 @@ namespace Fluency.IdGenerators
 		readonly int _staticIdValue;
 
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="StaticValueIdGenerator"/> class.
+		/// </summary>
+		/// <param name="staticIdValue">The static id value.</param>
 		public StaticValueIdGenerator( int staticIdValue )
 		{
 			_staticIdValue = staticIdValue;
@@ -16,6 +20,10 @@ namespace Fluency.IdGenerators
 
 		#region IIdGenerator Members
 
+		/// <summary>
+		/// Gets the next Id.
+		/// </summary>
+		/// <returns></returns>
 		public int GetNextId()
 		{
 			return _staticIdValue;

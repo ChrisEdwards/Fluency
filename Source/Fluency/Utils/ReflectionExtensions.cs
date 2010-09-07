@@ -9,6 +9,11 @@ namespace Fluency.Utils
 {
 	public static class ReflectionExtensions
 	{
+		/// <summary>
+		/// Gets the properties with a public getter.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns></returns>
 		public static PropertyInfo[] GetPublicGetProperties( this Type type )
 		{
 			return type.FindMembers( MemberTypes.Property,
@@ -20,6 +25,11 @@ namespace Fluency.Utils
 		}
 
 
+		/// <summary>
+		/// Gets the public read only properties.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns></returns>
 		public static PropertyInfo[] GetPublicReadOnlyProperties( this Type type )
 		{
 			return type.FindMembers( MemberTypes.Property,
@@ -31,6 +41,14 @@ namespace Fluency.Utils
 		}
 
 
+		/// <summary>
+		/// Gets the property info for the property specified in the expression.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <typeparam name="TPropertyType">The type of the property type.</typeparam>
+		/// <param name="source">The source.</param>
+		/// <param name="propertyExpression">The property expression.</param>
+		/// <returns></returns>
 		public static PropertyInfo PropertyInfoFor< T, TPropertyType >( this T source, Expression< Func< T, TPropertyType > > propertyExpression )
 		{
 			return ReflectionHelper.GetProperty( propertyExpression );
@@ -75,6 +93,13 @@ namespace Fluency.Utils
 		}
 
 
+		/// <summary>
+		/// Invokes a method on an objet given the method's name and a list of parameters.
+		/// </summary>
+		/// <param name="target">The target.</param>
+		/// <param name="methodName">Name of the method.</param>
+		/// <param name="parameters">The parameters.</param>
+		/// <returns></returns>
 		public static object InvokeMethod( this object target, string methodName, params object[] parameters )
 		{
 			MethodInfo buildMethod = target.GetType().GetMethod( methodName );
@@ -105,6 +130,14 @@ namespace Fluency.Utils
 		}
 
 
+		/// <summary>
+		/// Sets the value for the property specified by an expression.
+		/// </summary>
+		/// <typeparam name="TPropertyType">The type of the property type.</typeparam>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="prototype">The prototype.</param>
+		/// <param name="propertyExpression">The property expression.</param>
+		/// <param name="propertyValue">The property value.</param>
 		public static void SetProperty< TPropertyType, T >( this T prototype, Expression< Func< T, TPropertyType > > propertyExpression, TPropertyType propertyValue )
 				where T : class, new()
 		{
@@ -113,14 +146,19 @@ namespace Fluency.Utils
 		}
 
 
+		/// <summary>
+		/// Gets the value for the property specified by an expression.
+		/// </summary>
+		/// <typeparam name="TPropertyType">The type of the property type.</typeparam>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="prototype">The prototype.</param>
+		/// <param name="propertyExpression">The property expression.</param>
+		/// <returns></returns>
 		public static TPropertyType GetProperty< TPropertyType, T >( this T prototype, Expression< Func< T, TPropertyType > > propertyExpression )
 				where T : class, new()
 		{
 			Accessor accessor = ReflectionHelper.GetAccessor( propertyExpression );
 			return (TPropertyType)accessor.GetValue( prototype );
 		}
-
-
-		// Fluent NHibernate Methods
 	}
 }
