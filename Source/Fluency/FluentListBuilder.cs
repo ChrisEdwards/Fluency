@@ -37,7 +37,7 @@ namespace Fluency
 		/// Adds a builder to build a specified item in the list.
 		/// </summary>
 		/// <param name="builder">The builder.</param>
-		public void Add( FluentBuilder< T > builder )
+		public void Add( IFluentBuilder< T > builder )
 		{
 			_builders.Add( builder );
 		}

@@ -234,7 +234,7 @@ namespace Fluency
 		/// <typeparam name="TPropertyType">The type of the property type.</typeparam>
 		/// <param name="propertyExpression">The property expression.</param>
 		/// <param name="builder">The builder.</param>
-		protected internal FluentBuilder< T > AddListItem< TPropertyType >( Expression< Func< T, IList< TPropertyType > > > propertyExpression, FluentBuilder< TPropertyType > builder )
+		protected internal FluentBuilder< T > AddListItem< TPropertyType >( Expression< Func< T, IList< TPropertyType > > > propertyExpression, IFluentBuilder< TPropertyType > builder )
 				where TPropertyType : class, new()
 		{
 			ListBuilderFor( propertyExpression ).Add( builder );

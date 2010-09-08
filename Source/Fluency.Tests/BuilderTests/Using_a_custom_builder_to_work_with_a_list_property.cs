@@ -128,11 +128,38 @@ namespace Fluency.Tests.BuilderTests
 			[ Subject( "FluentBuilder" ) ]
 			public class When_adding_a_list_item_to_a_list_property : Given_a_builder_for_a_target_type_having_a_list_property
 			{
-				static Bar _newItem = new Bar();
+				static Bar _expectedListItem = new Bar();
 
-				Establish context = () => _builder.AddListItem( x => x.Bars, _newItem );
+				Establish context = () => _builder.AddListItem( x => x.Bars, _expectedListItem );
 
-				It should_build_an_instance_whose_list_property_contains_the_new_item = () => _buildResult.Bars.Should().Contain( _newItem );
+				It should_build_an_instance_whose_list_property_contains_the_new_item = () => _buildResult.Bars.Should().Contain( _expectedListItem );
+			}
+		}
+
+
+		/// <summary>
+		/// To add an item to a list from within a custom builder, you can call <code>AddListItem( x => x.ListProperty, item );</code>
+		/// </summary>
+		public class By_adding_a_builder_to_build_an_item_for_the_list
+		{
+			[ Subject( "FluentBuilder" ) ]
+			public class When_adding_a_list_item_to_a_list_property : Given_a_builder_for_a_target_type_having_a_list_property
+			{
+				static Bar _expectedListItem = new Bar();
+				static IFluentBuilder< Bar > _listItemBuilder;
+
+				Establish context = () =>
+				                    	{
+				                    		// Setup mock builder to return the new item.
+				                    		_listItemBuilder = MockRepository.GenerateMock< IFluentBuilder< Bar > >();
+				                    		_listItemBuilder.Stub( x => x.build() ).Return( _expectedListItem );
+
+				                    		// Add the new item by adding its builder.
+				                    		_builder.AddListItem( x => x.Bars, _listItemBuilder );
+				                    	};
+
+				It should_invoke_the_builder_to_create_the_new_list_item = () => _listItemBuilder.AssertWasCalled( x => x.build() );
+				It should_build_an_instance_whose_list_property_contains_the_new_item = () => _buildResult.Bars.Should().Contain( _expectedListItem );
 			}
 		}
 	}

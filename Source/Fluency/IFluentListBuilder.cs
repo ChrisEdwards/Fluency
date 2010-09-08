@@ -9,7 +9,7 @@ namespace Fluency
 		/// Adds a builder to build a specified item in the list.
 		/// </summary>
 		/// <param name="builder">The builder.</param>
-		void Add( FluentBuilder< T > builder );
+		void Add( IFluentBuilder< T > builder );
 
 
 		/// <summary>
