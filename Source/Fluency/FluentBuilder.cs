@@ -163,7 +163,7 @@ namespace Fluency
 		/// <typeparam name="TPropertyType">The type of the property type.</typeparam>
 		/// <param name="propertyExpression">The property expression.</param>
 		/// <param name="propertyValue">The property value.</param>
-		public void SetProperty< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression, TPropertyType propertyValue )
+		protected internal FluentBuilder< T> SetProperty< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression, TPropertyType propertyValue )
 		{
 			// If we try to change info after prebuilt result is set...throw error since the change wont be reflected in the prebuilt result.
 			if ( _preBuiltResult != null )
@@ -176,6 +176,8 @@ namespace Fluency
 
 			// Set the property on the prototype object.
 			_prototype.SetProperty( propertyExpression, propertyValue );
+
+			return this;
 		}
 
 
@@ -185,7 +187,7 @@ namespace Fluency
 		/// <typeparam name="TPropertyType">The type of the property type.</typeparam>
 		/// <param name="propertyExpression">The property expression.</param>
 		/// <param name="builder">The builder.</param>
-		protected void SetProperty< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression, IFluentBuilder builder ) where TPropertyType : class, new()
+		protected internal FluentBuilder< T> SetProperty< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression, IFluentBuilder builder ) where TPropertyType : class, new()
 		{
 			// Due to lack of polymorphism in generic parameters.
 			if ( !( builder is FluentBuilder< TPropertyType > ) )
@@ -196,6 +198,8 @@ namespace Fluency
 			}
 
 			AddBuilderFor( propertyExpression, builder );
+
+			return this;
 		}
 
 
@@ -205,7 +209,7 @@ namespace Fluency
 		/// <typeparam name="TPropertyType">The type of the property type.</typeparam>
 		/// <param name="propertyExpression">The property expression.</param>
 		/// <param name="builder">The builder.</param>
-		protected void SetList< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression, IFluentBuilder builder ) where TPropertyType : class
+		protected internal FluentBuilder< T > SetList< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression, IFluentBuilder builder ) where TPropertyType : class
 		{
 			if ( !typeof ( TPropertyType ).FullName.Contains( "IList" ) )
 				throw new ArgumentException( "PropertyType must derive from IList" );
@@ -219,6 +223,8 @@ namespace Fluency
 			}
 
 			AddBuilderFor( propertyExpression, builder );
+
+			return this;
 		}
 
 
@@ -228,10 +234,12 @@ namespace Fluency
 		/// <typeparam name="TPropertyType">The type of the property type.</typeparam>
 		/// <param name="propertyExpression">The property expression.</param>
 		/// <param name="builder">The builder.</param>
-		protected void AddListItem< TPropertyType >( Expression< Func< T, IList< TPropertyType > > > propertyExpression, FluentBuilder< TPropertyType > builder )
+		protected internal FluentBuilder< T > AddListItem< TPropertyType >( Expression< Func< T, IList< TPropertyType > > > propertyExpression, FluentBuilder< TPropertyType > builder )
 				where TPropertyType : class, new()
 		{
 			ListBuilderFor( propertyExpression ).Add( builder );
+
+			return this;
 		}
 
 
@@ -241,9 +249,11 @@ namespace Fluency
 		/// <typeparam name="TPropertyType">The type of the property type.</typeparam>
 		/// <param name="propertyExpression">The property expression.</param>
 		/// <param name="value">The value.</param>
-		protected void AddListItem< TPropertyType >( Expression< Func< T, IList< TPropertyType > > > propertyExpression, TPropertyType value ) where TPropertyType : class, new()
+		protected internal FluentBuilder< T > AddListItem< TPropertyType >( Expression< Func< T, IList< TPropertyType > > > propertyExpression, TPropertyType value ) where TPropertyType : class, new()
 		{
 			ListBuilderFor( propertyExpression ).Add( value );
+
+			return this;
 		}
 
 		#endregion

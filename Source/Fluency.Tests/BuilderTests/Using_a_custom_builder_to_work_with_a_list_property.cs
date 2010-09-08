@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using Machine.Specifications;
 using NUnit.Framework;
 using Rhino.Mocks;
@@ -47,20 +48,7 @@ namespace Fluency.Tests.BuilderTests
 		/// by passing in a <see cref="FluentListBuilder{Bar}"/> which is the point of this test.
 		/// </summary>
 		public class FooBuilder : FluentBuilder< Foo >
-		{
-			public FooBuilder SetBarUsingBuilder( IFluentBuilder builder )
-			{
-				SetProperty( x => x.Bar, builder );
-				return this;
-			}
-
-
-			public FooBuilder SetBarsListUsingBuilder( IFluentBuilder barListBuilder )
-			{
-				SetList( x => x.Bars, barListBuilder );
-				return this;
-			}
-		}
+		{}
 
 		#endregion
 
@@ -99,7 +87,7 @@ namespace Fluency.Tests.BuilderTests
 				                    		_listBuilder.Stub( x => x.build() ).Return( _expectedList );
 
 				                    		// Set the list builder.
-				                    		_builder.SetBarsListUsingBuilder( _listBuilder );
+				                    		_builder.SetList( x => x.Bars, _listBuilder );
 				                    	};
 
 				It should_invoke_the_list_builder_to_get_the_list_propertys_value = () => _listBuilder.AssertWasCalled( x => x.build() );
@@ -114,7 +102,7 @@ namespace Fluency.Tests.BuilderTests
 
 				Establish context = () => _nonListBuilder = new FluentBuilder< Bar >();
 
-				It should_fail = () => Assert.Throws< ArgumentException >( () => _builder.SetBarsListUsingBuilder( _nonListBuilder ) );
+				It should_fail = () => Assert.Throws< ArgumentException >( () => _builder.SetList( x => x.Bars, _nonListBuilder ) );
 			}
 
 
@@ -125,7 +113,7 @@ namespace Fluency.Tests.BuilderTests
 
 				Establish context = () => _listBuilder = new FluentListBuilder< Bar >();
 
-				It should_fail = () => Assert.Throws< ArgumentException >( () => _builder.SetBarUsingBuilder( _listBuilder ) );
+				It should_fail = () => Assert.Throws< ArgumentException >( () => _builder.SetList( x => x.Bar, _listBuilder ) );
 			}
 		}
 
