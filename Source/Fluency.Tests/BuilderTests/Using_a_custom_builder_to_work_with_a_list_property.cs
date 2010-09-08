@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using Machine.Specifications;
 using NUnit.Framework;
 using Rhino.Mocks;
@@ -48,32 +47,35 @@ namespace Fluency.Tests.BuilderTests
 		/// by passing in a <see cref="FluentListBuilder{Bar}"/> which is the point of this test.
 		/// </summary>
 		public class FooBuilder : FluentBuilder< Foo >
-		{}
+		{
+			public FooBuilder()
+			{
+				SetList( x => x.Bars, new FluentListBuilder< Bar >() );
+			}
+		}
 
 		#endregion
+
+
+		[ Subject( "FluentBuilder" ) ]
+		public class Given_a_builder_for_a_target_type_having_a_list_property
+		{
+			public static FooBuilder _builder;
+			public static Foo _buildResult;
+
+			Establish context = () => _builder = new FooBuilder();
+
+			Because of = () => _buildResult = _builder.build();
+		}
 
 
 		/// <summary>
 		/// You can set a list property's value to be built by a <see cref="FluentListBuilder{T}"/>
 		///  by using <code>SetList()</code> and passing the ListBuilder as the value for the property.
-		/// <example>
-		///		<code>_builder.SetList( x => x.MyList, new FluentListBuilder&lt;MyList&gt;() );</code>
-		/// </example>
+		/// The code here calls SetList on the builder, but you would call SetList from within your custom builder.
 		/// </summary>
 		public class By_passing_in_a_list_builder_to_build_the_list_for_the_property
 		{
-			[ Subject( "FluentBuilder" ) ]
-			public class Given_a_builder_for_a_target_type_having_a_list_property
-			{
-				public static FooBuilder _builder;
-				public static Foo _buildResult;
-
-				Establish context = () => _builder = new FooBuilder();
-
-				Because of = () => _buildResult = _builder.build();
-			}
-
-
 			[ Subject( "FluentBuilder" ) ]
 			public class When_setting_the_list_property_to_an_instance_of_a_list_builder : Given_a_builder_for_a_target_type_having_a_list_property
 			{
@@ -118,54 +120,20 @@ namespace Fluency.Tests.BuilderTests
 		}
 
 
-		[ Subject( typeof ( FluentBuilder< > ) ) ]
-		public class Given_a_builder_for_a_class_having_a_list_property
+		/// <summary>
+		/// To add an item to a list from within a custom builder, you can call <code>AddListItem( x => x.ListProperty, item );</code>
+		/// </summary>
+		public class By_adding_an_item_to_the_list
 		{
-			public static ClassWithListPropertyBuilder _builder;
-
-			Establish context = () => { _builder = new ClassWithListPropertyBuilder(); };
-		}
-
-
-		public class ClassWithListProperty
-		{
-			public IList< DynamicFluentBuilderSpecs.TestClass > TestClasses { get; set; }
-		}
-
-
-		public class ClassWithListPropertyBuilder : FluentBuilder< ClassWithListProperty >
-		{
-			public ClassWithListPropertyBuilder()
+			[ Subject( "FluentBuilder" ) ]
+			public class When_adding_a_list_item_to_a_list_property : Given_a_builder_for_a_target_type_having_a_list_property
 			{
-				SetList( x => x.TestClasses, new FluentListBuilder< DynamicFluentBuilderSpecs.TestClass >() );
+				static Bar _newItem = new Bar();
+
+				Establish context = () => _builder.AddListItem( x => x.Bars, _newItem );
+
+				It should_build_an_instance_whose_list_property_contains_the_new_item = () => _buildResult.Bars.Should().Contain( _newItem );
 			}
-
-
-			public ClassWithListPropertyBuilder Having( DynamicFluentBuilderSpecs.TestClass item )
-			{
-				AddListItem( x => x.TestClasses, item );
-				return this;
-			}
-		}
-
-
-		[ Subject( typeof ( FluentBuilder< > ) ) ]
-		public class When_adding_an_item_to_the_list_builder : Given_a_builder_for_a_class_having_a_list_property
-		{
-			static ClassWithListProperty _result;
-			static DynamicFluentBuilderSpecs.TestClass _expectedListItem;
-
-			Establish context = () =>
-			                    	{
-			                    		_expectedListItem = new DynamicFluentBuilderSpecs.TestClass();
-
-			                    		// Calls "AddItem" on the list builder.
-			                    		_builder.Having( _expectedListItem );
-			                    	};
-
-			Because of = () => _result = _builder.build();
-
-			It should_build_a_list_with_the_expected_list_item = () => _result.TestClasses.Should().Contain( _expectedListItem );
 		}
 	}
 }
