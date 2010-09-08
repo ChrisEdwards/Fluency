@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Fluency
 {
-	public class FluentListBuilder< T > : IFluentBuilder< IList< T > > where T : class, new()
+	public class FluentListBuilder< T > : IFluentListBuilder< T > where T : class, new()
 	{
 		readonly IList< IFluentBuilder< T > > _builders = new List< IFluentBuilder< T > >();
 		readonly IList< T > _directItems = new List< T >();
@@ -16,7 +16,7 @@ namespace Fluency
 		/// Builds a list of all the items specified directly combined with a list of all items built by the specifed builders.
 		/// </summary>
 		/// <returns></returns>
-		public IList< T > build()
+		public virtual IList< T > build()
 		{
 			// Build each builder's item and gather into collection.
 			IEnumerable< T > builtItems =

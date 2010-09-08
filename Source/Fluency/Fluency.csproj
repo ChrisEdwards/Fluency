@@ -59,6 +59,7 @@
     <Compile Include="Fluency.cs" />
     <Compile Include="FluencyConfiguration.cs" />
     <Compile Include="FluencyException.cs" />
+    <Compile Include="IFluentListBuilder.cs" />
     <Compile Include="InitializationExpression.cs" />
     <Compile Include="IdGenerators\DecrementingIdGenerator.cs" />
     <Compile Include="IdGenerators\IncrementingIdGenerator.cs" />

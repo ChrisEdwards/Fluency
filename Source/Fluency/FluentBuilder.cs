@@ -297,14 +297,15 @@ namespace Fluency
 		/// <typeparam name="TPropertyType">The type of the property type.</typeparam>
 		/// <param name="propertyExpression">The property expression.</param>
 		/// <returns></returns>
-		public FluentListBuilder< TPropertyType > ListBuilderFor< TPropertyType >( Expression< Func< T, IList< TPropertyType > > > propertyExpression ) where TPropertyType : class, new()
+		public IFluentListBuilder< TPropertyType > ListBuilderFor< TPropertyType >( Expression< Func< T, IList< TPropertyType > > > propertyExpression )
+				where TPropertyType : class, new()
 		{
 			PropertyInfo property = propertyExpression.GetPropertyInfo();
 
 			if ( !_builders.ContainsKey( property.Name ) )
 				throw new ArgumentException( "List Builder does not exist for property [" + property.Name + "]" );
 
-			return (FluentListBuilder< TPropertyType >)_builders[property.Name];
+			return (IFluentListBuilder< TPropertyType >)_builders[property.Name];
 		}
 
 

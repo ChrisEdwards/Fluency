@@ -39,6 +39,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\ThirdParty\NUnit\nunit.framework.dll</HintPath>
     </Reference>
+    <Reference Include="Rhino.Mocks, Version=3.6.0.0, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\thirdparty\RhinoMocks\Rhino.Mocks.dll</HintPath>
+    </Reference>
     <Reference Include="SharpTestsEx, Version=1.0.0.0, Culture=neutral, PublicKeyToken=8c60d8070630b1c1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\ThirdParty\SharpTestEx\SharpTestsEx.dll</HintPath>
@@ -59,8 +63,8 @@
   <ItemGroup>
     <Compile Include="AssertionExtensions.cs" />
     <Compile Include="BuilderTests\DynamicFluentBuilderSpecs.cs" />
-    <Compile Include="BuilderTests\When_a_builder_builds_its_own_result.cs" />
-    <Compile Include="BuilderTests\When_a_builder_populates_a_property_that_is_a_list.cs" />
+    <Compile Include="BuilderTests\Using_a_custom_builder_as_an_alias_for_an_existing_instance.cs" />
+    <Compile Include="BuilderTests\Using_a_custom_builder_to_work_with_a_list_property.cs" />
     <Compile Include="BuilderTests\When_building_two_consecutive_objects.cs" />
     <Compile Include="BuilderTests\When_setting_a_reference_property.cs" />
     <Compile Include="Conventions\ByName\LastNameConventionSpecs.cs" />
