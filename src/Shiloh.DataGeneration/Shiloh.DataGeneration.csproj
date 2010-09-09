@@ -31,12 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Anonymous.cs" />
     <Compile Include="AnonymousBase.cs" />
     <Compile Include="AnonymousDate.cs" />
@@ -50,6 +44,12 @@
     <Compile Include="ValueConstraints\IValueConstraints.cs" />
     <Compile Include="ValueConstraints\SqlServerDefaultValuesAndConstraints.cs" />
     <Compile Include="ValueConstraints\ValueConstraints.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

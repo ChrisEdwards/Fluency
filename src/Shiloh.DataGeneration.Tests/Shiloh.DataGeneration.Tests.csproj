@@ -33,7 +33,7 @@
   <ItemGroup>
     <Reference Include="Machine.Specifications, Version=0.3.0.0, Culture=neutral, PublicKeyToken=5c474de7a495cff1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\ThirdParty\Machine.Specifications\Machine.Specifications.dll</HintPath>
+      <HintPath>..\..\lib\machine.specifications\net35\Machine.Specifications.dll</HintPath>
     </Reference>
     <Reference Include="SharpTestsEx, Version=1.0.0.0, Culture=neutral, PublicKeyToken=8c60d8070630b1c1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

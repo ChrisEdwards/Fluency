@@ -2,7 +2,6 @@
 using FluentNHibernate.Automapping;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
-using HibernatingRhinos.Profiler.Appender.NHibernate;
 using NHibernate;
 using NHibernate.Cfg;
 using NHibernate.Tool.hbm2ddl;
@@ -36,14 +35,14 @@ namespace SampleApplication.NHibernate
 									           	{
 									           		m.AutoMappings.Add(
 									           				AutoMap.AssemblyOf< ISampleApplicationAssembly >()
-									           						.Where( t => t.Namespace == "SampleApplication.Domain" && t.Name != "Customer" ) );
+									           						.Where( t => t.Namespace == "SampleApplication.Domain" && t.Name != "Customer" )
+									           						// FNH 1.1 decided to fail on readonly fields. Quick fix till I override the automapping configuration.
+									           						.Override< LineItem >( map => map.IgnoreProperty( x => x.Amount ) )
+									           						.Override< Order >( map => map.IgnoreProperty( x => x.TotalAmount ) ) );
 									           		m.HbmMappings.AddFromAssemblyOf< Customer >();
 									           	} )
 									.ExposeConfiguration( BuildSchema )
 									.BuildSessionFactory();
-
-					// Initialize NHProf.
-					NHibernateProfiler.Initialize();
 				}
 
 				return _sessionFactory;

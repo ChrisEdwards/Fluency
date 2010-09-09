@@ -11,6 +11,7 @@ namespace SampleApplication.NHibernate.Mappings
 			Id( x => x.Id );
 			Map( x => x.Quantity );
 			Map( x => x.UnitPrice );
+			
 			References( x => x.Order )
 					.Cascade.SaveUpdate();
 			References( x => x.Product )
