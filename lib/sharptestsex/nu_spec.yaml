@@ -1,0 +1,82 @@
+--- !ruby/object:Gem::Specification 
+name: sharptestsex
+version: !ruby/object:Gem::Version 
+  hash: 95
+  prerelease: false
+  segments: 
+  - 1
+  - 0
+  - 0
+  - 0
+  version: 1.0.0.0
+platform: ruby
+authors: 
+- Fabio Maulo
+- JDiamond
+autorequire: 
+bindir: bin
+cert_chain: []
+
+date: 2010-09-10 00:00:00 -05:00
+default_executable: 
+dependencies: []
+
+description: "#TestsEx (Sharp Tests Extensions) is a set of extensible extensions. The main target is write short assertions where the Visual Studio IDE intellisense is your guide. #TestsEx can be used with NUnit, MsTests, xUnit, MbUnit."
+email: ""
+executables: []
+
+extensions: []
+
+extra_rdoc_files: []
+
+files: 
+- lib/License.txt
+- lib/nunit.framework.dll
+- lib/nunit.framework.xml
+- lib/Read_Me.txt
+- lib/SharpTestsEx.dll
+- lib/SharpTestsEx.MSTest.dll
+- lib/SharpTestsEx.MSTest.xml
+- lib/SharpTestsEx.NUnit.dll
+- lib/SharpTestsEx.NUnit.xml
+- lib/SharpTestsEx.snk
+- lib/SharpTestsEx.xUnit.dll
+- lib/SharpTestsEx.xUnit.xml
+- lib/xunit.dll
+- lib/xunit.xml
+has_rdoc: true
+homepage: http://sharptestex.codeplex.com/
+licenses: []
+
+post_install_message: 
+rdoc_options: []
+
+require_paths: 
+- lib
+required_ruby_version: !ruby/object:Gem::Requirement 
+  none: false
+  requirements: 
+  - - ">="
+    - !ruby/object:Gem::Version 
+      hash: 3
+      segments: 
+      - 0
+      version: "0"
+required_rubygems_version: !ruby/object:Gem::Requirement 
+  none: false
+  requirements: 
+  - - ">="
+    - !ruby/object:Gem::Version 
+      hash: 3
+      segments: 
+      - 0
+      version: "0"
+requirements: []
+
+rubyforge_project: sharptestsex
+rubygems_version: 1.3.7
+signing_key: 
+specification_version: 3
+summary: Sharp Tests Ex - .NET Fluent Assertions for Your Tests
+test_files: []
+
