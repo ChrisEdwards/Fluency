@@ -1,11 +1,12 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq.Expressions;
 using System.Reflection;
 using Fluency.Conventions;
 using Fluency.IdGenerators;
 using Fluency.Utils;
-using Rhino.Mocks;
 
 
 namespace Fluency
@@ -17,9 +18,9 @@ namespace Fluency
 	public class FluentBuilder< T > : IFluentBuilder< T > where T : class, new()
 	{
 		readonly Dictionary< string, IFluentBuilder > _builders = new Dictionary< string, IFluentBuilder >();
-		readonly MockRepository _mocks;
 		protected T _preBuiltResult;
 		protected T _prototype;
+		protected ListDictionary _properties;
 		readonly IList< IDefaultConvention > _defaultConventions = new List< IDefaultConvention >();
 		protected IIdGenerator IdGenerator;
 
@@ -32,8 +33,7 @@ namespace Fluency
 			IdGenerator = Fluency.Configuration.GetIdGenerator< T >();
 			_defaultConventions = Fluency.Configuration.DefaultValueConventions;
 
-			_mocks = new MockRepository();
-			_prototype = _mocks.Stub< T >();
+			_properties = new ListDictionary();
 
 			Initialize();
 		}
@@ -49,7 +49,8 @@ namespace Fluency
 				{
 					// Get the default value from the configured conventions and set the value.
 					object defaultValue = GetDefaultValue( propertyInfo );
-					_prototype.SetProperty( propertyInfo, defaultValue );
+					//_prototype.SetProperty( propertyInfo, defaultValue );
+					_properties.Add( propertyInfo.Name, defaultValue );
 				}
 			}
 
@@ -71,38 +72,31 @@ namespace Fluency
 				return _preBuiltResult;
 
 			// Populate the prototype with the result of executing each builder.
-			PopulatePrototypeWithBuiltValues( _builders, _prototype );
-
-			// Allow the client builder the opportunity to do some pre-processing.
-			BeforeBuilding();
-
-			T buildResult = _prototype.ShallowClone();
-
-			// Alow the client builder the ability to do some post-processing.
-			AfterBuilding( buildResult );
-
-			// Don't rebuild, but return this built item after first build.
-			_preBuiltResult = buildResult;
-
-			return buildResult;
-		}
-
-
-		/// <summary>
-		/// Populates the prototype with built values.
-		/// </summary>
-		/// <param name="fluentBuilders">The fluent builders.</param>
-		/// <param name="prototype">The prototype.</param>
-		static void PopulatePrototypeWithBuiltValues( Dictionary< string, IFluentBuilder > fluentBuilders, T prototype )
-		{
-			foreach ( KeyValuePair< string, IFluentBuilder > pair in fluentBuilders )
+			foreach ( KeyValuePair< string, IFluentBuilder > pair in _builders )
 			{
 				string propertyName = pair.Key;
 				IFluentBuilder builder = pair.Value;
 
 				object propertyValue = builder.InvokeMethod( "build" );
-				prototype.SetProperty( propertyName, propertyValue );
+				//prototype.SetProperty( propertyName, propertyValue );
+				_properties[propertyName] = propertyValue;
 			}
+
+			// Allow the client builder the opportunity to do some pre-processing.
+			BeforeBuilding();
+
+			//T buildResult = _prototype.ShallowClone();
+			var result = new T();
+			foreach ( DictionaryEntry entry in _properties )
+				result.SetProperty( entry.Key.ToString(), entry.Value );
+
+			// Alow the client builder the ability to do some post-processing.
+			AfterBuilding( result );
+
+			// Don't rebuild, but return this built item after first build.
+			_preBuiltResult = result;
+
+			return result;
 		}
 
 		#endregion
@@ -151,7 +145,8 @@ namespace Fluency
 		/// <returns></returns>
 		public TPropertyType GetValue< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression )
 		{
-			return _prototype.GetProperty( propertyExpression );
+//			return _prototype.GetProperty( propertyExpression );
+			return (TPropertyType)_properties[propertyExpression.GetPropertyInfo().Name];
 		}
 
 
@@ -163,7 +158,7 @@ namespace Fluency
 		/// <typeparam name="TPropertyType">The type of the property type.</typeparam>
 		/// <param name="propertyExpression">The property expression.</param>
 		/// <param name="propertyValue">The property value.</param>
-		protected internal FluentBuilder< T> SetProperty< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression, TPropertyType propertyValue )
+		protected internal FluentBuilder< T > SetProperty< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression, TPropertyType propertyValue )
 		{
 			// If we try to change info after prebuilt result is set...throw error since the change wont be reflected in the prebuilt result.
 			if ( _preBuiltResult != null )
@@ -175,7 +170,8 @@ namespace Fluency
 			RemoveBuilderFor( property );
 
 			// Set the property on the prototype object.
-			_prototype.SetProperty( propertyExpression, propertyValue );
+			//_prototype.SetProperty( propertyExpression, propertyValue );
+			_properties[propertyExpression.GetPropertyInfo().Name] = propertyValue;
 
 			return this;
 		}
@@ -187,7 +183,8 @@ namespace Fluency
 		/// <typeparam name="TPropertyType">The type of the property type.</typeparam>
 		/// <param name="propertyExpression">The property expression.</param>
 		/// <param name="builder">The builder.</param>
-		protected internal FluentBuilder< T> SetProperty< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression, IFluentBuilder builder ) where TPropertyType : class, new()
+		protected internal FluentBuilder< T > SetProperty< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression, IFluentBuilder builder )
+				where TPropertyType : class, new()
 		{
 			// Due to lack of polymorphism in generic parameters.
 			if ( !( builder is FluentBuilder< TPropertyType > ) )
@@ -204,7 +201,7 @@ namespace Fluency
 
 
 		/// <summary>
-		/// Sets the list builder for the specified property. Use this to assign a FluentBuilder<IList<PropertyType>> to build the list for the property whose type is IList<PropertyType>.
+		/// Sets the list builder for the specified property. Use this to assign a <see cref="FluentBuilder{IList(TPropertyType}}"/> to build the list for the property whose type is IList<PropertyType>.
 		/// </summary>
 		/// <typeparam name="TPropertyType">The type of the property type.</typeparam>
 		/// <param name="propertyExpression">The property expression.</param>
@@ -249,7 +246,8 @@ namespace Fluency
 		/// <typeparam name="TPropertyType">The type of the property type.</typeparam>
 		/// <param name="propertyExpression">The property expression.</param>
 		/// <param name="value">The value.</param>
-		protected internal FluentBuilder< T > AddListItem< TPropertyType >( Expression< Func< T, IList< TPropertyType > > > propertyExpression, TPropertyType value ) where TPropertyType : class, new()
+		protected internal FluentBuilder< T > AddListItem< TPropertyType >( Expression< Func< T, IList< TPropertyType > > > propertyExpression, TPropertyType value )
+				where TPropertyType : class, new()
 		{
 			ListBuilderFor( propertyExpression ).Add( value );
 

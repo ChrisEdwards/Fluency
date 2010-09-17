@@ -119,6 +119,23 @@ namespace Fluency.Tests.BuilderTests
 			}
 		}
 
+		public class By_passing_in_a_prepopulated_list_for_the_list_property
+		{
+			[ Subject( "FluentBuilder" ) ]
+			public class When_setting_a_list_property_to_an_existing_prepopulated_list : Given_a_builder_for_a_target_type_having_a_list_property
+			{
+				static IList< Bar > _expectedList;
+
+				Establish context = () =>
+				                    	{
+				                    		_expectedList = new List< Bar >{ new Bar() };
+				                    		_builder.SetProperty( x => x.Bars, _expectedList );
+				                    	};
+
+				It should_build_an_instance_having_the_list_set_to_the_prepopulated_list = () => _buildResult.Bars.Should().Be.SameInstanceAs( _expectedList );
+			}
+		}
+
 
 		/// <summary>
 		/// To add an item to a list from within a custom builder, you can call <code>AddListItem( x => x.ListProperty, item );</code>
