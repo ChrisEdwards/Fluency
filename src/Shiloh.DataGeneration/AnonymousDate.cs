@@ -5,6 +5,8 @@ namespace Shiloh.DataGeneration
 {
 	public class AnonymousDate : AnonymousBase< DateTime >
 	{
+		private AnonymousDateTime _anonymousDateTime = new AnonymousDateTime();
+
 		protected override DateTime GetRandomValue()
 		{
 			return GetRandomDate();
@@ -13,20 +15,36 @@ namespace Shiloh.DataGeneration
 
 		DateTime GetRandomDate()
 		{
-			return DateBetween( Anonymous.ValueConstraints.MinDateTime, Anonymous.ValueConstraints.MaxDateTime );
+			return Between( Anonymous.ValueConstraints.MinDateTime, Anonymous.ValueConstraints.MaxDateTime );
 		}
 
 
-		public static DateTime DateBetween( DateTime min, DateTime max )
+		public DateTime Between( DateTime min, DateTime max )
 		{
-			if ( max <= min )
-				throw new ArgumentException( "Max must be greater than min." );
+			return _anonymousDateTime.Between(min,max).Date;
+		}
 
-			double startTick = min.Ticks;
-			double endTick = max.Ticks;
-			double numberOfTicksInRange = endTick - startTick;
-			double randomTickInRange = startTick + numberOfTicksInRange * _random.NextDouble();
-			return new DateTime( Convert.ToInt64( randomTickInRange ) ).Date;
+
+		public DateTime InPast()
+		{
+			return _anonymousDateTime.InPast().Date;
+		}
+
+
+		public DateTime InPastSince(DateTime startDate)
+		{
+			return _anonymousDateTime.InPastSince(startDate).Date;
+		}
+
+		public DateTime After(DateTime afterDate)
+		{
+			return _anonymousDateTime.After( afterDate ).Date;
+		}
+
+		public DateTime InFuture()
+		{
+			// Add a day to the result since the anonymous will have a time component. When we strip it off, it could be in the past if the date is today.
+			return _anonymousDateTime.InFuture().Date.AddDays( 1 );
 		}
 	}
 }

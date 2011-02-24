@@ -1,4 +1,5 @@
 using System;
+using Shiloh.DataGeneration.ValueConstraints;
 
 
 namespace Shiloh.DataGeneration
@@ -22,5 +23,10 @@ namespace Shiloh.DataGeneration
 
 
 		protected abstract TAnonymousType GetRandomValue();
+
+		protected IValueConstraints ValueConstraints
+		{
+			get { return Anonymous.ValueConstraints; }
+		}
 	}
 }
