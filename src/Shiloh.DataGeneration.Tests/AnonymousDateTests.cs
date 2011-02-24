@@ -7,7 +7,7 @@ using Machine.Specifications;
 
 namespace Shiloh.DataGeneration.Tests
 {
-	internal class AnonymousDateTests
+	public class AnonymousDateTests
 	{
 		[ Subject( typeof ( AnonymousDate ) ) ]
 		public class When_getting_an_anonymous_date
@@ -16,6 +16,7 @@ namespace Shiloh.DataGeneration.Tests
 			Because of = () => _value = Anonymous.Date;
 
 			It should_not_be_a_null_value = () => _value.ShouldNotBeNull();
+			It should_not_contain_a_time_component = () => _value.ShouldEqual( _value.Date );
 		}
 	}
 }

@@ -1,6 +1,8 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{D2689613-C029-4AD1-9795-2354C974A6DB}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleApplication", "SampleApplication\SampleApplication.csproj", "{0B310EB5-358D-45B4-B95D-E217B3B4283C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleApplication.Tests", "SampleApplication.Tests\SampleApplication.Tests.csproj", "{3AA1FDEB-5E41-466E-BDFA-571F6A49C1E4}"
@@ -16,8 +18,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shiloh.DataGeneration.Tests", "Shiloh.DataGeneration.Tests\Shiloh.DataGeneration.Tests.csproj", "{9CC38069-57B8-4656-A1BD-118C59C6D49C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shiloh.Persistence", "Shiloh.Persistence\Shiloh.Persistence.csproj", "{B9E93AAC-EA86-45BF-973D-C5B9848F640E}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{D2689613-C029-4AD1-9795-2354C974A6DB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

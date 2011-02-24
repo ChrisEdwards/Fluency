@@ -26,12 +26,16 @@ namespace Shiloh.DataGeneration
 			get { return new AnonymousValue(); }
 		}
 
-		public static DateTime Date
+		public static AnonymousDate Date
 		{
 			get { return new AnonymousDate(); }
 		}
 
-
+		public static AnonymousDateTime DateTime
+		{
+			get { return new AnonymousDateTime(); }
+		}
+		
 		public static string FirstName()
 		{
 			return Value.From( RandomData.FirstNames );

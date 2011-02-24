@@ -13,11 +13,11 @@ namespace Shiloh.DataGeneration
 
 		DateTime GetRandomDate()
 		{
-			return DateTimeBetween( Anonymous.ValueConstraints.MinDateTime, Anonymous.ValueConstraints.MaxDateTime );
+			return DateBetween( Anonymous.ValueConstraints.MinDateTime, Anonymous.ValueConstraints.MaxDateTime );
 		}
 
 
-		public static DateTime DateTimeBetween( DateTime min, DateTime max )
+		public static DateTime DateBetween( DateTime min, DateTime max )
 		{
 			if ( max <= min )
 				throw new ArgumentException( "Max must be greater than min." );

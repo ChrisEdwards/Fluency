@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="Fluency.NET">
+</Property><Property Name="Solution File" Value="C:\Projects\Fluency\src\Fluency.NET.sln">
+</Property><Property Name="Date" Value="Thursday, February 24, 2011">
+</Property><Property Name="Time" Value="13:58 PM">
+</Property></Properties><Event ErrorLevel="0" Project="SampleApplication" Source="SampleApplication\SampleApplication.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="SampleApplication" Source="SampleApplication\SampleApplication.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="SampleApplication.Tests" Source="SampleApplication.Tests\SampleApplication.Tests.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="SampleApplication.Tests" Source="SampleApplication.Tests\SampleApplication.Tests.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="Fluency" Source="Fluency\Fluency.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="Fluency" Source="Fluency\Fluency.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="Fluency.Tests" Source="Fluency.Tests\Fluency.Tests.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="Fluency.Tests" Source="Fluency.Tests\Fluency.Tests.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="SpecUnit" Source="SpecUnit\SpecUnit.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="SpecUnit" Source="SpecUnit\SpecUnit.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="Shiloh.DataGeneration" Source="Shiloh.DataGeneration\Shiloh.DataGeneration.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="Shiloh.DataGeneration" Source="Shiloh.DataGeneration\Shiloh.DataGeneration.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="Shiloh.DataGeneration.Tests" Source="Shiloh.DataGeneration.Tests\Shiloh.DataGeneration.Tests.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="Shiloh.DataGeneration.Tests" Source="Shiloh.DataGeneration.Tests\Shiloh.DataGeneration.Tests.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="Shiloh.Persistence" Source="Shiloh.Persistence\Shiloh.Persistence.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="Shiloh.Persistence" Source="Shiloh.Persistence\Shiloh.Persistence.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="" Source="Fluency.NET.sln" Description="Solution converted successfully">
+</Event><Event ErrorLevel="3" Project="" Source="Fluency.NET.sln" Description="Converted">
+</Event><Event ErrorLevel="0" Project="SampleApplication" Source="SampleApplication\SampleApplication.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event><Event ErrorLevel="0" Project="SampleApplication.Tests" Source="SampleApplication.Tests\SampleApplication.Tests.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event><Event ErrorLevel="0" Project="Fluency" Source="Fluency\Fluency.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event><Event ErrorLevel="0" Project="Fluency.Tests" Source="Fluency.Tests\Fluency.Tests.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event><Event ErrorLevel="0" Project="SpecUnit" Source="SpecUnit\SpecUnit.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event><Event ErrorLevel="0" Project="Shiloh.DataGeneration" Source="Shiloh.DataGeneration\Shiloh.DataGeneration.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event><Event ErrorLevel="0" Project="Shiloh.DataGeneration.Tests" Source="Shiloh.DataGeneration.Tests\Shiloh.DataGeneration.Tests.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event><Event ErrorLevel="0" Project="Shiloh.Persistence" Source="Shiloh.Persistence\Shiloh.Persistence.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event></UpgradeLog>
