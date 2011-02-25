@@ -2,9 +2,9 @@
 
 
 using System;
-using Fluency.Utils;
 using Machine.Specifications;
 using SharpTestsEx;
+using Shiloh.Utils;
 
 
 namespace Shiloh.DataGeneration.Tests
@@ -52,7 +52,7 @@ namespace Shiloh.DataGeneration.Tests
 		}
 
 
-		[Subject(typeof(AnonymousDate), "InPast")]
+		[ Subject( typeof ( AnonymousDate ), "InPast" ) ]
 		public class When_getting_an_anonymous_date_in_past
 		{
 			static DateTime _value;
@@ -60,8 +60,8 @@ namespace Shiloh.DataGeneration.Tests
 			Because of = () => _value = Anonymous.Date.InPast();
 
 			It should_not_be_a_null_value = () => _value.ShouldNotBeNull();
-			It should_not_contain_a_time_component = () => _value.ShouldEqual(_value.Date);
-			It should_be_prior_to_now = () => _value.ShouldBeLessThan(DateTime.Now);
+			It should_not_contain_a_time_component = () => _value.ShouldEqual( _value.Date );
+			It should_be_prior_to_now = () => _value.ShouldBeLessThan( DateTime.Now );
 		}
 
 
@@ -90,7 +90,7 @@ namespace Shiloh.DataGeneration.Tests
 		}
 
 
-		[Subject(typeof(AnonymousDate), "InPastYear")]
+		[ Subject( typeof ( AnonymousDate ), "InPastYear" ) ]
 		public class When_getting_an_anonymous_date_in_past_year
 		{
 			static DateTime _oneYearAgo, _value;
@@ -100,40 +100,28 @@ namespace Shiloh.DataGeneration.Tests
 			Because of = () => _value = Anonymous.Date.InPastYear();
 
 			It should_not_be_a_null_value = () => _value.ShouldNotBeNull();
-			It should_not_contain_a_time_component = () => _value.ShouldEqual(_value.Date);
-			It should_be_prior_to_now = () => _value.ShouldBeLessThan(DateTime.Now);
-			It should_be_after_one_year_ago_today = () => _value.ShouldBeGreaterThan(_oneYearAgo);
-		}
-
-
-		[ Subject( typeof ( AnonymousDate ), "InFuture" ) ]
-		public class When_getting_an_anonymous_date_in_future
-		{
-			static DateTime _value;
-
-			Because of = () => _value = Anonymous.Date.InFuture();
-
-			It should_not_be_a_null_value = () => _value.ShouldNotBeNull();
 			It should_not_contain_a_time_component = () => _value.ShouldEqual( _value.Date );
-			It should_be_after_now = () => _value.ShouldBeGreaterThan( DateTime.Now );
+			It should_be_prior_to_now = () => _value.ShouldBeLessThan( DateTime.Now );
+			It should_be_after_one_year_ago_today = () => _value.ShouldBeGreaterThan( _oneYearAgo );
 		}
-		
-		[Subject( typeof(AnonymousDate), "After")]
+
+
+		[ Subject( typeof ( AnonymousDate ), "After" ) ]
 		public class When_getting_an_anonymous_date_after_a_specified_date
 		{
 			static DateTime _afterDate, _value;
 
 			Establish context = () => _afterDate = 1.YearsAgo();
 
-			Because of = () => _value = Anonymous.Date.After(_afterDate);
+			Because of = () => _value = Anonymous.Date.After( _afterDate );
 
 			It should_not_be_a_null_value = () => _value.ShouldNotBeNull();
-			It should_not_contain_a_time_component = () => _value.ShouldEqual(_value.Date);
-			It should_be_after_to_the_specified_date = () => _value.ShouldBeGreaterThan(_afterDate);
+			It should_not_contain_a_time_component = () => _value.ShouldEqual( _value.Date );
+			It should_be_after_to_the_specified_date = () => _value.ShouldBeGreaterThan( _afterDate );
 		}
 
 
-		[Subject( typeof(AnonymousDate), "InFuture")]
+		[ Subject( typeof ( AnonymousDate ), "InFuture" ) ]
 		public class When_getting_an_anonymous_date_in_the_future
 		{
 			static DateTime _value;
@@ -141,8 +129,8 @@ namespace Shiloh.DataGeneration.Tests
 			Because of = () => _value = Anonymous.Date.InFuture();
 
 			It should_not_be_a_null_value = () => _value.ShouldNotBeNull();
-			It should_not_contain_a_time_component = () => _value.ShouldEqual(_value.Date);
-			It should_be_after_to_the_specified_date = () => _value.ShouldBeGreaterThan(DateTime.Now);
+			It should_not_contain_a_time_component = () => _value.ShouldEqual( _value.Date );
+			It should_be_after_to_the_specified_date = () => _value.ShouldBeGreaterThan( DateTime.Now );
 		}
 	}
 }

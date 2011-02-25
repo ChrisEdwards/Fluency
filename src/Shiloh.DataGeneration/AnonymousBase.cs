@@ -1,12 +1,14 @@
 using System;
+using System.Collections.Generic;
 using Shiloh.DataGeneration.ValueConstraints;
+using UMMO.TestingUtils.RandomData;
 
 
 namespace Shiloh.DataGeneration
 {
 	public abstract class AnonymousBase< TAnonymousType >
 	{
-		protected static readonly Random _random = new Random();
+		protected static readonly ExtendedRandom Random = new ExtendedRandom();
 		readonly TAnonymousType _defaultValue;
 
 
@@ -27,6 +29,18 @@ namespace Shiloh.DataGeneration
 		protected IValueConstraints ValueConstraints
 		{
 			get { return Anonymous.ValueConstraints; }
+		}
+
+
+		public TAnonymousType From(IList<TAnonymousType> list)
+		{
+			return Anonymous.Value.From(list);
+		}
+
+
+		public TAnonymousType From(params TAnonymousType[] list)
+		{
+			return Anonymous.Value.From(list);
 		}
 	}
 }

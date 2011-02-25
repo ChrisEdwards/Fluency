@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Shiloh.DataGeneration</RootNamespace>
     <AssemblyName>Shiloh.DataGeneration</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
@@ -31,6 +31,7 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -52,12 +53,17 @@
   <ItemGroup>
     <Compile Include="Anonymous.cs" />
     <Compile Include="AnonymousBase.cs" />
+    <Compile Include="AnonymousDecimal.cs" />
     <Compile Include="AnonymousDate.cs" />
     <Compile Include="AnonymousDateTime.cs" />
     <Compile Include="AnonymousInteger.cs" />
+    <Compile Include="AnonymousNumericBase.cs" />
     <Compile Include="AnonymousValue.cs" />
+    <Compile Include="AnonymousDouble.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RandomData.cs" />
+    <Compile Include="Random\ExtendedRandom.cs" />
+    <Compile Include="Random\IRandom.cs" />
     <Compile Include="ValueConstraints\CSharpDefaultValuesAndConstraints.cs" />
     <Compile Include="ValueConstraints\DefaultValues.cs" />
     <Compile Include="ValueConstraints\IDefaultValues.cs" />
@@ -92,6 +98,10 @@
     <ProjectReference Include="..\Fluency\Fluency.csproj">
       <Project>{CA8DE273-AA4A-4FC1-9D41-B67B56A53433}</Project>
       <Name>Fluency</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shiloh.Utils\Shiloh.Utils.csproj">
+      <Project>{D9C01343-518C-47D5-B7AB-B5A400CAAD5E}</Project>
+      <Name>Shiloh.Utils</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

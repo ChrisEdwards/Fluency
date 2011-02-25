@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Fluency.Utils;
+using Shiloh.Utils;
 
 
 namespace Fluency.DataGeneration
@@ -40,12 +41,12 @@ namespace Fluency.DataGeneration
 			var waffle = new WaffleEngine( _random );
 
 			// Guess at a number of paragraphs to generate.
-			const int numberOfCharactersPerParagraph = 100;
+			const int numberOfCharactersPerParagraph = 80;
 			int numberOfParagraphsToGenerate = maxChars / numberOfCharactersPerParagraph + 1;
 
 			waffle.TextWaffle( numberOfParagraphsToGenerate, false, sb );
 
-			return sb.ToString( 0, maxChars );
+			return sb.ToString(0, maxChars);
 		}
 
 

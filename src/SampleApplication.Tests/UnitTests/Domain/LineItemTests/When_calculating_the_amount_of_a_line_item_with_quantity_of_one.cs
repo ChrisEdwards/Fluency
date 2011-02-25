@@ -3,6 +3,7 @@ using NUnit.Framework;
 using SampleApplication.Domain;
 using SampleApplication.Tests.FluentBuilders;
 using SharpTestsEx;
+using Shiloh.Utils;
 
 
 namespace SampleApplication.Tests.UnitTests.Domain.LineItemTests

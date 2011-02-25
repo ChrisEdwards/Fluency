@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shiloh.DataGeneration.Tests
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shiloh.Persistence", "Shiloh.Persistence\Shiloh.Persistence.csproj", "{B9E93AAC-EA86-45BF-973D-C5B9848F640E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shiloh.Utils", "Shiloh.Utils\Shiloh.Utils.csproj", "{D9C01343-518C-47D5-B7AB-B5A400CAAD5E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +59,10 @@ Global
 		{B9E93AAC-EA86-45BF-973D-C5B9848F640E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B9E93AAC-EA86-45BF-973D-C5B9848F640E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B9E93AAC-EA86-45BF-973D-C5B9848F640E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9C01343-518C-47D5-B7AB-B5A400CAAD5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9C01343-518C-47D5-B7AB-B5A400CAAD5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9C01343-518C-47D5-B7AB-B5A400CAAD5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9C01343-518C-47D5-B7AB-B5A400CAAD5E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

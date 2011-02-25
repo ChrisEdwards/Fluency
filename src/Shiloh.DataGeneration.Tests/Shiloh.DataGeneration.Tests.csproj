@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Shiloh.DataGeneration.Tests</RootNamespace>
     <AssemblyName>Shiloh.DataGeneration.Tests</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
@@ -31,6 +31,7 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -76,6 +77,10 @@
     <ProjectReference Include="..\Shiloh.DataGeneration\Shiloh.DataGeneration.csproj">
       <Project>{B5088BE7-78C5-4C63-8F64-9147308D4E45}</Project>
       <Name>Shiloh.DataGeneration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shiloh.Utils\Shiloh.Utils.csproj">
+      <Project>{D9C01343-518C-47D5-B7AB-B5A400CAAD5E}</Project>
+      <Name>Shiloh.Utils</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

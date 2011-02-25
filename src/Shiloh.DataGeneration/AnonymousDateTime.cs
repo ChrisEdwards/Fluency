@@ -25,7 +25,7 @@ namespace Shiloh.DataGeneration
 			double startTick = min.Ticks;
 			double endTick = max.Ticks;
 			double numberOfTicksInRange = endTick - startTick;
-			double randomTickInRange = startTick + numberOfTicksInRange * _random.NextDouble();
+			double randomTickInRange = startTick + numberOfTicksInRange * Random.NextDouble();
 			return new DateTime( Convert.ToInt64( randomTickInRange ) );
 		}
 

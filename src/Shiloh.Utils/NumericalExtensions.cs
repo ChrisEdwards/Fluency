@@ -1,7 +1,7 @@
-using System;
+﻿using System;
 
 
-namespace Fluency.Utils
+namespace Shiloh.Utils
 {
 	public static class NumericalExtensions
 	{

@@ -21,7 +21,7 @@ namespace Shiloh.DataGeneration.Tests
 		}
 
 
-		[ Subject( typeof ( AnonymousInteger ) ) ]
+		[ Subject( typeof ( AnonymousInteger ), "GreaterThan" ) ]
 		public class When_getting_an_anonymous_integer_greater_than_a_specified_value
 		{
 			static int _value;
@@ -34,7 +34,7 @@ namespace Shiloh.DataGeneration.Tests
 		}
 
 
-		[ Subject( typeof ( AnonymousInteger ) ) ]
+		[ Subject( typeof ( AnonymousInteger ), "GreaterThanOrEqualTo" ) ]
 		public class When_getting_an_anonymous_integer_greater_than_or_equal_to_a_specified_value
 		{
 			static int _value;
@@ -47,7 +47,7 @@ namespace Shiloh.DataGeneration.Tests
 		}
 
 
-		[ Subject( typeof ( AnonymousInteger ) ) ]
+		[ Subject( typeof ( AnonymousInteger ), "LessThan" ) ]
 		public class When_getting_an_anonymous_integer_less_than_a_specified_value
 		{
 			static int _value;
@@ -60,7 +60,7 @@ namespace Shiloh.DataGeneration.Tests
 		}
 
 
-		[ Subject( typeof ( AnonymousInteger ) ) ]
+		[ Subject( typeof ( AnonymousInteger ), "LessThanOrEqualTo" ) ]
 		public class When_getting_an_anonymous_integer_less_than_or_equal_to_a_specified_value
 		{
 			static int _value;
@@ -73,7 +73,7 @@ namespace Shiloh.DataGeneration.Tests
 		}
 
 
-		[ Subject( typeof ( AnonymousInteger ) ) ]
+		[ Subject( typeof ( AnonymousInteger ), "Between" ) ]
 		public class When_getting_an_anonymous_integer_between_two_specified_values
 		{
 			static int _value;
@@ -93,7 +93,7 @@ namespace Shiloh.DataGeneration.Tests
 		}
 
 
-		[ Subject( typeof ( AnonymousInteger ) ) ]
+		[ Subject( typeof ( AnonymousInteger ), "Between" ) ]
 		public class When_getting_an_anonymous_integer_between_two_specified_values_where_the_lower_bound_is_greater_than_the_upper_bound
 		{
 			static Exception _exception;
@@ -102,7 +102,7 @@ namespace Shiloh.DataGeneration.Tests
 		}
 
 
-		[ Subject( typeof ( AnonymousInteger ) ) ]
+		[ Subject( typeof ( AnonymousInteger ), "BetweenExclusive" ) ]
 		public class When_getting_an_anonymous_integer_between_two_specified_values_exclusively
 		{
 			static int _value;
@@ -122,7 +122,7 @@ namespace Shiloh.DataGeneration.Tests
 		}
 
 
-		[ Subject( typeof ( AnonymousInteger ) ) ]
+		[ Subject( typeof ( AnonymousInteger ), "BetweenExclusive" ) ]
 		public class When_getting_an_anonymous_integer_between_two_specified_values_exclusively_where_the_lower_bound_is_greater_than_the_upper_bound
 		{
 			static Exception _exception;
@@ -131,7 +131,25 @@ namespace Shiloh.DataGeneration.Tests
 		}
 
 
-		[ Subject( typeof ( AnonymousInteger ) ) ]
+		[ Subject( typeof ( AnonymousInteger ), "BetweenExclusive" ) ]
+		public class When_getting_an_anonymous_integer_between_two_specified_values_exclusively_where_the_lower_bound_is_equal_to_the_upper_bound
+		{
+			static Exception _exception;
+			Because of = () => _exception = Catch.Exception( () => Anonymous.Integer.BetweenExclusive( 100, 100 ) );
+			It should_fail = () => _exception.Should().Be.OfType< ArgumentException >();
+		}
+
+
+		[ Subject( typeof ( AnonymousInteger ), "BetweenExclusive" ) ]
+		public class When_getting_an_anonymous_integer_between_two_specified_values_exclusively_where_the_upper_and_lower_bounds_are_adjacent
+		{
+			static Exception _exception;
+			Because of = () => _exception = Catch.Exception( () => Anonymous.Integer.BetweenExclusive( 100, 101 ) );
+			It should_fail = () => _exception.Should().Be.OfType< ArgumentOutOfRangeException >();
+		}
+
+
+		[ Subject( typeof ( AnonymousInteger ), "InRange" ) ]
 		public class When_getting_an_anonymous_integer_in_the_range_of_two_specified_values
 		{
 			static int _value;
@@ -151,7 +169,7 @@ namespace Shiloh.DataGeneration.Tests
 		}
 
 
-		[ Subject( typeof ( AnonymousInteger ) ) ]
+		[ Subject( typeof ( AnonymousInteger ), "InRange" ) ]
 		public class When_getting_an_anonymous_integer_in_the_range_two_specified_values_where_the_lower_bound_is_greater_than_the_upper_bound
 		{
 			static Exception _exception;
@@ -160,7 +178,7 @@ namespace Shiloh.DataGeneration.Tests
 		}
 
 
-		[ Subject( typeof ( AnonymousInteger ) ) ]
+		[ Subject( typeof ( AnonymousInteger ), "From" ) ]
 		public class When_getting_an_anonymous_integer_from_a_predefined_list_of_integers
 		{
 			static int _result;
@@ -173,7 +191,7 @@ namespace Shiloh.DataGeneration.Tests
 		}
 
 
-		[ Subject( typeof ( AnonymousInteger ) ) ]
+		[ Subject( typeof ( AnonymousInteger ), "From" ) ]
 		public class When_getting_an_anonymous_integer_from_a_params_array_of_integers
 		{
 			static int _result;

@@ -8,13 +8,13 @@ namespace Shiloh.DataGeneration
 	{
 		public T From< T >( IList< T > items )
 		{
-			return items[Anonymous.Int.BetweenExclusive( 0, items.Count - 1 )];
+			return items[Anonymous.Int.Between( 0, items.Count - 1 )];
 		}
 
 
 		public T From< T >( IEnumerable< T > items )
 		{
-			int randomItemPosition = Anonymous.Int.BetweenExclusive( 0, items.Count() - 1 );
+			int randomItemPosition = Anonymous.Int.Between(0, items.Count() - 1 );
 			return items.Skip( randomItemPosition - 1 ).First();
 		}
 

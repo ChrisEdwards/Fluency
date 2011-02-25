@@ -26,6 +26,11 @@ namespace Shiloh.DataGeneration
 			get { return new AnonymousValue(); }
 		}
 
+		public static AnonymousDecimal Decimal
+		{
+			get{return new AnonymousDecimal();}
+		}
+
 		public static AnonymousDate Date
 		{
 			get { return new AnonymousDate(); }
@@ -82,7 +87,7 @@ namespace Shiloh.DataGeneration
 		{
 			var builder = new StringBuilder();
 			for ( int i = 0; i < size; i++ )
-					//26 letters in the alfabet, ascii + 65 for the capital letters
+					//26 letters in the alphabet, ascii + 65 for the capital letters
 				builder.Append( Convert.ToChar( Convert.ToInt32( Math.Floor( 26 * _random.NextDouble() + 65 ) ) ) );
 			return builder.ToString();
 		}

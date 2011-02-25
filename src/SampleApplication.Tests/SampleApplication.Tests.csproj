@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SampleApplication.Tests</RootNamespace>
     <AssemblyName>SampleApplication.Tests</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
@@ -31,6 +31,7 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -139,6 +140,10 @@
     <ProjectReference Include="..\sampleapplication\SampleApplication.csproj">
       <Project>{0B310EB5-358D-45B4-B95D-E217B3B4283C}</Project>
       <Name>SampleApplication</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shiloh.Utils\Shiloh.Utils.csproj">
+      <Project>{D9C01343-518C-47D5-B7AB-B5A400CAAD5E}</Project>
+      <Name>Shiloh.Utils</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
