@@ -1,4 +1,5 @@
 using System;
+using Fluency.Utils;
 
 
 namespace Shiloh.DataGeneration
@@ -25,6 +26,18 @@ namespace Shiloh.DataGeneration
 		}
 
 
+		public DateTime PriorTo( DateTime priorToDate )
+		{
+			return _anonymousDateTime.Before( priorToDate ).Date;
+		}
+
+
+		public DateTime Before( DateTime priorToDate )
+		{
+			return PriorTo( priorToDate );
+		}
+
+
 		public DateTime InPast()
 		{
 			return _anonymousDateTime.InPast().Date;
@@ -36,10 +49,18 @@ namespace Shiloh.DataGeneration
 			return _anonymousDateTime.InPastSince(startDate).Date;
 		}
 
+
+		public DateTime InPastYear()
+		{
+			return _anonymousDateTime.InPastSince(1.YearsAgo()).Date;
+		}
+
+
 		public DateTime After(DateTime afterDate)
 		{
 			return _anonymousDateTime.After( afterDate ).Date;
 		}
+
 
 		public DateTime InFuture()
 		{

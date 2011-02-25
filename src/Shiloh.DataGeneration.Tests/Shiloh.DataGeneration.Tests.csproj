@@ -69,6 +69,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Fluency\Fluency.csproj">
+      <Project>{CA8DE273-AA4A-4FC1-9D41-B67B56A53433}</Project>
+      <Name>Fluency</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Shiloh.DataGeneration\Shiloh.DataGeneration.csproj">
       <Project>{B5088BE7-78C5-4C63-8F64-9147308D4E45}</Project>
       <Name>Shiloh.DataGeneration</Name>

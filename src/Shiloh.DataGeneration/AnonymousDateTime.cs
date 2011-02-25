@@ -30,21 +30,27 @@ namespace Shiloh.DataGeneration
 		}
 
 
-		public DateTime InPastSince( DateTime startDate )
+		public DateTime PriorTo( DateTime priorToDateTime )
 		{
-			return Between( startDate, DateTime.Now );
+			return Between( ValueConstraints.MinDateTime, priorToDateTime );
 		}
 
 
 		public DateTime Before( DateTime priorToDateTime )
 		{
-			return Between( ValueConstraints.MinDateTime, priorToDateTime );
+			return PriorTo( priorToDateTime );
 		}
 
 
 		public DateTime InPast()
 		{
 			return Before( DateTime.Now );
+		}
+
+
+		public DateTime InPastSince( DateTime startDate )
+		{
+			return Between( startDate, DateTime.Now );
 		}
 
 
