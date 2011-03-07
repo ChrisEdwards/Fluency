@@ -71,6 +71,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\sharptestsex\SharpTestsEx.dll</HintPath>
     </Reference>
+    <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -88,12 +89,25 @@
     <Compile Include="Conventions\ByType\IntegerTypeConventionSpecs.cs" />
     <Compile Include="Conventions\ByType\StringTypeConventionSpecs.cs" />
     <Compile Include="FluencyInitializationSpecs.cs" />
+    <Compile Include="Probabilities\PercentChanceOfSpecs.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Probabilities\ProbabilityOfSpecs.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Probabilities\ProbabilitySpecs.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fluency\Fluency.csproj">
       <Project>{CA8DE273-AA4A-4FC1-9D41-B67B56A53433}</Project>
       <Name>Fluency</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shiloh.Utils\Shiloh.Utils.csproj">
+      <Project>{D9C01343-518C-47D5-B7AB-B5A400CAAD5E}</Project>
+      <Name>Shiloh.Utils</Name>
     </ProjectReference>
     <ProjectReference Include="..\SpecUnit\SpecUnit.csproj">
       <Project>{650A6CED-11AD-4DA2-984C-39FB773F88D3}</Project>

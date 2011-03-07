@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 
 namespace Shiloh.Utils
@@ -58,6 +60,11 @@ namespace Shiloh.Utils
 		public static double dollars( this int dollars )
 		{
 			return dollars;
+		}
+
+		public static IEnumerable< int > Times( this int times )
+		{
+			return Enumerable.Range( 0, times );
 		}
 	}
 }
