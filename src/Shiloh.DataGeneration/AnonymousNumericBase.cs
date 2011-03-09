@@ -6,7 +6,7 @@ using System.Reflection;
 
 namespace Shiloh.DataGeneration
 {
-	public abstract class AnonymousNumericBase< T > : AnonymousBase< T >
+	public abstract class AnonymousNumericBase< T > : AnonymousTypedBase< T >
 			where T : struct, IComparable< T >
 	{
 		readonly T _maxValue;

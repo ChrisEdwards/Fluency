@@ -52,7 +52,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Anonymous.cs" />
+    <Compile Include="AnonymousAddress.cs" />
     <Compile Include="AnonymousBase.cs" />
+    <Compile Include="AnonymousTypedBase.cs" />
     <Compile Include="AnonymousDecimal.cs" />
     <Compile Include="AnonymousDate.cs" />
     <Compile Include="AnonymousDateTime.cs" />
@@ -60,6 +62,7 @@
     <Compile Include="AnonymousNumericBase.cs" />
     <Compile Include="AnonymousValue.cs" />
     <Compile Include="AnonymousDouble.cs" />
+    <Compile Include="DictionaryList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RandomData.cs" />
     <Compile Include="Random\ExtendedRandom.cs" />
@@ -70,6 +73,7 @@
     <Compile Include="ValueConstraints\IValueConstraints.cs" />
     <Compile Include="ValueConstraints\SqlServerDefaultValuesAndConstraints.cs" />
     <Compile Include="ValueConstraints\ValueConstraints.cs" />
+    <Compile Include="Waffle\WaffleEngine.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -103,6 +107,60 @@
       <Project>{D9C01343-518C-47D5-B7AB-B5A400CAAD5E}</Project>
       <Name>Shiloh.Utils</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Dictionaries\StreetNames.txt" />
+    <Content Include="Waffle\Adverbs.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Waffle\ArtyNouns.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Waffle\BuzzPhrases.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Waffle\CardinalSequence.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Waffle\Cliches.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Waffle\FirstAdjectivePhrases.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Waffle\FirstNames.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Waffle\LastNames.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Waffle\NounPhrases.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Waffle\ObjectPhrases.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Waffle\OrdinalSequence.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Waffle\PreamblePhrases.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Waffle\Prefixes.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Waffle\SecondAdjectivePhrases.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Waffle\SubjectPhrases.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Waffle\VerbPhrases.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Waffle\Verbs.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

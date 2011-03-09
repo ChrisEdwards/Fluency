@@ -43,8 +43,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EmbeddedResourceFileSpecs.cs" />
+    <Compile Include="IOSpecs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StringExtensionSpecs.cs" />
+    <EmbeddedResource Include="TestContent.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

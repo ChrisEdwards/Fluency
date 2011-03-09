@@ -40,7 +40,13 @@ namespace Shiloh.DataGeneration
 		{
 			get { return new AnonymousDateTime(); }
 		}
-		
+
+		public static AnonymousAddress Address
+		{
+			get { return new AnonymousAddress(); }
+		}
+
+
 		public static string FirstName()
 		{
 			return Value.From( RandomData.FirstNames );

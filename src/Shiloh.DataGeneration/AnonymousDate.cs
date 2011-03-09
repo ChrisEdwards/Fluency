@@ -5,7 +5,7 @@ using Shiloh.Utils;
 
 namespace Shiloh.DataGeneration
 {
-	public class AnonymousDate : AnonymousBase< DateTime >
+	public class AnonymousDate : AnonymousTypedBase< DateTime >
 	{
 		private AnonymousDateTime _anonymousDateTime = new AnonymousDateTime();
 

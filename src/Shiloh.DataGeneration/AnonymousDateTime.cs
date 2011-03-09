@@ -3,7 +3,7 @@ using System;
 
 namespace Shiloh.DataGeneration
 {
-	public class AnonymousDateTime : AnonymousBase< DateTime >
+	public class AnonymousDateTime : AnonymousTypedBase< DateTime >
 	{
 		protected override DateTime GetRandomValue()
 		{
