@@ -26,13 +26,12 @@ namespace Shiloh.Utils
 		/// <summary>
 		/// Gets a StreamReader for the specified resource file.
 		/// </summary>
-		/// <param name="filename">The filename.</param>
+		/// <param name="resourceName">The filename.</param>
 		/// <param name="assembly">The assembly.</param>
 		/// <returns></returns>
 		/// <exception cref="MissingManifestResourceException"><c>MissingManifestResourceException</c>.</exception>
-		public static StreamReader GetReader( string filename, Assembly assembly )
+		public static StreamReader GetReader( string resourceName, Assembly assembly )
 		{
-			string resourceName = GetResourceName( filename, assembly );
 			Stream stream = assembly.GetManifestResourceStream( resourceName );
 			
 			if ( stream == null )
@@ -45,14 +44,12 @@ namespace Shiloh.Utils
 		/// <summary>
 		/// Gets the resource name for a file embedded in the specified assembly.
 		/// </summary>
-		/// <param name="filename">The filename.</param>
 		/// <param name="assembly">The assembly.</param>
 		/// <returns></returns>
-		public static string GetResourceName( string filename, Assembly assembly )
+		public static string GetDefaultResourceNamespace( Assembly assembly )
 		{
 			// NOTE: This assumes the name of the assembly is equal to its root namespace. If this is not true, then this code would need modification.
-			string rootNameSpace = assembly.GetName().Name;
-			return rootNameSpace + "." + filename;
+			return assembly.GetName().Name;
 		}
 	}
 }

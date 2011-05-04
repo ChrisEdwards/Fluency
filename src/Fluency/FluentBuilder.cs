@@ -141,7 +141,6 @@ namespace Fluency
 		/// </summary>
 		/// <typeparam name="TPropertyType">The type of the property type.</typeparam>
 		/// <param name="propertyExpression">The property expression.</param>
-		/// <param name="propertyValue">The property value.</param>
 		/// <returns></returns>
 		public TPropertyType GetValue< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression )
 		{
@@ -158,6 +157,7 @@ namespace Fluency
 		/// <typeparam name="TPropertyType">The type of the property type.</typeparam>
 		/// <param name="propertyExpression">The property expression.</param>
 		/// <param name="propertyValue">The property value.</param>
+		/// <exception cref="FluencyException">Cannot set property once a pre built result has been given. Property change will have no affect.</exception>
 		protected internal FluentBuilder< T > SetProperty< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression, TPropertyType propertyValue )
 		{
 			// If we try to change info after prebuilt result is set...throw error since the change wont be reflected in the prebuilt result.
@@ -171,7 +171,7 @@ namespace Fluency
 
 			// Set the property on the prototype object.
 			//_prototype.SetProperty( propertyExpression, propertyValue );
-			_properties[propertyExpression.GetPropertyInfo().Name] = propertyValue;
+			_properties[property.Name] = propertyValue;
 
 			return this;
 		}
@@ -206,6 +206,8 @@ namespace Fluency
 		/// <typeparam name="TPropertyType">The type of the property type.</typeparam>
 		/// <param name="propertyExpression">The property expression.</param>
 		/// <param name="builder">The builder.</param>
+		/// <exception cref="ArgumentException">Invalid builder type. Builder type must be a FluentListBuilder of the Property Type</exception>
+		/// <exception cref="ArgumentException">PropertyType must derive from IList</exception>
 		protected internal FluentBuilder< T > SetList< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression, IFluentBuilder builder ) where TPropertyType : class
 		{
 			if ( !typeof ( TPropertyType ).FullName.Contains( "IList" ) )

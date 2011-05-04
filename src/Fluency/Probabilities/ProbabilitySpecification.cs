@@ -37,7 +37,7 @@ namespace Fluency.Probabilities
 
 		public T GetOutcome()
 		{
-			int random = ARandom.IntBetween( 0, 100 );
+			int random = ARandom.IntBetween( 1, 100 );
 
 			// Determine which chance's percentile the random number falls in to and return its outcome.
 			int threshold = 0;

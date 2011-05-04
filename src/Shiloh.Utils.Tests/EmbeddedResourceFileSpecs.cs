@@ -17,7 +17,7 @@ namespace Shiloh.Utils.Tests
 		[ Subject( typeof ( EmbeddedResourceFile ) ) ]
 		public class Given_an_embedded_resource_file
 		{
-			protected static string embeddedFileName = "TestContent.txt";
+			protected static string embeddedResourceName = "Shiloh.Utils.Tests.TestContent.txt";
 			/* The contents of this file (which is an embedded resource in this assembly) are the following two lines:
 			 * Line1
 			 * Line2
@@ -32,7 +32,7 @@ namespace Shiloh.Utils.Tests
 		{
 			static List< string > lines;
 
-			Because of = () => lines = EmbeddedResourceFile.ForEachLineIn( embeddedFileName, thisAssembly ).ToList();
+			Because of = () => lines = EmbeddedResourceFile.ForEachLineIn( embeddedResourceName, thisAssembly ).ToList();
 
 			It should_contain_the_lines_of_the_embedded_file = () =>
 			                                                   	{
@@ -48,7 +48,7 @@ namespace Shiloh.Utils.Tests
 		{
 			static StreamReader result;
 
-			Because of = () => result = EmbeddedResourceFile.GetReader( embeddedFileName, thisAssembly );
+			Because of = () => result = EmbeddedResourceFile.GetReader( embeddedResourceName, thisAssembly );
 
 			It should_return_an_open_stream_reader = () => result.EndOfStream.ShouldBeFalse();
 		}
@@ -65,13 +65,13 @@ namespace Shiloh.Utils.Tests
 		}
 
 
-		[ Subject( typeof ( EmbeddedResourceFile ), "GetResourceName" ) ]
-		public class When_getting_the_resource_name_of_an_embedded_resouce_file : Given_an_embedded_resource_file
+		[ Subject( typeof ( EmbeddedResourceFile ), "GetDefaultResourceNamespace" ) ]
+		public class When_getting_the_default_resource_namespace_of_an_assembly : Given_an_embedded_resource_file
 		{
 			static string resourceName;
 
-			Because of = () => resourceName = EmbeddedResourceFile.GetResourceName( "TestContent.txt", thisAssembly );
-			It should_return_the_filename_prepended_with_the_name_of_the_assembly = () => resourceName.ShouldEqual( "Shiloh.Utils.Tests.TestContent.txt" );
+			Because of = () => resourceName = EmbeddedResourceFile.GetDefaultResourceNamespace( thisAssembly );
+			It should_return_the_name_of_the_assembly = () => resourceName.ShouldEqual( "Shiloh.Utils.Tests" );
 		}
 	}
 }

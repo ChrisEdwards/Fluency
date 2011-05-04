@@ -1,7 +1,6 @@
 // ReSharper disable InconsistentNaming
 
 
-using System;
 using Machine.Specifications;
 
 
@@ -14,7 +13,7 @@ namespace Shiloh.DataGeneration.Tests
 		{
 			static string result;
 
-			Because of = () => result = Anonymous.Address.StreetName();
+			Because of = () =>  result = Anonymous.Address.StreetName(); 
 
 			It should_return_a_street_name = () => result.ShouldNotBeNull();
 		}
