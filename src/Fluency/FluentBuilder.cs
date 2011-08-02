@@ -15,7 +15,7 @@ namespace Fluency
 	/// Exposes a fluent interface to build Fluent objects.
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
-	public class FluentBuilder< T > : IFluentBuilder< T > where T : class, new()
+	public class FluentBuilder< T > : IFluentBuilder< T > where T : class
 	{
 		readonly Dictionary< string, IFluentBuilder > _builders = new Dictionary< string, IFluentBuilder >();
 		protected T _preBuiltResult;
@@ -23,9 +23,13 @@ namespace Fluency
 		protected ListDictionary _properties;
 		readonly IList< IDefaultConvention > _defaultConventions = new List< IDefaultConvention >();
 		protected IIdGenerator IdGenerator;
+// ReSharper disable StaticFieldInGenericType
+	    private static ConstructorInfo _typeConstructor;
+        private static bool _triedToGetConstructor;
+// ReSharper restore StaticFieldInGenericType
+	    
 
-
-		/// <summary>
+	    /// <summary>
 		/// Initializes a new instance of the <see cref="FluentBuilder{T}"/> class.
 		/// </summary>
 		public FluentBuilder()
@@ -86,7 +90,7 @@ namespace Fluency
 			BeforeBuilding();
 
 			//T buildResult = _prototype.ShallowClone();
-			var result = new T();
+			var result = GetNewInstance();
 			foreach ( DictionaryEntry entry in _properties )
 				result.SetProperty( entry.Key.ToString(), entry.Value );
 
@@ -99,7 +103,21 @@ namespace Fluency
 			return result;
 		}
 
-		#endregion
+	    protected virtual T GetNewInstance()
+	    {
+            if (_triedToGetConstructor == false)
+            {
+                // Check for a parameterless constructor
+                _typeConstructor = typeof (T).GetConstructor(Type.EmptyTypes);
+                _triedToGetConstructor = true;
+            }
+            if (_typeConstructor != null)
+                return _typeConstructor.Invoke(new object[] {}) as T;
+
+            throw new FluencyException("Unable to invoke default constructor.  Override GetNewInstance() in builder class.");
+	    }
+
+	    #endregion
 
 
 		#region Events
@@ -130,7 +148,7 @@ namespace Fluency
 		[ Obsolete( "Use AfterBuild() method to perform post-processinig." ) ]
 		protected virtual T BuildFrom( T values )
 		{
-			return new T();
+			return GetNewInstance();
 		}
 
 		#endregion
@@ -201,7 +219,7 @@ namespace Fluency
 
 
 		/// <summary>
-		/// Sets the list builder for the specified property. Use this to assign a <see cref="FluentBuilder{IList(TPropertyType}}"/> to build the list for the property whose type is IList<PropertyType>.
+		/// Sets the list builder for the specified property. Use this to assign a <see cref="FluentBuilder{IList{TPropertyType}}"/> to build the list for the property whose type is IList{PropertyType}.
 		/// </summary>
 		/// <typeparam name="TPropertyType">The type of the property type.</typeparam>
 		/// <param name="propertyExpression">The property expression.</param>

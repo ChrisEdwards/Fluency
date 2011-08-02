@@ -1,6 +1,6 @@
 namespace Fluency
 {
-	public interface IFluentBuilder< T > : IFluentBuilder
+	public interface IFluentBuilder< out T > : IFluentBuilder
 	{
 		/// <summary>
 		/// Builds this instance.

@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Fluency
 {
-	public class FluentListBuilder< T > : IFluentListBuilder< T > where T : class, new()
+	public class FluentListBuilder< T > : IFluentListBuilder< T > where T : class
 	{
 		readonly IList< IFluentBuilder< T > > _builders = new List< IFluentBuilder< T > >();
 		readonly IList< T > _directItems = new List< T >();

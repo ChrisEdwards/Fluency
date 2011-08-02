@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Fluency
 {
-	public interface IFluentListBuilder< T > : IFluentBuilder< IList< T > > where T : class, new()
+	public interface IFluentListBuilder< T > : IFluentBuilder< IList< T > > where T : class
 	{
 		/// <summary>
 		/// Adds a builder to build a specified item in the list.
