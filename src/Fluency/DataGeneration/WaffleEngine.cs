@@ -931,7 +931,11 @@ namespace Fluency.DataGeneration
 
 		public static string TitleCaseWords( string input )
 		{
+#if SILVERLIGHT
+            return input;
+#else
 			return CultureInfo.CurrentCulture.TextInfo.ToTitleCase( input );
+#endif
 		}
 
 

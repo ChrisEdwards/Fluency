@@ -4,7 +4,7 @@ using System.Reflection;
 
 // Copied from FluentNHibernate source to remove dependency on FluentNHibernate. Need to remove dependency on this code.
 
-
+#if !SILVERLIGHT
 namespace FluentNHibernate
 {
 	public sealed class DummyPropertyInfo : PropertyInfo
@@ -113,3 +113,4 @@ namespace FluentNHibernate
 		}
 	}
 }
+#endif

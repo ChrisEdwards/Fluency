@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Linq.Expressions;
 using System.Reflection;
 using Fluency.Conventions;
@@ -20,7 +18,7 @@ namespace Fluency
 		readonly Dictionary< string, IFluentBuilder > _builders = new Dictionary< string, IFluentBuilder >();
 		protected T _preBuiltResult;
 		protected T _prototype;
-		protected ListDictionary _properties;
+		protected IDictionary<string, object> _properties;
 		readonly IList< IDefaultConvention > _defaultConventions = new List< IDefaultConvention >();
 		protected IIdGenerator IdGenerator;
 // ReSharper disable StaticFieldInGenericType
@@ -37,7 +35,7 @@ namespace Fluency
 			IdGenerator = Fluency.Configuration.GetIdGenerator< T >();
 			_defaultConventions = Fluency.Configuration.DefaultValueConventions;
 
-			_properties = new ListDictionary();
+			_properties = new Dictionary<string, object>();
 
 			Initialize();
 		}
@@ -91,8 +89,8 @@ namespace Fluency
 
 			//T buildResult = _prototype.ShallowClone();
 			var result = GetNewInstance();
-			foreach ( DictionaryEntry entry in _properties )
-				result.SetProperty( entry.Key.ToString(), entry.Value );
+			foreach ( KeyValuePair<string, object> entry in _properties )
+				result.SetProperty( entry.Key, entry.Value );
 
 			// Alow the client builder the ability to do some post-processing.
 			AfterBuilding( result );

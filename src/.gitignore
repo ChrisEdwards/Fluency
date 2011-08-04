@@ -13,6 +13,7 @@ bin
 *.suo
 *.cache
 * Thumbs.db
+*DotCover*
  
 # Other useful stuff
 *.bak

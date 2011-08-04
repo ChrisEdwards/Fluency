@@ -107,6 +107,7 @@ namespace Fluency.DataGeneration
 		}
 
 
+#if !SILVERLIGHT // Silverlight does not support Enum.GetValues()
 		public static T EnumValue< T >()
 		{
 			if ( !typeof ( T ).IsSubclassOf( typeof ( Enum ) ) )
@@ -117,6 +118,7 @@ namespace Fluency.DataGeneration
 			int randomArrayIndex = IntBetween( 0, values.Length - 1 );
 			return (T)values.GetValue( randomArrayIndex );
 		}
+#endif
 
 
 		public static DateTime DateTime()

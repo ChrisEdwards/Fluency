@@ -33,7 +33,11 @@ namespace FluentNHibernate.Utils
 			bool isExpressionOfDynamicComponent = expression.ToString().Contains( "get_Item" );
 
 			if ( isExpressionOfDynamicComponent )
+#if SILVERLIGHT
+                throw new ArgumentException("Not supported in Silverlight");
+#else
 				return GetDynamicComponentProperty( expression );
+#endif
 
 			MemberExpression memberExpression = GetMemberExpression( expression );
 
@@ -41,6 +45,7 @@ namespace FluentNHibernate.Utils
 		}
 
 
+#if !SILVERLIGHT
 		static PropertyInfo GetDynamicComponentProperty< TModel, T >( Expression< Func< TModel, T > > expression )
 		{
 			Type desiredConversionType = null;
@@ -68,14 +73,18 @@ namespace FluentNHibernate.Utils
 
 			return new DummyPropertyInfo( (string)constExpression.Value, desiredConversionType );
 		}
-
+#endif
 
 		public static PropertyInfo GetProperty< TModel, T >( Expression< Func< TModel, T > > expression )
 		{
 			bool isExpressionOfDynamicComponent = expression.ToString().Contains( "get_Item" );
 
-			if ( isExpressionOfDynamicComponent )
+            if (isExpressionOfDynamicComponent)
+#if SILVERLIGHT
+                throw new ArgumentException("Not supported in silverlight");
+#else
 				return GetDynamicComponentProperty( expression );
+#endif
 
 			MemberExpression memberExpression = GetMemberExpression( expression );
 
