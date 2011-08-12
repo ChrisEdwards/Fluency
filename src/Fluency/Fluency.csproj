@@ -155,6 +155,7 @@
     <Compile Include="Utils\Reflection\PropertyChain.cs" />
     <Compile Include="Utils\Reflection\ReflectionHelper.cs" />
     <Compile Include="Utils\Reflection\SingleProperty.cs" />
+    <Compile Include="Utils\SilverlightListDictionary.cs" />
     <Compile Include="Utils\StringExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
