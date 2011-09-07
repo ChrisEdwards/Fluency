@@ -79,8 +79,8 @@ namespace Fluency.Utils
 
         public void CopyTo(Array array, int index)
         {
-            for (int i = 0; i < _dictionaryEntries.Count; i++)
-                array.SetValue(_dictionaryEntries[i], i + index);
+            foreach (object entry in _dictionaryEntries)
+                array.SetValue(entry, index++);
         }
 
         public int Count
@@ -180,9 +180,8 @@ namespace Fluency.Utils
 
             public void CopyTo(Array array, int index)
             {
-                int i = 0;
                 foreach (object item in _entries.Select(_selector))
-                    array.SetValue(item, i++ + index);
+                    array.SetValue(item, index++);
             }
 
             public int Count
