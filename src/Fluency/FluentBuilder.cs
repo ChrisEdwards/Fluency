@@ -208,7 +208,7 @@ namespace Fluency
 		/// <param name="propertyExpression">The property expression.</param>
 		/// <param name="builder">The builder.</param>
 		protected internal FluentBuilder< T > SetProperty< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression, IFluentBuilder builder )
-				where TPropertyType : class, new()
+				where TPropertyType : class
 		{
 			// Due to lack of polymorphism in generic parameters.
 			if ( !( builder is FluentBuilder< TPropertyType > ) )
@@ -258,7 +258,7 @@ namespace Fluency
 		/// <param name="propertyExpression">The property expression.</param>
 		/// <param name="builder">The builder.</param>
 		protected internal FluentBuilder< T > AddListItem< TPropertyType >( Expression< Func< T, IList< TPropertyType > > > propertyExpression, IFluentBuilder< TPropertyType > builder )
-				where TPropertyType : class, new()
+				where TPropertyType : class
 		{
 			ListBuilderFor( propertyExpression ).Add( builder );
 
@@ -332,7 +332,7 @@ namespace Fluency
 		/// <param name="propertyExpression">The property expression.</param>
 		/// <returns></returns>
 		public IFluentListBuilder< TPropertyType > ListBuilderFor< TPropertyType >( Expression< Func< T, IList< TPropertyType > > > propertyExpression )
-				where TPropertyType : class, new()
+				where TPropertyType : class
 		{
 			PropertyInfo property = propertyExpression.GetPropertyInfo();
 
