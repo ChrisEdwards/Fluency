@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
+    <projectUrl>https://github.com/ChrisEdwards/Fluency</projectUrl>
+    <iconUrl>https://chrisedwards.dreamhosters.com/images/FluencyLogo.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <copyright>Copyright 2011</copyright>
+    <tags>testing anonymous fluentinterface object builder net dotnet library framework csharp c# development fluent fluent-interface test</tags>
+  </metadata>
+</package>
