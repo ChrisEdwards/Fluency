@@ -2,6 +2,11 @@ Fluency.NET
 ===========
 Fluency is a framework for building fluent interfaces or DSLs in .NET. It simplifies building fluent interfaces for configuration, but also has facilities for creating interfaces to build anonymous (random) test data for integration tests.
 
+Installing Fluency
+------------------
+You can install Fluency either by:
+1. Using the NuGet package manager for Visual Studio typing `Install-Package Fluency` at the package manager console or searching for "Fluency" in the UI, or
+2. Downloading the latest binaries from the [Fluency GitHub repository](http://github.com/ChrisEdwards/Fluency) by clicking the "Downloads" button.
 
 Two types of builders
 ---------------------
