@@ -80,7 +80,7 @@ And here is how you would use the builder.
 	MyConfiguration config =
 		new MyConfigurationBuilder()
 			.ForUser( "Bob" )
-			.AllowedToLogin()
+			.IsAllowedToLogin()
 			.MinutesBeforeTimeout( 20 )
 			.build();
 ```
@@ -95,7 +95,7 @@ I don't know about you, but the "new" keyword and the builder's class name reall
 ```CSharp
 	public static class a
 	{
-		public MyConfigurationBuilder Config 
+		public static MyConfigurationBuilder Config 
 		{
 			get { return new MyConfigurationBuilder(); }
 		}
@@ -107,7 +107,7 @@ Now my syntax to create the builder looks like this
 ```CSharp
 	var config = a.Config
 					.ForUser( "Bob" )
-					.AllowedToLogin()
+					.IsAllowedToLogin()
 					.MinutesBeforeTimeout( 20 )
 					.build();
 ```
