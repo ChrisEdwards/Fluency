@@ -12,15 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 using Fluency.IdGenerators;
+using Machine.Specifications;
 using NUnit.Framework;
-using SpecUnit;
+
+// ReSharper disable InconsistentNaming
 
 
 namespace Fluency.Tests.BuilderTests
 {
-	public class When_building_two_consecutive_objects : ContextSpecification
+	public class when_building_two_consecutive_objects
 	{
 		public class ClassWithId
+		{
+			public int Id { get; set; }
+		}
+
+
+		public class DifferentClassWithId
 		{
 			public int Id { get; set; }
 		}
@@ -35,36 +43,6 @@ namespace Fluency.Tests.BuilderTests
 		}
 
 
-		protected override void SharedContext()
-		{
-			Fluency.Initialize( x => x.IdGeneratorIsConstructedBy( () => new DecrementingIdGenerator( -1 ) ) );
-		}
-	}
-
-
-	[ Concern( "FluentBuilder" ) ]
-	public class When_the_two_objects_are_of_the_same_type : When_building_two_consecutive_objects
-	{
-		[ Observation ]
-		public void Should_return_unique_ids()
-		{
-			ClassWithId object1 = new BuilderWithId().build();
-			ClassWithId object2 = new BuilderWithId().build();
-
-			Assert.That( object1.Id, Is.Not.EqualTo( object2.Id ) );
-		}
-	}
-
-
-	[ Concern( "FluentBuilder" ) ]
-	public class When_the_two_objects_are_of_the_different_types : When_building_two_consecutive_objects
-	{
-		public class DifferentClassWithId
-		{
-			public int Id { get; set; }
-		}
-
-
 		public class DifferentBuilderWithId : FluentBuilder< DifferentClassWithId >
 		{
 			protected override void SetupDefaultValues()
@@ -74,13 +52,35 @@ namespace Fluency.Tests.BuilderTests
 		}
 
 
-		[ Observation ]
-		public void Should_not_return_unique_ids()
-		{
-			ClassWithId object1 = new BuilderWithId().build();
-			DifferentClassWithId object2 = new DifferentBuilderWithId().build();
+		Establish context = () => Fluency.Initialize( x => x.IdGeneratorIsConstructedBy( () => new DecrementingIdGenerator( -1 ) ) );
+	}
 
-			Assert.That( object1.Id, Is.EqualTo( object2.Id ) );
-		}
+
+	[ Subject( "FluentBuilder" ) ]
+	public class when_the_two_objects_are_of_the_same_type : when_building_two_consecutive_objects
+	{
+		It should_return_unique_ids = () =>
+		                              	{
+		                              		ClassWithId object1 = new BuilderWithId().build();
+		                              		ClassWithId object2 = new BuilderWithId().build();
+
+		                              		Assert.That( object1.Id, Is.Not.EqualTo( object2.Id ) );
+		                              	};
+	}
+
+
+	[ Subject( "FluentBuilder" ) ]
+	public class when_the_two_objects_are_of_different_types : when_building_two_consecutive_objects
+	{
+		It should_not_return_unique_ids = () =>
+		                                  	{
+		                                  		ClassWithId object1 = new BuilderWithId().build();
+		                                  		DifferentClassWithId object2 = new DifferentBuilderWithId().build();
+
+		                                  		Assert.That( object1.Id, Is.EqualTo( object2.Id ) );
+		                                  	};
 	}
 }
+
+
+// ReSharper restore InconsistentNaming

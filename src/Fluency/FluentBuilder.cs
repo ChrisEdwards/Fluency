@@ -32,17 +32,16 @@ namespace Fluency
 	{
 		readonly Dictionary< string, IFluentBuilder > _builders = new Dictionary< string, IFluentBuilder >();
 		protected T _preBuiltResult;
-		protected T _prototype;
-		protected ListDictionary _properties;
+		protected readonly ListDictionary _properties;
 		readonly IList< IDefaultConvention > _defaultConventions = new List< IDefaultConvention >();
 		protected IIdGenerator IdGenerator;
 // ReSharper disable StaticFieldInGenericType
-	    private static ConstructorInfo _typeConstructor;
-        private static bool _triedToGetConstructor;
+		static ConstructorInfo _typeConstructor;
+		static bool _triedToGetConstructor;
 // ReSharper restore StaticFieldInGenericType
-	    
 
-	    /// <summary>
+
+		/// <summary>
 		/// Initializes a new instance of the <see cref="FluentBuilder{T}"/> class.
 		/// </summary>
 		public FluentBuilder()
@@ -66,7 +65,6 @@ namespace Fluency
 				{
 					// Get the default value from the configured conventions and set the value.
 					object defaultValue = GetDefaultValue( propertyInfo );
-					//_prototype.SetProperty( propertyInfo, defaultValue );
 					_properties.Add( propertyInfo.Name, defaultValue );
 				}
 			}
@@ -95,15 +93,13 @@ namespace Fluency
 				IFluentBuilder builder = pair.Value;
 
 				object propertyValue = builder.InvokeMethod( "build" );
-				//prototype.SetProperty( propertyName, propertyValue );
 				_properties[propertyName] = propertyValue;
 			}
 
 			// Allow the client builder the opportunity to do some pre-processing.
 			BeforeBuilding();
 
-			//T buildResult = _prototype.ShallowClone();
-			var result = GetNewInstance();
+			T result = GetNewInstance();
 			foreach ( DictionaryEntry entry in _properties )
 				result.SetProperty( entry.Key.ToString(), entry.Value );
 
@@ -116,21 +112,23 @@ namespace Fluency
 			return result;
 		}
 
-	    protected virtual T GetNewInstance()
-	    {
-            if (_triedToGetConstructor == false)
-            {
-                // Check for a parameterless constructor
-                _typeConstructor = typeof (T).GetConstructor(Type.EmptyTypes);
-                _triedToGetConstructor = true;
-            }
-            if (_typeConstructor != null)
-                return _typeConstructor.Invoke(new object[] {}) as T;
 
-            throw new FluencyException("Unable to invoke default constructor.  Override GetNewInstance() in builder class.");
-	    }
+		protected virtual T GetNewInstance()
+		{
+			if ( _triedToGetConstructor == false )
+			{
+				// Check for a parameterless constructor
+				_typeConstructor = typeof ( T ).GetConstructor( Type.EmptyTypes );
+				_triedToGetConstructor = true;
+			}
 
-	    #endregion
+			if ( _typeConstructor == null )
+				throw new FluencyException( "Unable to invoke default constructor.  Override GetNewInstance() in builder class." );
+
+			return _typeConstructor.Invoke( new object[] {} ) as T;
+		}
+
+		#endregion
 
 
 		#region Events
@@ -175,7 +173,6 @@ namespace Fluency
 		/// <returns></returns>
 		public TPropertyType GetValue< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression )
 		{
-//			return _prototype.GetProperty( propertyExpression );
 			return (TPropertyType)_properties[propertyExpression.GetPropertyInfo().Name];
 		}
 
@@ -200,8 +197,7 @@ namespace Fluency
 
 			RemoveBuilderFor( property );
 
-			// Set the property on the prototype object.
-			//_prototype.SetProperty( propertyExpression, propertyValue );
+			// Set the property.
 			_properties[property.Name] = propertyValue;
 
 			return this;
@@ -372,11 +368,11 @@ namespace Fluency
 		/// <summary>
 		/// Casts this builder to the specified builder type.
 		/// </summary>
-		/// <typeparam name="BUILDERTYPE">The type of the UILDERTYPE.</typeparam>
+		/// <typeparam name="TBuilderType">The type of the builder.</typeparam>
 		/// <returns></returns>
-		public BUILDERTYPE As< BUILDERTYPE >() where BUILDERTYPE : FluentBuilder< T >
+		public TBuilderType As< TBuilderType >() where TBuilderType : FluentBuilder< T >
 		{
-			return (BUILDERTYPE)this;
+			return (TBuilderType)this;
 		}
 
 

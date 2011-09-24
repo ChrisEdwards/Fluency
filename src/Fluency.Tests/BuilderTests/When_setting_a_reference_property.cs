@@ -11,17 +11,16 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+using Machine.Specifications;
 using NUnit.Framework;
-using SpecUnit;
+
+// ReSharper disable InconsistentNaming
 
 
 namespace Fluency.Tests.BuilderTests
 {
-	public class When_setting_a_reference_property : ContextSpecification
+	public class when_setting_a_reference_property
 	{
-		protected ReferenceType expectedValue;
-
-
 		public class ReferenceType
 		{
 			public string Name { get; set; }
@@ -34,15 +33,14 @@ namespace Fluency.Tests.BuilderTests
 		}
 
 
-		protected override void SharedContext()
-		{
-			expectedValue = new ReferenceType();
-		}
+		protected static ReferenceType _expectedValue;
+
+		Establish context = () => _expectedValue = new ReferenceType();
 	}
 
 
-	[ Concern( "FluentBuilder" ) ]
-	public class When_setting_a_reference_property_with_no_default_builder : When_setting_a_reference_property
+	[ Subject( "FluentBuilder" ) ]
+	public class when_setting_a_reference_property_with_no_default_builder : when_setting_a_reference_property
 	{
 		public class BuilderWithReferenceProperty_WithNoDefaultBuilder : FluentBuilder< ClassWithReferenceProperty >
 		{
@@ -54,17 +52,17 @@ namespace Fluency.Tests.BuilderTests
 		}
 
 
-		[ Observation ]
-		public void Build_should_return_the_same_reference()
-		{
-			var builder = new BuilderWithReferenceProperty_WithNoDefaultBuilder();
-			ClassWithReferenceProperty instance = builder.With( expectedValue ).build();
-			Assert.That( instance.ReferenceProperty, Is.SameAs( expectedValue ) );
-		}
+		It should_return_the_same_reference = () =>
+		                                      	{
+		                                      		var builder = new BuilderWithReferenceProperty_WithNoDefaultBuilder();
+		                                      		ClassWithReferenceProperty instance = builder.With( _expectedValue ).build();
+		                                      		Assert.That( instance.ReferenceProperty, Is.SameAs( _expectedValue ) );
+		                                      	};
 	}
 
 
-	public class When_setting_a_reference_property_with_default_builder : When_setting_a_reference_property
+	[ Subject( "FluentBuilder" ) ]
+	public class when_setting_a_reference_property_with_a_default_builder : when_setting_a_reference_property
 	{
 		public class BuilderWithReferenceProperty_WithDefaultBuilder : FluentBuilder< ClassWithReferenceProperty >
 		{
@@ -82,12 +80,14 @@ namespace Fluency.Tests.BuilderTests
 		}
 
 
-		[ Observation ]
-		public void Build_should_return_the_same_reference()
-		{
-			var builder = new BuilderWithReferenceProperty_WithDefaultBuilder();
-			ClassWithReferenceProperty instance = builder.With( expectedValue ).build();
-			instance.ReferenceProperty.should_be( expectedValue );
-		}
+		It should_return_the_same_reference = () =>
+		                                      	{
+		                                      		var builder = new BuilderWithReferenceProperty_WithDefaultBuilder();
+		                                      		ClassWithReferenceProperty instance = builder.With( _expectedValue ).build();
+		                                      		instance.ReferenceProperty.should_be( _expectedValue );
+		                                      	};
 	}
 }
+
+
+// ReSharper restore InconsistentNaming

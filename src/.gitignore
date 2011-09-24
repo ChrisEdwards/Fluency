@@ -33,3 +33,5 @@ deploy
 deploy/*
 
 *.nupkg
+*.crunchproject.local.xml
+*.crunchsolution.local.xml

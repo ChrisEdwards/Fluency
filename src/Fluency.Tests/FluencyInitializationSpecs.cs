@@ -12,7 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 using Fluency.IdGenerators;
+using Machine.Specifications;
 using SpecUnit;
+
+// ReSharper disable InconsistentNaming
 
 
 namespace Fluency.Tests
@@ -38,99 +41,51 @@ namespace Fluency.Tests
 		#endregion
 
 
-		public class FluencySpecsContext : ContextSpecification
+		public class FluencyInitializationBaseSpecs
 		{
-			protected TestItem item;
-
-			protected override void SharedContext() {}
-
-
-			protected override void Because()
-			{
-				item = new TestItemBuilder().build();
-			}
+			protected static TestItem _item;
+			Because of = () => _item = new TestItemBuilder().build();
 		}
 
 
-		[ Concern( "FluencyInitialization" ) ]
-		public class when_fluency_is_configured_to_use_decrementing_ids : FluencySpecsContext
+		[ Subject( "FluencyInitialization" ) ]
+		public class When_Fluency_is_configured_to_use_decrementing_ids : FluencyInitializationBaseSpecs
 		{
-			protected override void Context()
-			{
-				Fluency.Initialize( x => x.IdGeneratorIsConstructedBy( () => new DecrementingIdGenerator() ) );
-			}
-
-
-			[ Observation ]
-			public void should_generate_a_negative_id_value()
-			{
-				item.Id.should_be_less_than( 0 );
-			}
+			Establish context = () => Fluency.Initialize( x => x.IdGeneratorIsConstructedBy( () => new DecrementingIdGenerator() ) );
+			It should_generate_a_negative_id_value = () => _item.Id.should_be_less_than( 0 );
 		}
 
 
-		[ Concern( "FluencyInitialization" ) ]
-		public class when_fluency_is_configured_to_use_zero_for_ids : FluencySpecsContext
+		[ Subject( "FluencyInitialization" ) ]
+		public class When_Fluency_is_configured_to_use_zero_for_ids : FluencyInitializationBaseSpecs
 		{
-			protected override void Context()
-			{
-				Fluency.Initialize( x => x.IdGeneratorIsConstructedBy( () => new StaticValueIdGenerator( 0 ) ) );
-			}
-
-
-			[ Observation ]
-			public void should_generate_a_zero_id_value()
-			{
-				item.Id.should_be_equal_to( 0 );
-			}
+			Establish context = () => Fluency.Initialize( x => x.IdGeneratorIsConstructedBy( () => new StaticValueIdGenerator( 0 ) ) );
+			It should_generate_a_zero_id_value = () => _item.Id.should_be_equal_to( 0 );
 		}
 
 
-		[ Concern( "FluencyInitialization" ) ]
-		public class when_no_id_generator_is_specified_for_fluency : FluencySpecsContext
+		[ Subject( "FluencyInitialization" ) ]
+		public class When_no_id_generator_is_specified_for_fluency : FluencyInitializationBaseSpecs
 		{
-			protected override void Context()
-			{
-				Fluency.Initialize( x => x.IdGeneratorIsConstructedBy( () => new StaticValueIdGenerator( 0 ) ) );
-			}
-
-
-			[ Observation ]
-			public void should_use_zero_id_value_generator_by_default()
-			{
-				item.Id.should_be_equal_to( 0 );
-			}
+			It should_use_zero_id_value_generator_by_default = () => _item.Id.should_be_equal_to( 0 );
 		}
 
 
-		[ Concern( "FluencyInitialization" ) ]
-		public class when_no_default_value_conventions_are_specified : FluencySpecsContext
+		[ Subject( "FluencyInitialization" ) ]
+		public class When_no_default_value_conventions_are_specified : FluencyInitializationBaseSpecs
 		{
-			protected override void Context() {}
-
-
-			[ Observation ]
-			public void default_conventions_should_be_empty()
-			{
-				Fluency.Configuration.DefaultValueConventions.Count.should_be_equal_to( 0 );
-			}
+			It should_not_use_any_default_conventions = () => Fluency.Configuration.DefaultValueConventions.Count.should_be_equal_to( 0 );
 		}
 
 
-		[ Concern( "FluencyInitialization" ) ]
-		public class when_default_value_conventions_are_specified : FluencySpecsContext
+		[ Subject( "FluencyInitialization" ) ]
+		public class When_default_value_conventions_are_specified : FluencyInitializationBaseSpecs
 		{
-			protected override void Context()
-			{
-				Fluency.Initialize( x => x.UseDefaultValueConventions() );
-			}
-
-
-			[ Observation ]
-			public void default_conventions_should_be_used()
-			{
-				Fluency.Configuration.DefaultValueConventions.Count.should_be_equal_to( 5 );
-			}
+			Establish context = () => Fluency.Initialize( x => x.UseDefaultValueConventions() );
+			It the_default_conventions_should_be_used = () => Fluency.Configuration.DefaultValueConventions.Count.should_be_equal_to( 5 );
 		}
 	}
 }
+
+
+// ReSharper restore InconsistentNaming

@@ -51,8 +51,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Machine.Specifications, Version=0.3.0.0, Culture=neutral, PublicKeyToken=5c474de7a495cff1, processorArchitecture=MSIL">
-      <HintPath>..\packages\Machine.Specifications.0.3.0.0\lib\35\Machine.Specifications.dll</HintPath>
+    <Reference Include="Machine.Specifications, Version=0.4.24.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Machine.Specifications.0.4.24.0\lib\Machine.Specifications.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework, Version=2.5.9.10348, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
