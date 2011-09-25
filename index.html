@@ -8,7 +8,10 @@
   <style type="text/css">
     body {
       margin-top: 1.0em;
-      background-color: #111111;
+      background-color: #000000;
+	  background-image:url(Fluency-Web-Background.gif);
+	  background-position:top center;
+	  background-repeat:no-repeat;
       font-family: Helvetica, Arial, FreeSans, san-serif;
       color: #ffffff;
     }
@@ -16,17 +19,20 @@
       margin: 0 auto;
       width: 700px;
     }
-    h1 { font-size: 3.8em; color: #ee4444; margin-bottom: 3px; }
+    h1 { font-size: 3.8em; color: #A081B6; margin-bottom: 3px; }
     h1 .small { font-size: 0.4em; }
     h1 a { text-decoration: none }
-    h2 { font-size: 1.5em; color: #ee4444; }
-    h3 { text-align: center; color: #ee4444; }
-    a { color: #ee4444; }
-    .description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
-    .download { float: right; }
+    h2 { font-size: 1.5em; color: #A081B6; }
+    h3 { text-align: center; color: #A081B6; }
+    a { color: #A081B6; }
+    .description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic; clear:both;}
+    .download { float: right; clear:none;}
     pre { background: #000; color: #fff; padding: 15px;}
     hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
     .footer { text-align:center; padding-top:30px; font-style: italic; }
+	#title { float:left; margin }
+	#title img { border:none;}
+	#title h1 {display:none;}
   </style>
 </head>
 
@@ -35,15 +41,19 @@
 
   <div id="container">
 
-    <div class="download">
+	<div id="title">
+		<a href="http://github.com/ChrisEdwards/Fluency"><img src="Fluency-Name.png"/></a>		
+	    <h1><a href="http://github.com/ChrisEdwards/Fluency">Fluency</a>
+      <span class="small">by <a href="http://github.com/ChrisEdwards">ChrisEdwards</a></span></h1>
+	</div>
+    
+	<div class="download">
       <a href="http://github.com/ChrisEdwards/Fluency/zipball/master">
         <img border="0" width="90" src="http://github.com/images/modules/download/zip.png"></a>
       <a href="http://github.com/ChrisEdwards/Fluency/tarball/master">
         <img border="0" width="90" src="http://github.com/images/modules/download/tar.png"></a>
     </div>
 
-    <h1><a href="http://github.com/ChrisEdwards/Fluency">Fluency</a>
-      <span class="small">by <a href="http://github.com/ChrisEdwards">ChrisEdwards</a></span></h1>
 
     <div class="description">
       A .NET fluent interface for building anonymous objects for testing.
