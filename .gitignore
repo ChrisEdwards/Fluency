@@ -31,6 +31,10 @@ httpd.parse.errors
 # If you have a deploy folder
 deploy
 deploy/*
+build_artifacts
+build_artifacts/*
+build_output
+build_output/*
 
 *.nupkg
 *.crunchproject.local.xml
