@@ -35,8 +35,4 @@ deploy/*
 *.nupkg
 *.crunchproject.local.xml
 *.crunchsolution.local.xml
-
-build_output
-build_output/*
-build_artifacts
-build_artifacts/*
+*.ncrunchsolution

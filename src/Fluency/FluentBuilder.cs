@@ -437,18 +437,16 @@ namespace Fluency
 		/// <returns></returns>
 		object GetDefaultValue( PropertyInfo propertyInfo )
 		{
-			object result = null;
-
 			// Check each of the conventions and apply them if necessary.
 			foreach ( IDefaultConvention defaultConvention in _defaultConventions )
 			{
-				// if more than one convention matches...last one wins.
+				// first convention match wins...
 				if ( defaultConvention.AppliesTo( propertyInfo ) )
-					result = defaultConvention.DefaultValue( propertyInfo );
+					return defaultConvention.DefaultValue( propertyInfo );
 			}
 
 			// Returns null if no convention matched.
-			return result;
+			return null;
 		}
 
 		#endregion

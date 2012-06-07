@@ -74,7 +74,7 @@ namespace Fluency.Tests
 		[ Subject( "FluencyInitialization" ) ]
 		public class When_no_default_value_conventions_are_specified : FluencyInitializationBaseSpecs
 		{
-			It should_not_use_any_default_conventions = () => Fluency.Configuration.DefaultValueConventions.Count.should_be_equal_to( 0 );
+			private It should_use_default_set_of_default_value_conventions = () => Fluency.Configuration.DefaultValueConventions.Count.ShouldBeGreaterThan( 0 );
 		}
 
 
@@ -82,7 +82,7 @@ namespace Fluency.Tests
 		public class When_default_value_conventions_are_specified : FluencyInitializationBaseSpecs
 		{
 			Establish context = () => Fluency.Initialize( x => x.UseDefaultValueConventions() );
-			It the_default_conventions_should_be_used = () => Fluency.Configuration.DefaultValueConventions.Count.should_be_equal_to( 5 );
+			It the_default_conventions_should_be_used = () => Fluency.Configuration.DefaultValueConventions.Count.ShouldBeGreaterThan( 0 );
 		}
 	}
 }
