@@ -50,7 +50,7 @@ assemblyinfo :version do |asm|
   asm.version = asm_version
   asm.file_version = build_number
 
-  asm.description = "Fluency is designed to simplify the way you set up tests. Fluency exposes a customizeable fluent interface that constructs test objects (including the full graph of dependencies). Yet it only requires you to specify the few things your test is actually concerned with--everything else is automatically populated with random (yet valid) data. Fluency comes complete with a very functional set of realistic random data generators that can be configured on a case-by-case basis or by convention to give you complete control over the randomness of your data."
+  asm.description = "Fluency is designed to simplify the way you set up tests by acting as a factory to create object graphs populated with fake data. Fluency exposes a customizeable fluent interface that constructs test objects (including the full graph of dependencies). Yet it only requires you to specify the few things your test is actually concerned with--everything else is automatically populated with random (yet valid) data. Fluency comes complete with a very functional set of realistic random data generators that can be configured on a case-by-case basis or by convention to give you complete control over the randomness of your data."
   asm.company_name = "Chris Edwards"
   asm.product_name = "Fluency"
   asm.copyright = COPYRIGHT
