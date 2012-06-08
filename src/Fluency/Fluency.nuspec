@@ -15,7 +15,7 @@
 		<tags>testing anonymous fluentinterface object builder net dotnet library framework csharp c# development fluent fluent-interface test data factory</tags>
 	</metadata>
 	<files>
-		<file src="bin\Release\*.dll" target="lib" />
-		<file src="bin\Release\*.pdb" target="lib" />
+		<file src="*.dll" target="lib" />
+		<file src="*.pdb" target="lib" />
 	</files>
 </package>
