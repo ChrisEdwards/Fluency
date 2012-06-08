@@ -72,6 +72,7 @@
     <Compile Include="DataGeneration\ValueConstraints.cs" />
     <Compile Include="DataGeneration\WaffleEngine.cs" />
     <Compile Include="DynamicFluentBuilder.cs" />
+    <Compile Include="Utils\NumericalExtensions.cs" />
     <Compile Include="Fluency.cs" />
     <Compile Include="FluencyConfiguration.cs" />
     <Compile Include="FluencyException.cs" />
@@ -115,12 +116,6 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Shiloh.Utils\Shiloh.Utils.csproj">
-      <Project>{D9C01343-518C-47D5-B7AB-B5A400CAAD5E}</Project>
-      <Name>Shiloh.Utils</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

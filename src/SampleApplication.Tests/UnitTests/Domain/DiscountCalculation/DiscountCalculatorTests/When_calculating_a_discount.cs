@@ -17,7 +17,6 @@ using SampleApplication.Domain;
 using SampleApplication.Domain.DiscountCalculation;
 using SampleApplication.Tests.FluentBuilders;
 using SharpTestsEx;
-using Shiloh.Utils;
 
 
 namespace SampleApplication.Tests.UnitTests.Domain.DiscountCalculation.DiscountCalculatorTests
