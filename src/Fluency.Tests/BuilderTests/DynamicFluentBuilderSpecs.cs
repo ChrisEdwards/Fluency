@@ -268,6 +268,63 @@ namespace Fluency.Tests.BuilderTests
 			                                                                 		_result.ListProperty.Should().Contain( _secondExpectedValue );
 			                                                                 	};
 		}
+
+
+		[ Subject( typeof ( DynamicFluentBuilder< > ) ) ]
+		public class When_building_the_object_after_specifying_list_property_builders_using_WithListOf : Given_a_DynamicFluentBuilder_that_uses_default_value_conventions
+		{
+			static TestClass _result;
+			static TestClass _firstExpectedValue;
+			static TestClass _secondExpectedValue;
+
+			Establish context = () =>
+			                    	{
+			                    		// Create a builder that will return the expected value.
+			                    		_firstExpectedValue = new TestClass {FirstName = "Bob", LastName = "Smith"};
+										FluentBuilder<TestClass> firstValueBuilder = new DynamicFluentBuilder<TestClass>().AliasFor(_firstExpectedValue);
+			                    		_secondExpectedValue = new TestClass {FirstName = "Harry", LastName = "Johnson"};
+										FluentBuilder<TestClass> secondValueBuilder = new DynamicFluentBuilder<TestClass>().AliasFor(_secondExpectedValue);
+
+			                    		_builder.WithListOf( x => x.ListProperty , firstValueBuilder, secondValueBuilder );
+			                    	};
+
+			Because of = () => _result = _builder.build();
+
+			private It should_build_a_list_containing_the_specified_values = () =>
+			                                                                 	{
+			                                                                 		_result.ListProperty.Should().Contain( _firstExpectedValue );
+			                                                                 		_result.ListProperty.Should().Contain( _secondExpectedValue );
+			                                                                 	};
+		}
+
+
+		[ Subject( typeof ( DynamicFluentBuilder< > ) ) ]
+		public class When_building_the_object_after_specifying_list_property_builders_using_HavingListOf : Given_a_DynamicFluentBuilder_that_uses_default_value_conventions
+		{
+			static TestClass _result;
+			static TestClass _firstExpectedValue;
+			static TestClass _secondExpectedValue;
+
+			Establish context = () =>
+			                    	{
+										// Create a builder that will return the expected value.
+										_firstExpectedValue = new TestClass { FirstName = "Bob", LastName = "Smith" };
+										FluentBuilder<TestClass> firstValueBuilder = new DynamicFluentBuilder<TestClass>().AliasFor(_firstExpectedValue);
+										_secondExpectedValue = new TestClass { FirstName = "Harry", LastName = "Johnson" };
+										FluentBuilder<TestClass> secondValueBuilder = new DynamicFluentBuilder<TestClass>().AliasFor(_secondExpectedValue);
+
+			                    		
+			                    		_builder.HavingListOf( x => x.ListProperty , firstValueBuilder, secondValueBuilder );
+			                    	};
+
+			Because of = () => _result = _builder.build();
+
+			private It should_build_a_list_containing_the_specified_values = () =>
+			                                                                 	{
+			                                                                 		_result.ListProperty.Should().Contain( _firstExpectedValue );
+			                                                                 		_result.ListProperty.Should().Contain( _secondExpectedValue );
+			                                                                 	};
+		}
 	}
 }
 
