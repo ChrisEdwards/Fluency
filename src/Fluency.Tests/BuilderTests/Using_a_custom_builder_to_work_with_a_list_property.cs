@@ -63,7 +63,7 @@ namespace Fluency.Tests.BuilderTests
 		{
 			public FooBuilder()
 			{
-				SetList( x => x.Bars, new FluentListBuilder< Bar >() );
+				//SetList( x => x.Bars, new FluentListBuilder< Bar >() );
 			}
 		}
 

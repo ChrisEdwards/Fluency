@@ -339,8 +339,8 @@ namespace Fluency
 		{
 			PropertyInfo property = propertyExpression.GetPropertyInfo();
 
-			if ( !_builders.ContainsKey( property.Name ) )
-				throw new ArgumentException( "List Builder does not exist for property [" + property.Name + "]" );
+			if (!_builders.ContainsKey(property.Name))
+				AddBuilderFor( property, new FluentListBuilder< TPropertyType >() );
 
 			return (IFluentListBuilder< TPropertyType >)_builders[property.Name];
 		}
