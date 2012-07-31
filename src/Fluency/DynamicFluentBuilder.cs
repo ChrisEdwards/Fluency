@@ -11,7 +11,9 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+
 using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 
 
@@ -117,6 +119,41 @@ namespace Fluency
 				where TPropertyType : class, new()
 		{
 			return With( propertyExpression, propertyValueBuilder );
+		}
+
+
+		/// <summary>
+		/// Specify a builder for the value of a property on the build result.<br/>
+		/// Usage: <code>builder.For( x => x.MyProperty, otherFluentBuilder );</code>
+		/// </summary>
+		/// <example></example>
+		/// <typeparam name="TPropertyType">The type of the property to set. This is inferred.</typeparam>
+		/// <param name="propertyExpression">Lambda expression identifying the property to set.</param>
+		/// <param name="values">The values to add to the list</param>
+		/// <returns></returns>
+		public DynamicFluentBuilder< T > WithListOf< TPropertyType >( Expression< Func< T, IList< TPropertyType > > > propertyExpression, params TPropertyType[] values )
+				where TPropertyType : class, new()
+		{
+			SetList( propertyExpression, new FluentListBuilder< TPropertyType >() );
+			foreach ( var value in values )
+				AddListItem( propertyExpression, value );
+			return this;
+		}
+
+
+		/// <summary>
+		/// Specify a builder for the value of a property on the build result.<br/>
+		/// Usage: <code>builder.For( x => x.MyProperty, otherFluentBuilder );</code>
+		/// </summary>
+		/// <example></example>
+		/// <typeparam name="TPropertyType">The type of the property to set. This is inferred.</typeparam>
+		/// <param name="propertyExpression">Lambda expression identifying the property to set.</param>
+		/// <param name="values">The values to add to the list</param>
+		/// <returns></returns>
+		public DynamicFluentBuilder< T > HavingListOf< TPropertyType >( Expression< Func< T, IList< TPropertyType > > > propertyExpression, params TPropertyType[] values )
+				where TPropertyType : class, new()
+		{
+			return WithListOf( propertyExpression, values );
 		}
 	}
 }
