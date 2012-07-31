@@ -19,7 +19,7 @@ using Fluency.Utils;
 
 namespace Fluency.DataGeneration
 {
-	public static class ARandom
+	public static partial class ARandom
 	{
 		static readonly Random _random = new Random();
 		public static IValueConstraints _valueConstraints = new SqlServerDefaultValuesAndConstraints();
@@ -31,6 +31,21 @@ namespace Fluency.DataGeneration
 			for ( int i = 0; i < size; i++ )
 					//26 letters in the alfabet, ascii + 65 for the capital letters
 				builder.Append( Convert.ToChar( Convert.ToInt32( Math.Floor( 26 * _random.NextDouble() + 65 ) ) ) );
+			return builder.ToString();
+		}
+
+		/// <summary>
+		/// Creates a randomized string constrained to characters in the specified character set.
+		/// </summary>
+		/// <param name="size">The size.</param>
+		/// <param name="charactersToChooseFrom">The characters to choose from.</param>
+		/// <returns></returns>
+		public static string StringFromCharacterSet( int size, string charactersToChooseFrom )
+		{
+			var characterArray = charactersToChooseFrom.ToCharArray();
+			var builder = new StringBuilder( size );
+			for (int i = 0; i < size; i++)
+				builder.Append( ItemFrom( characterArray ) );
 			return builder.ToString();
 		}
 
