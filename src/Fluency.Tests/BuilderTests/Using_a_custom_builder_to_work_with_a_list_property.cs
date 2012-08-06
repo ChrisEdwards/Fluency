@@ -11,6 +11,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+
 using System;
 using System.Collections.Generic;
 using Machine.Specifications;
@@ -59,13 +60,7 @@ namespace Fluency.Tests.BuilderTests
 		/// FooBuilder builds <see cref="Foo"/> and allows us to set the Bars list property 
 		/// by passing in a <see cref="FluentListBuilder{Bar}"/> which is the point of this test.
 		/// </summary>
-		public class FooBuilder : FluentBuilder< Foo >
-		{
-			public FooBuilder()
-			{
-				//SetList( x => x.Bars, new FluentListBuilder< Bar >() );
-			}
-		}
+		public class FooBuilder : FluentBuilder< Foo > {}
 
 		#endregion
 
@@ -76,9 +71,9 @@ namespace Fluency.Tests.BuilderTests
 			public static FooBuilder _builder;
 			public static Foo _buildResult;
 
-			Establish context = () => _builder = new FooBuilder();
+			private Establish context = () => _builder = new FooBuilder();
 
-			Because of = () => _buildResult = _builder.build();
+			private Because of = () => _buildResult = _builder.build();
 		}
 
 
@@ -95,18 +90,18 @@ namespace Fluency.Tests.BuilderTests
 				public static IFluentListBuilder< Bar > _listBuilder;
 				public static IList< Bar > _expectedList = new List< Bar >();
 
-				Establish context = () =>
-				                    	{
-				                    		// Setup mock list builder.
-				                    		_listBuilder = MockRepository.GenerateMock< FluentListBuilder< Bar > >();
-				                    		_listBuilder.Stub( x => x.build() ).Return( _expectedList );
+				private Establish context = () =>
+				                            	{
+				                            		// Setup mock list builder.
+				                            		_listBuilder = MockRepository.GenerateMock< FluentListBuilder< Bar > >();
+				                            		_listBuilder.Stub( x => x.build() ).Return( _expectedList );
 
-				                    		// Set the list builder.
-				                    		_builder.SetList( x => x.Bars, _listBuilder );
-				                    	};
+				                            		// Set the list builder.
+				                            		_builder.SetList( x => x.Bars, _listBuilder );
+				                            	};
 
-				It should_invoke_the_list_builder_to_get_the_list_propertys_value = () => _listBuilder.AssertWasCalled( x => x.build() );
-				It should_build_an_instance_having_the_list_property_set_to_the_result_of_the_list_builder = () => _buildResult.Bars.Should().Be.SameInstanceAs( _expectedList );
+				private It should_invoke_the_list_builder_to_get_the_list_propertys_value = () => _listBuilder.AssertWasCalled( x => x.build() );
+				private It should_build_an_instance_having_the_list_property_set_to_the_result_of_the_list_builder = () => _buildResult.Bars.Should().Be.SameInstanceAs( _expectedList );
 			}
 
 
@@ -115,54 +110,85 @@ namespace Fluency.Tests.BuilderTests
 			{
 				public static IFluentBuilder< Bar > _nonListBuilder;
 
-				Establish context = () => _nonListBuilder = new FluentBuilder< Bar >();
+				private Establish context = () => _nonListBuilder = new FluentBuilder< Bar >();
 
-				It should_fail = () => Assert.Throws< ArgumentException >( () => _builder.SetList( x => x.Bars, _nonListBuilder ) );
+				private It should_fail = () => Assert.Throws< ArgumentException >( () => _builder.SetList( x => x.Bars, _nonListBuilder ) );
 			}
 
 
 			[ Subject( "FluentBuilder" ) ]
 			public class When_trying_to_use_a_list_builder_to_build_a_property_that_is_not_a_list_property : Given_a_builder_for_a_target_type_having_a_list_property
 			{
-				static FluentListBuilder< Bar > _listBuilder;
+				private static FluentListBuilder< Bar > _listBuilder;
 
-				Establish context = () => _listBuilder = new FluentListBuilder< Bar >();
+				private Establish context = () => _listBuilder = new FluentListBuilder< Bar >();
 
-				It should_fail = () => Assert.Throws< ArgumentException >( () => _builder.SetList( x => x.Bar, _listBuilder ) );
+				private It should_fail = () => Assert.Throws< ArgumentException >( () => _builder.SetList( x => x.Bar, _listBuilder ) );
 			}
 		}
+
 
 		public class By_passing_in_a_prepopulated_list_for_the_list_property
 		{
 			[ Subject( "FluentBuilder" ) ]
 			public class When_setting_a_list_property_to_an_existing_prepopulated_list : Given_a_builder_for_a_target_type_having_a_list_property
 			{
-				static IList< Bar > _expectedList;
+				private static IList< Bar > _expectedList;
 
-				Establish context = () =>
-				                    	{
-				                    		_expectedList = new List< Bar >{ new Bar() };
-				                    		_builder.SetProperty( x => x.Bars, _expectedList );
-				                    	};
+				private Establish context = () =>
+				                            	{
+				                            		_expectedList = new List< Bar > {new Bar()};
+				                            		_builder.SetProperty( x => x.Bars, _expectedList );
+				                            	};
 
-				It should_build_an_instance_having_the_list_set_to_the_prepopulated_list = () => _buildResult.Bars.Should().Be.SameInstanceAs( _expectedList );
+				private It should_build_an_instance_having_the_list_set_to_the_prepopulated_list = () => _buildResult.Bars.Should().Be.SameInstanceAs( _expectedList );
 			}
 		}
 
 
 		/// <summary>
-		/// To add an item to a list from within a custom builder, you can call <code>AddListItem( x => x.ListProperty, item );</code>
+		/// To add an item to a list from within a custom builder, you can call <code>AddToList( x => x.ListProperty, item );</code>
 		/// </summary>
 		public class By_adding_an_item_to_the_list
 		{
 			[ Subject( "FluentBuilder" ) ]
-			public class When_adding_a_list_item_to_a_list_property : Given_a_builder_for_a_target_type_having_a_list_property
+			public class When_adding_a_list_item_to_a_list_property_using_AddToList : Given_a_builder_for_a_target_type_having_a_list_property
 			{
-				static Bar _expectedListItem = new Bar();
+				private static Bar _expectedListItem = new Bar();
 
-				Establish context = () => _builder.AddListItem( x => x.Bars, _expectedListItem );
+				private Establish context = () => _builder.AddToList( x => x.Bars, _expectedListItem );
 
-				It should_build_an_instance_whose_list_property_contains_the_new_item = () => _buildResult.Bars.Should().Contain( _expectedListItem );
+				private It should_build_an_instance_whose_list_property_contains_the_new_item = () => _buildResult.Bars.Should().Contain( _expectedListItem );
+			}
+
+
+			[ Subject( "FluentBuilder" ) ]
+			public class When_adding_a_list_item_to_a_list_property_using_AddListItem : Given_a_builder_for_a_target_type_having_a_list_property
+			{
+				private static Bar _expectedListItem = new Bar();
+
+				private Establish context = () => _builder.AddListItem( x => x.Bars, _expectedListItem );
+
+				private It should_build_an_instance_whose_list_property_contains_the_new_item = () => _buildResult.Bars.Should().Contain( _expectedListItem );
+			}
+		}
+
+
+		/// <summary>
+		/// To add multiple items to a list from within a custom builder, you can call <code>AddToList( x => x.ListProperty, item1, item2, item3 ..., itemN );</code>
+		/// </summary>
+		public class By_adding_multiple_items_to_the_list
+		{
+			[ Subject( "FluentBuilder" ) ]
+			public class When_adding_multiple_list_items_to_a_list_property : Given_a_builder_for_a_target_type_having_a_list_property
+			{
+				private static Bar _expectedListItem1 = new Bar();
+				private static Bar _expectedListItem2 = new Bar();
+
+				private Establish context = () => _builder.AddToList( x => x.Bars, _expectedListItem1, _expectedListItem2 );
+
+				private It should_build_an_instance_whose_list_property_contains_the_first_item = () => _buildResult.Bars.Should().Contain( _expectedListItem1 );
+				private It should_build_an_instance_whose_list_property_contains_the_second_item = () => _buildResult.Bars.Should().Contain( _expectedListItem2 );
 			}
 		}
 
@@ -173,23 +199,74 @@ namespace Fluency.Tests.BuilderTests
 		public class By_adding_a_builder_to_build_an_item_for_the_list
 		{
 			[ Subject( "FluentBuilder" ) ]
-			public class When_adding_a_list_item_to_a_list_property : Given_a_builder_for_a_target_type_having_a_list_property
+			public class When_adding_a_list_item_to_a_list_property_using_deprecated_AddListItem_method : Given_a_builder_for_a_target_type_having_a_list_property
 			{
-				static Bar _expectedListItem = new Bar();
-				static IFluentBuilder< Bar > _listItemBuilder;
+				private static Bar _expectedListItem = new Bar();
+				private static IFluentBuilder< Bar > _listItemBuilder;
 
-				Establish context = () =>
-				                    	{
-				                    		// Setup mock builder to return the new item.
-				                    		_listItemBuilder = MockRepository.GenerateMock< IFluentBuilder< Bar > >();
-				                    		_listItemBuilder.Stub( x => x.build() ).Return( _expectedListItem );
+				private Establish context = () =>
+				                            	{
+				                            		// Setup mock builder to return the new item.
+				                            		_listItemBuilder = MockRepository.GenerateMock< IFluentBuilder< Bar > >();
+				                            		_listItemBuilder.Stub( x => x.build() ).Return( _expectedListItem );
 
-				                    		// Add the new item by adding its builder.
-				                    		_builder.AddListItem( x => x.Bars, _listItemBuilder );
-				                    	};
+				                            		// Add the new item by adding its builder.
+				                            		_builder.AddListItem( x => x.Bars, _listItemBuilder );
+				                            	};
 
-				It should_invoke_the_builder_to_create_the_new_list_item = () => _listItemBuilder.AssertWasCalled( x => x.build() );
-				It should_build_an_instance_whose_list_property_contains_the_new_item = () => _buildResult.Bars.Should().Contain( _expectedListItem );
+				private It should_invoke_the_builder_to_create_the_new_list_item = () => _listItemBuilder.AssertWasCalled( x => x.build() );
+				private It should_build_an_instance_whose_list_property_contains_the_new_item = () => _buildResult.Bars.Should().Contain( _expectedListItem );
+			}
+
+
+			[ Subject( "FluentBuilder" ) ]
+			public class When_adding_a_builder_for_a_list_item_to_a_list_property_using_AddToList : Given_a_builder_for_a_target_type_having_a_list_property
+			{
+				private static Bar _expectedListItem = new Bar();
+				private static IFluentBuilder< Bar > _listItemBuilder;
+
+				private Establish context = () =>
+				                            	{
+				                            		// Setup mock builder to return the new item.
+				                            		_listItemBuilder = MockRepository.GenerateMock< IFluentBuilder< Bar > >();
+				                            		_listItemBuilder.Stub( x => x.build() ).Return( _expectedListItem );
+
+				                            		// Add the new item by adding its builder.
+				                            		_builder.AddToList( x => x.Bars, _listItemBuilder );
+				                            	};
+
+				private It should_invoke_the_builder_to_create_the_new_list_item = () => _listItemBuilder.AssertWasCalled( x => x.build() );
+				private It should_build_an_instance_whose_list_property_contains_the_new_item = () => _buildResult.Bars.Should().Contain( _expectedListItem );
+			}
+
+
+			[ Subject( "FluentBuilder" ) ]
+			public class When_adding_multiple_builders_for_list_items_to_a_list_property_using_AddToList : Given_a_builder_for_a_target_type_having_a_list_property
+			{
+				private static Bar _expectedListItem1 = new Bar();
+				private static IFluentBuilder< Bar > _listItemBuilder1;
+
+				private static Bar _expectedListItem2 = new Bar();
+				private static IFluentBuilder< Bar > _listItemBuilder2;
+
+				private Establish context = () =>
+				                            	{
+				                            		// Setup mock builders to return the new item.
+				                            		_listItemBuilder1 = MockRepository.GenerateMock< IFluentBuilder< Bar > >();
+				                            		_listItemBuilder1.Stub( x => x.build() ).Return( _expectedListItem1 );
+
+				                            		_listItemBuilder2 = MockRepository.GenerateMock< IFluentBuilder< Bar > >();
+				                            		_listItemBuilder2.Stub( x => x.build() ).Return( _expectedListItem2 );
+
+				                            		// Add the new item by adding its builder.
+				                            		_builder.AddToList( x => x.Bars, _listItemBuilder1, _listItemBuilder2 );
+				                            	};
+
+				private It should_invoke_the_builder_to_create_the_first_list_item = () => _listItemBuilder1.AssertWasCalled( x => x.build() );
+				private It should_build_an_instance_whose_list_property_contains_the_first_item = () => _buildResult.Bars.Should().Contain( _expectedListItem1 );
+
+				private It should_invoke_the_builder_to_create_the_second_list_item = () => _listItemBuilder2.AssertWasCalled( x => x.build() );
+				private It should_build_an_instance_whose_list_property_contains_the_second_item = () => _buildResult.Bars.Should().Contain( _expectedListItem2 );
 			}
 		}
 	}

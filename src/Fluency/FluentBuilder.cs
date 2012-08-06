@@ -11,6 +11,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -30,14 +31,14 @@ namespace Fluency
 	/// <typeparam name="T"></typeparam>
 	public class FluentBuilder< T > : IFluentBuilder< T > where T : class
 	{
-		readonly Dictionary< string, IFluentBuilder > _builders = new Dictionary< string, IFluentBuilder >();
+		private readonly Dictionary< string, IFluentBuilder > _builders = new Dictionary< string, IFluentBuilder >();
 		protected T _preBuiltResult;
 		protected readonly ListDictionary _properties;
-		readonly IList< IDefaultConvention > _defaultConventions = new List< IDefaultConvention >();
+		private readonly IList< IDefaultConvention > _defaultConventions = new List< IDefaultConvention >();
 		protected IIdGenerator IdGenerator;
 // ReSharper disable StaticFieldInGenericType
-		static ConstructorInfo _typeConstructor;
-		static bool _triedToGetConstructor;
+		private static ConstructorInfo _typeConstructor;
+		private static bool _triedToGetConstructor;
 // ReSharper restore StaticFieldInGenericType
 
 
@@ -55,16 +56,16 @@ namespace Fluency
 		}
 
 
-		void Initialize()
+		private void Initialize()
 		{
 			// Specify default values for each property based on conventions.
-			foreach ( PropertyInfo propertyInfo in typeof ( T ).GetProperties() )
+			foreach ( var propertyInfo in typeof ( T ).GetProperties() )
 			{
 				// If the property is both Read and Write, set its value.
 				if ( propertyInfo.CanWrite && propertyInfo.CanRead )
 				{
 					// Get the default value from the configured conventions and set the value.
-					object defaultValue = GetDefaultValue( propertyInfo );
+					var defaultValue = GetDefaultValue( propertyInfo );
 					_properties.Add( propertyInfo.Name, defaultValue );
 				}
 			}
@@ -87,19 +88,19 @@ namespace Fluency
 				return _preBuiltResult;
 
 			// Populate the prototype with the result of executing each builder.
-			foreach ( KeyValuePair< string, IFluentBuilder > pair in _builders )
+			foreach ( var pair in _builders )
 			{
-				string propertyName = pair.Key;
-				IFluentBuilder builder = pair.Value;
+				var propertyName = pair.Key;
+				var builder = pair.Value;
 
-				object propertyValue = builder.InvokeMethod( "build" );
+				var propertyValue = builder.InvokeMethod( "build" );
 				_properties[propertyName] = propertyValue;
 			}
 
 			// Allow the client builder the opportunity to do some pre-processing.
 			BeforeBuilding();
 
-			T result = GetNewInstance();
+			var result = GetNewInstance();
 			foreach ( DictionaryEntry entry in _properties )
 				result.SetProperty( entry.Key.ToString(), entry.Value );
 
@@ -193,7 +194,7 @@ namespace Fluency
 				throw new FluencyException( "Cannot set property once a pre built result has been given. Property change will have no affect." );
 
 			// Get the property to set
-			PropertyInfo property = propertyExpression.GetPropertyInfo();
+			var property = propertyExpression.GetPropertyInfo();
 
 			RemoveBuilderFor( property );
 
@@ -237,7 +238,7 @@ namespace Fluency
 		/// <exception cref="ArgumentException">PropertyType must derive from IList</exception>
 		protected internal FluentBuilder< T > SetList< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression, IFluentBuilder builder ) where TPropertyType : class
 		{
-			if ( !typeof ( TPropertyType ).FullName.Contains( "IList" ) )
+			if ( !IsListType( typeof ( TPropertyType ) ) )
 				throw new ArgumentException( "PropertyType must derive from IList" );
 
 			// Due to lack of polymorphism in generic parameters.
@@ -254,18 +255,23 @@ namespace Fluency
 		}
 
 
+		private static bool IsListType( Type type )
+		{
+			return type.FullName.Contains( "IList" );
+		}
+
+
 		/// <summary>
 		/// Adds a new builder to a list of builders for the specified list property.
 		/// </summary>
 		/// <typeparam name="TPropertyType">The type of the property type.</typeparam>
 		/// <param name="propertyExpression">The property expression.</param>
 		/// <param name="builder">The builder.</param>
+		[ Obsolete("This method is deprecated. Please use AddToList() instead.") ]
 		protected internal FluentBuilder< T > AddListItem< TPropertyType >( Expression< Func< T, IList< TPropertyType > > > propertyExpression, IFluentBuilder< TPropertyType > builder )
 				where TPropertyType : class, new()
 		{
-			ListBuilderFor( propertyExpression ).Add( builder );
-
-			return this;
+			return AddToList( propertyExpression, builder );
 		}
 
 
@@ -275,10 +281,45 @@ namespace Fluency
 		/// <typeparam name="TPropertyType">The type of the property type.</typeparam>
 		/// <param name="propertyExpression">The property expression.</param>
 		/// <param name="value">The value.</param>
+		[ Obsolete("This method is deprecated. Please use AddToList() instead.") ]
 		protected internal FluentBuilder< T > AddListItem< TPropertyType >( Expression< Func< T, IList< TPropertyType > > > propertyExpression, TPropertyType value )
 				where TPropertyType : class, new()
 		{
-			ListBuilderFor( propertyExpression ).Add( value );
+			return AddToList( propertyExpression, value );
+		}
+
+
+		/// <summary>
+		/// Adds a new builder to a list of builders for the specified list property.
+		/// </summary>
+		/// <typeparam name="TPropertyType">The type of the property type.</typeparam>
+		/// <param name="propertyExpression">The property expression.</param>
+		/// <param name="builder">The builder.</param>
+		protected internal FluentBuilder<T> AddToList<TPropertyType>(Expression<Func<T, IList<TPropertyType>>> propertyExpression, params IFluentBuilder<TPropertyType>[] builders)
+				where TPropertyType : class, new()
+		{
+			var listBuilder = ListBuilderFor( propertyExpression );
+
+			foreach (var builder in builders)
+				listBuilder.Add(builder);
+
+			return this;
+		}
+
+
+		/// <summary>
+		/// Adds a one or more values to the list of values to be built for the specified list property.
+		/// </summary>
+		/// <typeparam name="TPropertyType">The type of the property type.</typeparam>
+		/// <param name="propertyExpression">The property expression.</param>
+		/// <param name="values">The value or values to add to the list.</param>
+		protected internal FluentBuilder< T > AddToList< TPropertyType >( Expression< Func< T, IList< TPropertyType > > > propertyExpression, params TPropertyType[] values )
+				where TPropertyType : class, new()
+		{
+			var listBuilder = ListBuilderFor( propertyExpression );
+
+			foreach (var value in values)
+				listBuilder.Add( value );
 
 			return this;
 		}
@@ -292,7 +333,7 @@ namespace Fluency
 		/// Removes the builder for the specified property if it exists.
 		/// </summary>
 		/// <param name="property">The property.</param>
-		void RemoveBuilderFor( PropertyInfo property )
+		private void RemoveBuilderFor( PropertyInfo property )
 		{
 			// If a builder already exists for this type, remove it.
 			if ( _builders.ContainsKey( property.Name ) )
@@ -306,9 +347,9 @@ namespace Fluency
 		/// <typeparam name="TPropertyType">The type of the property type.</typeparam>
 		/// <param name="propertyExpression">The property expression.</param>
 		/// <param name="builder">The builder.</param>
-		void AddBuilderFor< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression, IFluentBuilder builder )
+		private void AddBuilderFor< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression, IFluentBuilder builder )
 		{
-			PropertyInfo property = propertyExpression.GetPropertyInfo();
+			var property = propertyExpression.GetPropertyInfo();
 			AddBuilderFor( property, builder );
 		}
 
@@ -318,7 +359,7 @@ namespace Fluency
 		/// </summary>
 		/// <param name="property">The property.</param>
 		/// <param name="builder">The builder.</param>
-		void AddBuilderFor( PropertyInfo property, IFluentBuilder builder )
+		private void AddBuilderFor( PropertyInfo property, IFluentBuilder builder )
 		{
 			// Since we are adding a new builder for this property, remove the existing one if it exists.
 			RemoveBuilderFor( property );
@@ -337,9 +378,9 @@ namespace Fluency
 		public IFluentListBuilder< TPropertyType > ListBuilderFor< TPropertyType >( Expression< Func< T, IList< TPropertyType > > > propertyExpression )
 				where TPropertyType : class, new()
 		{
-			PropertyInfo property = propertyExpression.GetPropertyInfo();
+			var property = propertyExpression.GetPropertyInfo();
 
-			if (!_builders.ContainsKey(property.Name))
+			if ( !_builders.ContainsKey( property.Name ) )
 				AddBuilderFor( property, new FluentListBuilder< TPropertyType >() );
 
 			return (IFluentListBuilder< TPropertyType >)_builders[property.Name];
@@ -354,7 +395,7 @@ namespace Fluency
 		/// <returns></returns>
 		public FluentBuilder< TPropertyType > BuilderFor< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression ) where TPropertyType : class, new()
 		{
-			PropertyInfo property = propertyExpression.GetPropertyInfo();
+			var property = propertyExpression.GetPropertyInfo();
 
 			if ( !_builders.ContainsKey( property.Name ) )
 				throw new ArgumentException( "Builder does not exist for property [" + property.Name + "]" );
@@ -435,10 +476,10 @@ namespace Fluency
 		/// </summary>
 		/// <param name="propertyInfo">The property info.</param>
 		/// <returns></returns>
-		object GetDefaultValue( PropertyInfo propertyInfo )
+		private object GetDefaultValue( PropertyInfo propertyInfo )
 		{
 			// Check each of the conventions and apply them if necessary.
-			foreach ( IDefaultConvention defaultConvention in _defaultConventions )
+			foreach ( var defaultConvention in _defaultConventions )
 			{
 				// first convention match wins...
 				if ( defaultConvention.AppliesTo( propertyInfo ) )
