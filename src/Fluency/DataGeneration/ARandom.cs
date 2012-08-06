@@ -11,6 +11,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -19,20 +20,21 @@ using Fluency.Utils;
 
 namespace Fluency.DataGeneration
 {
-	public static partial class ARandom
+	public static class ARandom
 	{
-		static readonly Random _random = new Random();
+		private static readonly Random _random = new Random();
 		public static IValueConstraints _valueConstraints = new SqlServerDefaultValuesAndConstraints();
 
 
 		public static string String( int size )
 		{
 			var builder = new StringBuilder();
-			for ( int i = 0; i < size; i++ )
+			for ( var i = 0; i < size; i++ )
 					//26 letters in the alfabet, ascii + 65 for the capital letters
 				builder.Append( Convert.ToChar( Convert.ToInt32( Math.Floor( 26 * _random.NextDouble() + 65 ) ) ) );
 			return builder.ToString();
 		}
+
 
 		/// <summary>
 		/// Creates a randomized string constrained to characters in the specified character set.
@@ -44,7 +46,7 @@ namespace Fluency.DataGeneration
 		{
 			var characterArray = charactersToChooseFrom.ToCharArray();
 			var builder = new StringBuilder( size );
-			for (int i = 0; i < size; i++)
+			for ( var i = 0; i < size; i++ )
 				builder.Append( ItemFrom( characterArray ) );
 			return builder.ToString();
 		}
@@ -52,10 +54,10 @@ namespace Fluency.DataGeneration
 
 		public static string StringPattern( string pattern )
 		{
-			string output = "";
-			foreach ( char c in pattern )
+			var output = "";
+			foreach ( var c in pattern )
 			{
-				string randomizedPattern = GetRandomizedPatternChar( c );
+				var randomizedPattern = GetRandomizedPatternChar( c );
 				output += randomizedPattern;
 			}
 			return output;
@@ -69,18 +71,18 @@ namespace Fluency.DataGeneration
 
 			// Guess at a number of paragraphs to generate.
 			const int numberOfCharactersPerParagraph = 80;
-			int numberOfParagraphsToGenerate = maxChars / numberOfCharactersPerParagraph + 1;
+			var numberOfParagraphsToGenerate = maxChars / numberOfCharactersPerParagraph + 1;
 
 			waffle.TextWaffle( numberOfParagraphsToGenerate, false, sb );
 
-			return sb.ToString(0, maxChars);
+			return sb.ToString( 0, maxChars );
 		}
 
 
 		public static string Title( int maxChars )
 		{
 			var waffle = new WaffleEngine( _random );
-			string title = waffle.GenerateTitle();
+			var title = waffle.GenerateTitle();
 			if ( title.Length > maxChars )
 				title = title.Substring( 0, maxChars );
 			return title;
@@ -104,7 +106,7 @@ namespace Fluency.DataGeneration
 
 		public static int IntBetween( int min, int max )
 		{
-			int result = _random.Next( min + 1, max + 2 );
+			var result = _random.Next( min + 1, max + 2 );
 			return result - 1;
 		}
 
@@ -117,7 +119,7 @@ namespace Fluency.DataGeneration
 
 		public static double DoubleBetween( double min, double max )
 		{
-			double range = max - min;
+			var range = max - min;
 			return min + ( range * _random.NextDouble() );
 		}
 
@@ -139,9 +141,9 @@ namespace Fluency.DataGeneration
 			if ( !typeof ( T ).IsSubclassOf( typeof ( Enum ) ) )
 				throw new ArgumentException( "Must be enum type." );
 
-			Array values = Enum.GetValues( typeof ( T ) );
+			var values = Enum.GetValues( typeof ( T ) );
 
-			int randomArrayIndex = IntBetween( 0, values.Length - 1 );
+			var randomArrayIndex = IntBetween( 0, values.Length - 1 );
 			return (T)values.GetValue( randomArrayIndex );
 		}
 
@@ -159,8 +161,8 @@ namespace Fluency.DataGeneration
 
 			double startTick = min.Ticks;
 			double endTick = max.Ticks;
-			double numberOfTicksInRange = endTick - startTick;
-			double randomTickInRange = startTick + numberOfTicksInRange * _random.NextDouble();
+			var numberOfTicksInRange = endTick - startTick;
+			var randomTickInRange = startTick + numberOfTicksInRange * _random.NextDouble();
 			return new DateTime( Convert.ToInt64( randomTickInRange ) );
 		}
 
@@ -225,7 +227,7 @@ namespace Fluency.DataGeneration
 		}
 
 
-		static string GetRandomizedPatternChar( char c )
+		private static string GetRandomizedPatternChar( char c )
 		{
 			switch ( c )
 			{
@@ -319,6 +321,71 @@ namespace Fluency.DataGeneration
 		public static string ZipCode()
 		{
 			return StringPattern( "99999" );
+		}
+
+
+		/// <summary>
+		/// Generates a random age between 1 and 100.
+		/// </summary>
+		/// <returns></returns>
+		public static int Age()
+		{
+			return IntBetween( 1, 100 );
+		}
+
+
+		/// <summary>
+		/// Generates a random adult age between 21 and 65 (inclusive).
+		/// </summary>
+		/// <returns></returns>
+		public static int AdultAge()
+		{
+			return IntBetween( 21, 65 );
+		}
+
+
+		/// <summary>
+		/// Generates a random birthdate for a person of the specified age.
+		/// </summary>
+		/// <param name="age">The age.</param>
+		/// <returns></returns>
+		public static DateTime BirthDateForAge( int age )
+		{
+			var latestPossibleBirthday = age.YearsAgo().Date;
+			var earliestPossibleBirthday = ( age + 1 ).YearsAgo().Date.AddDays( 1 ); // Without this extra day, would be too old.
+			return DateBetween( earliestPossibleBirthday, latestPossibleBirthday );
+		}
+
+
+		/// <summary>
+		/// Generates a random date (no time) between the two specified dates (inclusive).
+		/// </summary>
+		/// <param name="startDate">The start date.</param>
+		/// <param name="endDate">The end date.</param>
+		/// <returns></returns>
+		public static DateTime DateBetween( DateTime startDate, DateTime endDate )
+		{
+			if ( DateTimeRangeDoesNotCrossDateBoundary( startDate, endDate ) )
+			{
+				throw new FluencyException(
+						"No valid date exists between the two supplied date time values. For a valid date to exist, there must be a midnight value between them (since technically a date without time is a datetime for midnight on the specified day)." );
+			}
+
+			var result = DateTimeBetween( startDate, endDate ).Date;
+
+			// Since start date includes time and result does not, stripping the time could make the result less than the start date. If so, just try again.
+			if ( result < startDate )
+				result = DateBetween( startDate, endDate );
+
+			return result;
+		}
+
+
+		private static bool DateTimeRangeDoesNotCrossDateBoundary( DateTime startDate, DateTime endDate )
+		{
+			var bothOnSameDay = startDate.Date == endDate.Date;
+			var neitherAreMidnight = startDate != startDate.Date && endDate != endDate.Date;
+			return bothOnSameDay && neitherAreMidnight;
 		}
 	}
 }
