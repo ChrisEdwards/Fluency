@@ -7,15 +7,16 @@
 		<authors>Chris Edwards</authors>
 		<owners>Chris Edwards</owners>
 		<licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
-		<projectUrl>https://github.com/ChrisEdwards/Fluency</projectUrl>
-		<iconUrl>https://chrisedwards.dreamhosters.com/images/FluencyLogo.png</iconUrl>
+		<projectUrl>http://github.com/ChrisEdwards/Fluency</projectUrl>
+		<iconUrl>http://chrisedwards.dreamhosters.com/images/FluencyLogo.png</iconUrl>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
 		<description>Fluency is a factory that creates object graphs populated with fake data. Fluency exposes a customizeable fluent interface that constructs test objects (including the full graph of dependencies). Yet it only requires you to specify the few things your test is actually concerned with--everything else is automatically populated with random (yet valid) data. Fluency comes complete with a very functional set of realistic random data generators that can be configured on a case-by-case basis or by convention to give you complete control over the randomness of your data.</description>
 		<copyright>Copyright 2012</copyright>
 		<tags>testing anonymous fluentinterface object builder net dotnet library framework csharp c# development fluent fluent-interface test data factory</tags>
 	</metadata>
 	<files>
-		<file src="*.dll" target="lib" />
-		<file src="*.pdb" target="lib" />
+		<file src="*.dll" target="lib\net40" />
+		<file src="*.pdb" target="lib\net40" />
+		<file src="Fluency.xml" target="lib\net40" />
 	</files>
 </package>
