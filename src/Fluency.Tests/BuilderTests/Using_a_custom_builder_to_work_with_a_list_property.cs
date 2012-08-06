@@ -74,6 +74,14 @@ namespace Fluency.Tests.BuilderTests
 			private Establish context = () => _builder = new FooBuilder();
 
 			private Because of = () => _buildResult = _builder.build();
+
+			// Helper Method
+			protected static IFluentBuilder< T > MockBuilderFor< T >( T itemToBuild )
+			{
+				var builder = MockRepository.GenerateMock< IFluentBuilder< T > >();
+				builder.Stub( x => x.build() ).Return( itemToBuild );
+				return builder;
+			}
 		}
 
 
@@ -137,7 +145,7 @@ namespace Fluency.Tests.BuilderTests
 
 				private Establish context = () =>
 				                            	{
-				                            		_expectedList = new List< Bar > {new Bar()};
+				                            		_expectedList = new List< Bar > { new Bar() };
 				                            		_builder.SetProperty( x => x.Bars, _expectedList );
 				                            	};
 
@@ -163,7 +171,7 @@ namespace Fluency.Tests.BuilderTests
 
 
 			[ Subject( "FluentBuilder" ) ]
-			public class When_adding_a_list_item_to_a_list_property_using_AddListItem : Given_a_builder_for_a_target_type_having_a_list_property
+			public class When_adding_a_list_item_to_a_list_property_using_deprecated_AddListItem_method : Given_a_builder_for_a_target_type_having_a_list_property
 			{
 				private static Bar _expectedListItem = new Bar();
 
@@ -206,11 +214,7 @@ namespace Fluency.Tests.BuilderTests
 
 				private Establish context = () =>
 				                            	{
-				                            		// Setup mock builder to return the new item.
-				                            		_listItemBuilder = MockRepository.GenerateMock< IFluentBuilder< Bar > >();
-				                            		_listItemBuilder.Stub( x => x.build() ).Return( _expectedListItem );
-
-				                            		// Add the new item by adding its builder.
+				                            		_listItemBuilder = MockBuilderFor( _expectedListItem );
 				                            		_builder.AddListItem( x => x.Bars, _listItemBuilder );
 				                            	};
 
@@ -227,11 +231,7 @@ namespace Fluency.Tests.BuilderTests
 
 				private Establish context = () =>
 				                            	{
-				                            		// Setup mock builder to return the new item.
-				                            		_listItemBuilder = MockRepository.GenerateMock< IFluentBuilder< Bar > >();
-				                            		_listItemBuilder.Stub( x => x.build() ).Return( _expectedListItem );
-
-				                            		// Add the new item by adding its builder.
+				                            		_listItemBuilder = MockBuilderFor( _expectedListItem );
 				                            		_builder.AddToList( x => x.Bars, _listItemBuilder );
 				                            	};
 
@@ -251,14 +251,9 @@ namespace Fluency.Tests.BuilderTests
 
 				private Establish context = () =>
 				                            	{
-				                            		// Setup mock builders to return the new item.
-				                            		_listItemBuilder1 = MockRepository.GenerateMock< IFluentBuilder< Bar > >();
-				                            		_listItemBuilder1.Stub( x => x.build() ).Return( _expectedListItem1 );
+				                            		_listItemBuilder1 = MockBuilderFor( _expectedListItem1 );
+				                            		_listItemBuilder2 = MockBuilderFor( _expectedListItem2 );
 
-				                            		_listItemBuilder2 = MockRepository.GenerateMock< IFluentBuilder< Bar > >();
-				                            		_listItemBuilder2.Stub( x => x.build() ).Return( _expectedListItem2 );
-
-				                            		// Add the new item by adding its builder.
 				                            		_builder.AddToList( x => x.Bars, _listItemBuilder1, _listItemBuilder2 );
 				                            	};
 
