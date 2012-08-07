@@ -20,12 +20,20 @@ using Fluency.Utils;
 
 namespace Fluency.DataGeneration
 {
+	/// <summary>
+	/// A random value generator.
+	/// </summary>
 	public static class ARandom
 	{
 		private static readonly Random _random = new Random();
 		public static IValueConstraints _valueConstraints = new SqlServerDefaultValuesAndConstraints();
 
 
+		/// <summary>
+		/// Returns a random <see cref="string"/> of all capital letters. The length of the string equals the specified <paramref name="size"/>.
+		/// </summary>
+		/// <param name="size">The size.</param>
+		/// <returns></returns>
 		public static string String( int size )
 		{
 			var builder = new StringBuilder();
@@ -37,7 +45,8 @@ namespace Fluency.DataGeneration
 
 
 		/// <summary>
-		/// Creates a randomized string constrained to characters in the specified character set.
+		/// Creates a random <see cref="string"/> constrained to characters in the specified <paramref name="charactersToChooseFrom"/>
+		/// whose length equals the specified <paramref name="size"/>.
 		/// </summary>
 		/// <param name="size">The size.</param>
 		/// <param name="charactersToChooseFrom">The characters to choose from.</param>
@@ -52,6 +61,14 @@ namespace Fluency.DataGeneration
 		}
 
 
+		/// <summary>
+		/// Returns a <see cref="string"/> containing the <paramref name="pattern"/> after replacing 
+		/// any <c>'9'</c> or <c>'#'</c> characters with random digits.<br/>
+		/// Example:<br/>
+		/// <code>ARandom.StringPattern( "(999) 999-9999" ) => "(361) 735-8254"</code>
+		/// </summary>
+		/// <param name="pattern">The pattern.</param>
+		/// <returns></returns>
 		public static string StringPattern( string pattern )
 		{
 			var output = "";
@@ -64,6 +81,13 @@ namespace Fluency.DataGeneration
 		}
 
 
+		/// <summary>
+		/// Returns a <see cref="string"/> containing randomly generated text, with a length less than or equal to 
+		/// the specified <paramref name="maxChars"/>.<br/>
+		/// The text looks real, but is actually gibberish. Similar to lorem ipsum. Uses the <see cref="WaffleEngine"/> to generate the text.
+		/// </summary>
+		/// <param name="maxChars">The max chars.</param>
+		/// <returns></returns>
 		public static string Text( int maxChars )
 		{
 			var sb = new StringBuilder();
@@ -79,6 +103,11 @@ namespace Fluency.DataGeneration
 		}
 
 
+		/// <summary>
+		/// Returns a random <see cref="string"/> containing a title of length less than or equal to the specified <paramref name="maxChars"/>.
+		/// </summary>
+		/// <param name="maxChars">The max chars.</param>
+		/// <returns></returns>
 		public static string Title( int maxChars )
 		{
 			var waffle = new WaffleEngine( _random );
@@ -89,6 +118,14 @@ namespace Fluency.DataGeneration
 		}
 
 
+		/// <summary>
+		/// Returns a random <see cref="integer"/> between 1 and 9999.
+		/// </summary>
+		/// <remarks>
+		/// I think this code was tampered with. I believe it used to include the full range of int 
+		/// including negative values. Not sure.
+		/// </remarks>
+		/// <returns></returns>
 		public static int Int()
 		{
 			return IntBetween( 1, 9999 );
@@ -98,12 +135,22 @@ namespace Fluency.DataGeneration
 		// TODO: Decimal???
 		// TODO: Byte???
 
+		/// <summary>
+		/// Returns a random positive <see cref="integer"/> between 1 and 9999.
+		/// </summary>
+		/// <returns></returns>
 		public static int PositiveInt()
 		{
 			return IntBetween( 1, 9999 );
 		}
 
 
+		/// <summary>
+		/// Returns a random <see cref="integer"/> between the specified <paramref name="min"/> and <paramref name="max"/> (inclusive).
+		/// </summary>
+		/// <param name="min">The min.</param>
+		/// <param name="max">The max.</param>
+		/// <returns></returns>
 		public static int IntBetween( int min, int max )
 		{
 			var result = _random.Next( min + 1, max + 2 );
@@ -111,12 +158,22 @@ namespace Fluency.DataGeneration
 		}
 
 
+		/// <summary>
+		/// Returns a random <see cref="double"/> value.
+		/// </summary>
+		/// <returns></returns>
 		public static double Double()
 		{
 			return _random.NextDouble() + Int();
 		}
 
 
+		/// <summary>
+		/// Returns a random <see cref="double"/> value between the specified <paramref name="min"/> and <paramref name="max"/> (inclusive).
+		/// </summary>
+		/// <param name="min">The min.</param>
+		/// <param name="max">The max.</param>
+		/// <returns></returns>
 		public static double DoubleBetween( double min, double max )
 		{
 			var range = max - min;
@@ -124,36 +181,64 @@ namespace Fluency.DataGeneration
 		}
 
 
+		/// <summary>
+		/// Returns an item of type <typeparamref name="T"/> chosen at random from the specified list of <paramref name="items"/>.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="items">The items.</param>
+		/// <returns></returns>
 		public static T ItemFrom< T >( IList< T > items )
 		{
 			return items[IntBetween( 0, items.Count - 1 )];
 		}
 
 
+		/// <summary>
+		/// Returns an item of type <typeparamref name="T"/> chosen at random from the specified array of <paramref name="items"/>.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="items">The items.</param>
+		/// <returns></returns>
 		public static T ItemFrom< T >( params T[] items )
 		{
 			return ItemFrom< T >( new List< T >( items ) );
 		}
 
 
-		public static T EnumValue< T >()
+		/// <summary>
+		/// Returns a randomly selected enum value from the specified enum type <typeparamref name="TEnumType"/>.
+		/// </summary>
+		/// <typeparam name="TEnumType"></typeparam>
+		/// <returns></returns>
+		public static TEnumType EnumValue< TEnumType >()
 		{
-			if ( !typeof ( T ).IsSubclassOf( typeof ( Enum ) ) )
+			if ( !typeof ( TEnumType ).IsSubclassOf( typeof ( Enum ) ) )
 				throw new ArgumentException( "Must be enum type." );
 
-			var values = Enum.GetValues( typeof ( T ) );
+			var values = Enum.GetValues( typeof ( TEnumType ) );
 
 			var randomArrayIndex = IntBetween( 0, values.Length - 1 );
-			return (T)values.GetValue( randomArrayIndex );
+			return (TEnumType)values.GetValue( randomArrayIndex );
 		}
 
 
+		/// <summary>
+		/// Returns a random <see cref="DateTime"/>. <br/>
+		/// Note, this may return dates far into the future as well as far into the past.
+		/// </summary>
+		/// <returns></returns>
 		public static DateTime DateTime()
 		{
 			return DateTimeBetween( _valueConstraints.MinDateTime, _valueConstraints.MaxDateTime );
 		}
 
 
+		/// <summary>
+		/// Returns a random <see cref="DateTime"/> between the specified <paramref name="min"/> and <paramref name="max"/> (inclusive).
+		/// </summary>
+		/// <param name="min">The min.</param>
+		/// <param name="max">The max.</param>
+		/// <returns></returns>
 		public static DateTime DateTimeBetween( DateTime min, DateTime max )
 		{
 			if ( max <= min )
@@ -167,63 +252,111 @@ namespace Fluency.DataGeneration
 		}
 
 
-		public static DateTime DateTimeBefore( DateTime compareDateTime )
+		/// <summary>
+		/// Returns a random <see cref="DateTime"/> prior to the specified <paramref name="upperBounds"/>.
+		/// </summary>
+		/// <param name="upperBounds">The compare date time.</param>
+		/// <returns></returns>
+		public static DateTime DateTimeBefore( DateTime upperBounds )
 		{
-			return DateTimeBetween( _valueConstraints.MinDateTime, compareDateTime );
+			return DateTimeBetween( _valueConstraints.MinDateTime, upperBounds );
 		}
 
 
-		public static DateTime DateTimeAfter( DateTime compareDateTime )
+		/// <summary>
+		/// Returns a random <see cref="DateTime"/> greater than the specified <paramref name="lowerBounds"/>.
+		/// </summary>
+		/// <param name="lowerBounds">The compare date time.</param>
+		/// <returns></returns>
+		public static DateTime DateTimeAfter( DateTime lowerBounds )
 		{
-			return DateTimeBetween( compareDateTime, _valueConstraints.MaxDateTime );
+			return DateTimeBetween( lowerBounds, _valueConstraints.MaxDateTime );
 		}
 
 
-		public static DateTime DateAfter( DateTime compareDateTime )
+		/// <summary>
+		/// Returns a random  date (<see cref="DateTime"/> with no time data) greater than the specified <paramref name="lowerBounds"/>
+		/// </summary>
+		/// <param name="lowerBounds">The compare date time.</param>
+		/// <returns></returns>
+		public static DateTime DateAfter( DateTime lowerBounds )
 		{
-			return DateTimeAfter( compareDateTime ).Date;
+			return DateTimeAfter( lowerBounds ).Date;
 		}
 
 
-		public static DateTime DateInPastSince( DateTime startDate )
+		/// <summary>
+		/// Returns a random  date (<see cref="DateTime"/> with no time data) less than today, 
+		/// but greater than the specified <paramref name="lowerBounds"/>.
+		/// </summary>
+		/// <param name="lowerBounds">The start date.</param>
+		/// <returns></returns>
+		public static DateTime DateInPastSince( DateTime lowerBounds )
 		{
-			return DateTimeInPastSince( startDate ).Date;
+			return DateTimeInPastSince( lowerBounds ).Date;
 		}
 
 
+		/// <summary>
+		/// Returns a random <see cref="DateTime"/> less than now.
+		/// </summary>
+		/// <returns></returns>
 		public static DateTime DateTimeInPast()
 		{
 			return DateTimeBefore( System.DateTime.Now );
 		}
 
 
+		/// <summary>
+		/// Returns a random  date (<see cref="DateTime"/> with no time data) less than today.
+		/// </summary>
+		/// <returns></returns>
 		public static DateTime DateInPast()
 		{
 			return DateTimeBefore( System.DateTime.Now ).Date;
 		}
 
 
+		/// <summary>
+		/// Returns a random <see cref="DateTime"/> greater than one year ago, and less than now.
+		/// </summary>
+		/// <returns></returns>
 		public static DateTime DateTimeInPastYear()
 		{
 			return DateTimeInPastSince( 1.YearsAgo() );
 		}
 
 
+		/// <summary>
+		/// Returns a random date (<see cref="DateTime"/> with no time data) greater than one year ago today,
+		/// and less than today.
+		/// </summary>
+		/// <returns></returns>
 		public static DateTime DateInPastYear()
 		{
 			return DateTimeInPastYear().Date;
 		}
 
 
+		/// <summary>
+		/// Returns a random <see cref="DateTime"/> greater than now.
+		/// </summary>
+		/// <returns></returns>
 		public static DateTime DateTimeInFuture()
 		{
 			return DateTimeAfter( System.DateTime.Now );
 		}
 
 
-		public static DateTime DateTimeInPastSince( DateTime startDate )
+		/// <summary>
+		/// Returns a random <see cref="DateTime"/> greater than the specified <paramref name="lowerBounds"/>
+		/// and less than now.
+		/// </summary>
+		/// <param name="lowerBounds">The start date.</param>
+		/// <returns></returns>
+		public static DateTime DateTimeInPastSince( DateTime lowerBounds )
 		{
-			return DateTimeBetween( startDate, System.DateTime.Now );
+			return DateTimeBetween( lowerBounds, System.DateTime.Now );
 		}
 
 
@@ -241,30 +374,58 @@ namespace Fluency.DataGeneration
 		}
 
 
+		/// <summary>
+		/// Returns a random interest rate (<see cref="Decimal"/>) between 0 and 10.
+		/// </summary>
+		/// <returns></returns>
 		public static decimal InterestRate()
 		{
 			return (decimal)DoubleBetween( 0, 10 );
 		}
 
 
+		/// <summary>
+		/// Returns a random currency amount (<see cref="Decimal"/>). <br/>
+		/// The value will be between zero and 999,999,999.00 (inclusive) with a precision of two decimal places.
+		/// </summary>
+		/// <returns></returns>
 		public static decimal CurrencyAmount()
 		{
 			return IntBetween( 0, 999999999 ) + ( IntBetween( 0, 100 ) / 100 );
 		}
 
 
+		/// <summary>
+		/// Returns a random currency amount (<see cref="Decimal"/>) that is less than or equal to 
+		/// the specified <paramref name="maxAmount"/>. <br/>
+		/// The value will be between zero and the specified <paramref name="maxAmount"/> (inclusive) 
+		/// with a precision of two decimal places.
+		/// </summary>
+		/// <param name="maxAmount">The max amount.</param>
+		/// <returns></returns>
 		public static decimal CurrencyAmountLessThan( int maxAmount )
 		{
 			return IntBetween( 0, maxAmount - 1 ) + ( IntBetween( 0, 100 ) / 100 );
 		}
 
 
+		/// <summary>
+		/// Returns a random <see cref="Boolean"/> value.
+		/// </summary>
+		/// <returns></returns>
 		public static bool Boolean()
 		{
 			return ItemFrom( true, false );
 		}
 
 
+		/// <summary>
+		/// Returns a <see cref="string"/> containing a random email address.<br/>
+		/// It is (10 random capital letters)@(10 random capital letters).(com, org, or net)<br/>
+		/// Example: <br/>
+		/// <code>"UDHGELEGAP@PTMWZJRKCD.com"</code>
+		/// </summary>
+		/// <returns></returns>
 		public static string Email()
 		{
 			return System.String.Format( "{0}@{1}.{2}",
@@ -276,48 +437,88 @@ namespace Fluency.DataGeneration
 		}
 
 
+		/// <summary>
+		/// Returns a random first name.<br/>
+		/// Examples: <code>"Bob", "Judy", "Josephina"</code>
+		/// </summary>
+		/// <returns></returns>
 		public static string FirstName()
 		{
 			return ItemFrom( RandomData.FirstNames );
 		}
 
 
+		/// <summary>
+		/// Returns a random last name.<br/>
+		/// Examples: <code>"Smith", "Olson", "Naranja"</code>
+		/// </summary>
+		/// <returns></returns>
 		public static string LastName()
 		{
 			return ItemFrom( RandomData.LastNames );
 		}
 
 
+		/// <summary>
+		/// Returns a <see cref="string"/> containing a random full name. It is in the form of first name, followed by a space, then the last name.<br/>
+		/// Examples: <code>"Bob Smith", "Judith Werner"</code>
+		/// </summary>
+		/// <returns></returns>
 		public static string FullName()
 		{
 			return FirstName() + " " + LastName();
 		}
 
 
+		/// <summary>
+		/// Returns the full name of a random US State.<br/>
+		/// Examples: <code>"Texas", "Ohio", "Alaska"</code>
+		/// </summary>
+		/// <returns></returns>
 		public static string StateName()
 		{
 			return ItemFrom( RandomData.States );
 		}
 
 
+		/// <summary>
+		/// Returns a random 2-letter state code.<br/>
+		/// Examples: <code>"TX", "CA", "WA"</code>
+		/// </summary>
+		/// <returns></returns>
 		public static string StateCode()
 		{
 			return ItemFrom( RandomData.StateCodes );
 		}
 
 
+		/// <summary>
+		/// Returns a random city name.<br/>
+		/// Examples: <code>"Sacramento", "New York", "Austin"</code>
+		/// </summary>
+		/// <returns></returns>
 		public static string City()
 		{
 			return ItemFrom( RandomData.Cities );
 		}
 
 
+		/// <summary>
+		/// Returns a random BirthDate (<see cref="DateTime"/>) for a person aged anywhere between 5 and 75 years old.<br/>
+		/// Note: The returned value is a Date and does not include time information.
+		/// </summary>
+		/// <returns></returns>
 		public static DateTime BirthDate()
 		{
 			return DateTimeBetween( 75.YearsAgo(), 5.YearsAgo() ).Date;
 		}
 
 
+		/// <summary>
+		/// Returns a random 5-digit zip code.<br/>
+		/// Example: <code>"78234"</code>
+		/// </summary>
+		/// <returns></returns>
 		public static string ZipCode()
 		{
 			return StringPattern( "99999" );
@@ -345,7 +546,7 @@ namespace Fluency.DataGeneration
 
 
 		/// <summary>
-		/// Generates a random birthdate for a person of the specified age.
+		/// Generates a random birthdate  for a person of the specified <paramref name="age"/>.
 		/// </summary>
 		/// <param name="age">The age.</param>
 		/// <returns></returns>
@@ -358,7 +559,7 @@ namespace Fluency.DataGeneration
 
 
 		/// <summary>
-		/// Generates a random date (no time) between the two specified dates (inclusive).
+		/// Generates a random date (no time) between the specified <paramref name="startDate"/> and <paramref name="endDate"/> (inclusive).
 		/// </summary>
 		/// <param name="startDate">The start date.</param>
 		/// <param name="endDate">The end date.</param>
