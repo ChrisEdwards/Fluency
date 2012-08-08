@@ -2,6 +2,8 @@ Fluency.NET
 ===========
 Fluency is a framework for building fluent interfaces or DSLs in .NET. It simplifies building fluent interfaces for configuration, but also has facilities for creating interfaces to build anonymous (random) test data for integration tests.
 
+The [FluencyKoans project](http://github.com/ChrisEdwards/FluencyKoans) is good way to learn how to use Fluency. It is a progression of short code exercises to introduce you to Fluency.
+
 Installing Fluency
 ------------------
 You can install Fluency either by:
