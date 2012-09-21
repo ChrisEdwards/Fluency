@@ -410,6 +410,24 @@ namespace Fluency.DataGeneration
 
 
 		/// <summary>
+		/// Returns a random currency amount (<see cref="Decimal"/>) that is greater than or equal to the 
+		/// specified <paramref name="minAmount"/> and less than or equal to  the specified 
+		/// <paramref name="maxAmount"/>. <br/>
+		/// The value will be between zero and the specified <paramref name="maxAmount"/> (inclusive) 
+		/// with a precision of two decimal places.
+		/// </summary>
+		/// <param name="minAmount">The min amount. </param>
+		/// <param name="maxAmount">The max amount.</param>
+		/// <returns></returns>
+		public static decimal CurrencyAmountBetween( int minAmount, int maxAmount )
+		{
+			return IntBetween( minAmount, maxAmount - 1 ) + ( IntBetween( 0, 100 ) / 100 );
+		}
+
+		// TODO: Add CurrencyAmountBetween( decimal minAmount, decimal maxAmount )
+
+
+		/// <summary>
 		/// Returns a random <see cref="Boolean"/> value.
 		/// </summary>
 		/// <returns></returns>

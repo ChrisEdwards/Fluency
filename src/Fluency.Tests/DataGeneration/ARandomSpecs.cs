@@ -1,7 +1,4 @@
-﻿// ReSharper disable InconsistentNaming
-
-
-using System;
+﻿using System;
 using System.Linq;
 using Fluency.DataGeneration;
 using Machine.Specifications;
@@ -12,7 +9,82 @@ namespace Fluency.Tests.DataGeneration
 {
 	public class ARandomSpecs
 	{
-		[ Subject( typeof ( ARandom ) ) ]
+		public abstract class When_generating_a_random_currency_amount_between_a_specified_max_and_min_amount
+		{
+			protected static int minAmount = 0;
+			protected static int maxAmount = 100;
+			protected static decimal result;
+
+			private Because of = () => result = ARandom.CurrencyAmountBetween( minAmount, maxAmount );
+		}
+
+
+		[ Behaviors ]
+		public class CurrencyIsBetweenMinAndMaxBehavior
+		{
+			protected static int minAmount;
+			protected static int maxAmount;
+			protected static decimal result;
+
+			private It should_generate_a_number_that_is_greater_than_or_equal_to_the_min_amount = () => result.ShouldBeGreaterThanOrEqualTo( minAmount );
+			private It should_generate_a_number_that_is_less_than_or_equal_to_the_max_amount = () => result.ShouldBeLessThanOrEqualTo( maxAmount );
+		}
+
+
+		[ Subject( typeof ( ARandom ), "CurrencyAmountBetween" ) ]
+		public class When_generating_a_random_currency_amount_between_a_min_and_max_when_both_are_positive :
+				When_generating_a_random_currency_amount_between_a_specified_max_and_min_amount
+		{
+			private Establish context = () =>
+				{
+					minAmount = 0;
+					maxAmount = 100;
+				};
+
+			private Behaves_like< CurrencyIsBetweenMinAndMaxBehavior > currency_is_between_min_and_max;
+		}
+
+
+		[ Subject( typeof ( ARandom ), "CurrencyAmountBetween" ) ]
+		public class When_generating_a_random_currency_amount_between_a_min_and_max_when_both_are_negative :
+				When_generating_a_random_currency_amount_between_a_specified_max_and_min_amount
+		{
+			private Establish context = () =>
+				{
+					minAmount = -100;
+					maxAmount = -1;
+				};
+
+			private Behaves_like< CurrencyIsBetweenMinAndMaxBehavior > currency_is_between_min_and_max;
+		}
+
+
+		public abstract class When_generating_a_random_currency_amount_less_than_a_specified_amount
+		{
+			protected static int maxAmount;
+			protected static decimal result;
+
+			private Because of = () => result = ARandom.CurrencyAmountLessThan( maxAmount );
+		}
+
+
+		[ Subject( typeof ( ARandom ), "CurrencyAmountLessThan" ) ]
+		public class When_generating_a_random_currency_amount_less_than_a_positive_number : When_generating_a_random_currency_amount_less_than_a_specified_amount
+		{
+			private Establish context = () => maxAmount = 100;
+			private It should_generate_an_amount_less_than_the_specified_max_amount = () => result.ShouldBeLessThanOrEqualTo( maxAmount );
+		}
+
+
+		[ Subject( typeof ( ARandom ), "CurrencyAmountLessThan" ) ]
+		public class When_generating_a_random_currency_amount_less_than_a_negative_number : When_generating_a_random_currency_amount_less_than_a_specified_amount
+		{
+			private Establish context = () => maxAmount = 100;
+			private It should_generate_an_amount_less_than_the_specified_max_amount = () => result.ShouldBeLessThanOrEqualTo( maxAmount );
+		}
+
+
+		[ Subject( typeof ( ARandom ), "StringFromCharacterSet" ) ]
 		public class When_generating_a_random_string_constrained_to_a_specific_set_of_characters
 		{
 			private const string AllowedCharacters = "ABC123";
@@ -46,10 +118,10 @@ namespace Fluency.Tests.DataGeneration
 			private static DateTime _maxDate;
 
 			private Establish context = () =>
-			                            	{
-			                            		_minDate = ARandom.DateTime();
-			                            		_maxDate = ARandom.DateTimeAfter( _minDate );
-			                            	};
+				{
+					_minDate = ARandom.DateTime();
+					_maxDate = ARandom.DateTimeAfter( _minDate );
+				};
 
 			private Because of = () => result = ARandom.DateBetween( _minDate, _maxDate );
 
@@ -66,7 +138,7 @@ namespace Fluency.Tests.DataGeneration
 
 			private Because of = () => exception = Catch.Exception( () => ARandom.DateBetween( DateTime.Parse( "1/1/2010 1:00:00 PM" ), DateTime.Parse( "1/1/2010 2:00:00 PM" ) ) );
 
-			private It should_fail = () => exception.should_be_an_instance_of<FluencyException>();
+			private It should_fail = () => exception.should_be_an_instance_of< FluencyException >();
 		}
 
 
@@ -94,6 +166,3 @@ namespace Fluency.Tests.DataGeneration
 		}
 	}
 }
-
-
-// ReSharper restore InconsistentNaming

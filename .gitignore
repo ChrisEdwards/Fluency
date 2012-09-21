@@ -36,6 +36,9 @@ build_artifacts/*
 build_output
 build_output/*
 
+# Visual Studio Tools
+*.ncrunchproject
+*.ncrunchsolution
 *.nupkg
 *.crunchproject.local.xml
 *.crunchsolution.local.xml

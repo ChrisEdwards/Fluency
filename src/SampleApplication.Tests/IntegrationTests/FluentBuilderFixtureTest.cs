@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Fluency.DataGeneration;
 using NUnit.Framework;
 using SampleApplication.Tests.FluentBuilders;
 using SharpTestsEx;
@@ -31,7 +30,7 @@ namespace SampleApplication.Tests.IntegrationTests
 					.With( a.LineItem.Costing( 1.60 ) )
 					.With( a.LineItem.WithQuantity( 10 ).Costing( 25.99 ) )
 					.build();
-			
+
 
 			// Act.
 			var actualTotal = order.TotalAmount;
