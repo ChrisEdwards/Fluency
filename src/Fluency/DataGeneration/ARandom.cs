@@ -153,6 +153,12 @@ namespace Fluency.DataGeneration
 		/// <returns></returns>
 		public static int IntBetween( int min, int max )
 		{
+			// If either boundary is so large it would cause an overflow, reset it...might be inaccurate, but only a little.
+			if (min >= int.MaxValue - 2)
+				min = int.MaxValue - 2;
+			if (max >= int.MaxValue - 2)
+				max = int.MaxValue - 2;
+
 			var result = _random.Next( min + 1, max + 2 );
 			return result - 1;
 		}
