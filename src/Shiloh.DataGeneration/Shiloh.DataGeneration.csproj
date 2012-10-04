@@ -99,10 +99,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Fluency\Fluency.csproj">
-      <Project>{CA8DE273-AA4A-4FC1-9D41-B67B56A53433}</Project>
-      <Name>Fluency</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Shiloh.Utils\Shiloh.Utils.csproj">
       <Project>{D9C01343-518C-47D5-B7AB-B5A400CAAD5E}</Project>
       <Name>Shiloh.Utils</Name>

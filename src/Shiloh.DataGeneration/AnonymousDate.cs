@@ -11,8 +11,9 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+
 using System;
-using Fluency.Utils;
+using Shiloh.Utils;
 
 
 namespace Shiloh.DataGeneration
@@ -21,13 +22,14 @@ namespace Shiloh.DataGeneration
 	{
 		private AnonymousDateTime _anonymousDateTime = new AnonymousDateTime();
 
+
 		protected override DateTime GetRandomValue()
 		{
 			return GetRandomDate();
 		}
 
 
-		DateTime GetRandomDate()
+		private DateTime GetRandomDate()
 		{
 			return Between( Anonymous.ValueConstraints.MinDateTime, Anonymous.ValueConstraints.MaxDateTime );
 		}
@@ -35,7 +37,7 @@ namespace Shiloh.DataGeneration
 
 		public DateTime Between( DateTime min, DateTime max )
 		{
-			return _anonymousDateTime.Between(min,max).Date;
+			return _anonymousDateTime.Between( min, max ).Date;
 		}
 
 
@@ -57,19 +59,19 @@ namespace Shiloh.DataGeneration
 		}
 
 
-		public DateTime InPastSince(DateTime startDate)
+		public DateTime InPastSince( DateTime startDate )
 		{
-			return _anonymousDateTime.InPastSince(startDate).Date;
+			return _anonymousDateTime.InPastSince( startDate ).Date;
 		}
 
 
 		public DateTime InPastYear()
 		{
-			return _anonymousDateTime.InPastSince(1.YearsAgo()).Date;
+			return _anonymousDateTime.InPastSince( 1.YearsAgo() ).Date;
 		}
 
 
-		public DateTime After(DateTime afterDate)
+		public DateTime After( DateTime afterDate )
 		{
 			return _anonymousDateTime.After( afterDate ).Date;
 		}

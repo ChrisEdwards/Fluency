@@ -79,5 +79,21 @@ namespace Shiloh.Utils
 		{
 			return Enumerable.Range( 0, times );
 		}
+		
+		/// <summary>
+		/// Repeats the given function the specified number of times returning 
+		/// an IEnumerable containing the specified count of return values.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="count">The count.</param>
+		/// <param name="func">The func.</param>
+		/// <returns></returns>
+		public static IEnumerable<T> Of<T>(this int count, Func<T> func)
+		{
+			for (int i = 0; i < count; i++)
+			{
+				yield return func.Invoke();
+			}
+		}
 	}
 }

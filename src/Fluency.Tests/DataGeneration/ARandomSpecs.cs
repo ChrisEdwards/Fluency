@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Fluency.DataGeneration;
+using FluentNHibernate.Utils;
 using Machine.Specifications;
 using Shiloh.Utils;
 
@@ -92,8 +94,9 @@ namespace Fluency.Tests.DataGeneration
 
 			private Because of = () => _string = ARandom.StringFromCharacterSet( 10, "ABC123" );
 
-			private It should_generate_a_string_only_containing_chars_from_the_allowed_character_set =
-					() => _string.ToCharArray().ShouldEachConformTo( character => AllowedCharacters.ToCharArray().Contains( character ) );
+			private It should_generate_a_string_only_containing_chars_from_the_allowed_character_set = () => _string.ToCharArray().ShouldEachConformTo( character => AllowedCharacters.ToCharArray().Contains( character ) );
+			private It should_fail_if_characterset_is_null = () => Catch.Exception( () => ARandom.StringFromCharacterSet( 10, null ) ).should_be_an_instance_of< ArgumentNullException >();
+			private It should_fail_if_characterset_is_empty = () => Catch.Exception( () => ARandom.StringFromCharacterSet( 10, "" ) ).should_be_an_instance_of< ArgumentNullException >();
 		}
 
 
@@ -113,32 +116,30 @@ namespace Fluency.Tests.DataGeneration
 		[ Subject( typeof ( ARandom ), "DateBetween" ) ]
 		public class When_generating_a_random_date_between_two_datetimes
 		{
-			private static DateTime result;
-			private static DateTime _minDate;
-			private static DateTime _maxDate;
-
-			private Establish context = () =>
-				{
-					_minDate = ARandom.DateTime();
-					_maxDate = ARandom.DateTimeAfter( _minDate );
-				};
-
-			private Because of = () => result = ARandom.DateBetween( _minDate, _maxDate );
-
-			private It should_be_a_date_with_no_time_information = () => result.should_be_equal_to( result.Date );
-			private It should_be_greater_than_or_equal_to_the_min_date = () => result.should_be_greater_than_or_equal_to( _minDate );
-			private It should_be_less_than_or_equal_to_the_max_date = () => result.should_be_less_than_or_equal_to( _maxDate );
+			private It should_fail_if_no_date_boundary_exists_between_the_two_times = () => Catch.Exception( () => ARandom.DateBetween( DateTime.Parse( "1/1/2010 1:00:00 PM" ), DateTime.Parse( "1/1/2010 2:00:00 PM" ) ) ).should_be_an_instance_of< FluencyException >();
+			private It should_fail_if_the_start_date_is_greater_than_the_end_date = () => Catch.Exception( () => ARandom.DateBetween( DateTime.Parse( "2/1/2010 1:00:00 PM" ), DateTime.Parse( "1/1/2010 2:00:00 PM" ) ) ).should_be_an_instance_of< ArgumentException >();
+			private It should_be_a_date_with_no_time_information = () => ARandom.DateBetween( DateTime.Parse( "1/1/2010 2:00:00 PM" ), DateTime.Parse( "2/1/2010 2:00:00 PM" ) ).Hour.should_be_equal_to( 0 );
+			private It should_be_greater_than_or_equal_to_the_min_date = () => ARandom.DateBetween( DateTime.Parse( "1/1/2010 2:00:00 PM" ), DateTime.Parse( "2/1/2010 2:00:00 PM" ) ).should_be_greater_than_or_equal_to( DateTime.Parse( "1/1/2010 2:00:00 PM" ) );
+			private It should_be_less_than_or_equal_to_the_max_date = () => ARandom.DateBetween( DateTime.Parse( "1/1/2010 2:00:00 PM" ), DateTime.Parse( "2/1/2010 2:00:00 PM" ) ).should_be_less_than_or_equal_to( DateTime.Parse( "2/1/2010 2:00:00 PM" ) );
 		}
 
 
-		[ Subject( typeof ( ARandom ), "DateBetween" ) ]
-		public class When_generating_a_random_date_between_two_times_on_the_same_day_that_dont_include_midnight
+		[ Subject( typeof ( ARandom ), "DateTimeBetween" ) ]
+		public class When_generating_a_random_datetime_between_two_datetimes
 		{
-			private static Exception exception;
+			private It should_fail_if_the_start_date_is_greater_than_the_end_date = () => Catch.Exception(() => ARandom.DateTimeBetween(DateTime.Parse("2/1/2010 1:00:00 PM"), DateTime.Parse("1/1/2010 2:00:00 PM"))).should_be_an_instance_of<ArgumentException>();
+			private It should_be_greater_than_or_equal_to_the_min_date = () => ARandom.DateTimeBetween(DateTime.Parse("1/1/2010 2:00:00 PM"), DateTime.Parse("2/1/2010 2:00:00 PM")).should_be_greater_than_or_equal_to(DateTime.Parse("1/1/2010 2:00:00 PM"));
+			private It should_be_less_than_or_equal_to_the_max_date = () => ARandom.DateTimeBetween(DateTime.Parse("1/1/2010 2:00:00 PM"), DateTime.Parse("2/1/2010 2:00:00 PM")).should_be_less_than_or_equal_to(DateTime.Parse("2/1/2010 2:00:00 PM"));
+		}
 
-			private Because of = () => exception = Catch.Exception( () => ARandom.DateBetween( DateTime.Parse( "1/1/2010 1:00:00 PM" ), DateTime.Parse( "1/1/2010 2:00:00 PM" ) ) );
 
-			private It should_fail = () => exception.should_be_an_instance_of< FluencyException >();
+		[ Subject( typeof ( ARandom ), "BirthDateForAge" ) ]
+		public class When_generating_a_random_birth_date_given_a_persons_age
+		{
+			private It should_not_allow_an_age_below_1 = () => Catch.Exception( () => ARandom.BirthDateForAge( 0 ) ).should_be_an_instance_of< ArgumentOutOfRangeException >();
+			private It should_not_allow_an_age_greater_than_1000 = () => Catch.Exception( () => ARandom.BirthDateForAge( 1001 ) ).should_be_an_instance_of< ArgumentOutOfRangeException >();
+			private It should_return_a_date_earlier_than_the_age_number_of_years_ago = () => ARandom.BirthDateForAge( 10 ).should_be_less_than( 10.YearsAgo() );
+			private It should_return_a_date_later_than_a_year_prior_to_the_age_number_of_years_ago = () => ARandom.BirthDateForAge( 10 ).should_be_greater_than( 11.YearsAgo() );
 		}
 
 
@@ -163,6 +164,60 @@ namespace Fluency.Tests.DataGeneration
 
 			private It should_be_greater_than_or_equal_to_21 = () => result.should_be_greater_than_or_equal_to( 21 );
 			private It should_be_less_than_or_equal_to_65 = () => result.should_be_less_than_or_equal_to( 65 );
+		}
+
+
+		[ Subject( typeof ( ARandom ), "IntBetween" ) ]
+		public class When_generating_a_random_integer_between_two_values
+		{
+			private It should_generate_value_greater_than_or_equal_to_min_value = () => ARandom.IntBetween( 1, 3 ).should_be_greater_than_or_equal_to( 1 );
+			private It should_generate_value_less_than_or_equal_to_max_value = () => ARandom.IntBetween( 1, 3 ).should_be_less_than_or_equal_to( 3 );
+			private It when_given_that_same_min_and_max_value_it_should_generate_that_number = () => ARandom.IntBetween( 1, 1 ).should_be_equal_to( 1 );
+			private It should_accept_min_integer_value_as_min = () => ARandom.IntBetween( int.MinValue, 0 ).should_be_greater_than_or_equal_to( int.MinValue );
+			private It should_accept_max_integer_value_as_max = () => ARandom.IntBetween( 0, int.MaxValue ).should_be_less_than_or_equal_to( int.MaxValue );
+			private It should_accept_a_very_high_min_value = () => ARandom.IntBetween( int.MaxValue - 1, int.MaxValue ).ShouldBeGreaterThanOrEqualTo( int.MaxValue - 1 );
+			private It should_accept_a_very_low_max_value = () => ARandom.IntBetween( int.MinValue, int.MinValue + 1 ).should_be_less_than_or_equal_to( int.MinValue + 1 );
+			private It should_accept_min_and_max_int_values = () => ARandom.IntBetween( int.MinValue, int.MaxValue ).should_be_greater_than_or_equal_to( int.MinValue );
+			private It should_fail_if_min_is_greater_than_max = () => Catch.Exception( () => ARandom.IntBetween( 10, 0 ) ).should_be_an_instance_of< ArgumentException >();
+		}
+
+
+		[ Subject( typeof ( ARandom ), "Title" ) ]
+		public class When_generating_a_random_title
+		{
+			private It should_not_allow_max_chars_less_than_1 = () => Catch.Exception( () => ARandom.Title( 0 ) ).should_be_an_instance_of< ArgumentOutOfRangeException >();
+			private It should_return_a_nonempty_string = () => ARandom.Title( 100 ).ShouldNotBeEmpty();
+			private It should_generate_a_large_string = () => ARandom.Title( int.MaxValue ).ShouldNotBeEmpty();
+			private It should_generate_a_small_string = () => ARandom.Title( 1 ).Length.should_be_equal_to( 1 );
+		}
+
+
+		[ Subject( typeof ( ARandom ), "Text" ) ]
+		public class When_generating_a_random_text
+		{
+			private It should_not_allow_max_chars_less_than_1 = () => Catch.Exception( () => ARandom.Text( 0 ) ).should_be_an_instance_of< ArgumentOutOfRangeException >();
+			private It should_return_a_nonempty_string = () => ARandom.Text( 100 ).ShouldNotBeEmpty();
+//			private It should_generate_a_large_string = () => ARandom.Text( int.MaxValue ).ShouldNotBeEmpty();
+			private It should_generate_a_small_string = () => ARandom.Text( 1 ).Length.should_be_equal_to( 1 );
+		}
+
+
+		// TODO: Need to remove the IList override since using List makes it fail.
+		[Subject(typeof(ARandom), "ItemFrom<IList<T>>")]
+		public class When_getting_a_random_item_from_a_list
+		{
+			private It should_fail_if_passed_a_null_list = () => Catch.Exception( () => ARandom.ItemFrom( (IList<int>)null ) ).should_be_an_instance_of< ArgumentNullException >();
+			private It should_fail_if_passed_an_empty_list = () => Catch.Exception( () => ARandom.ItemFrom<int>( new List<int>() ) ).should_be_an_instance_of< ArgumentException >();
+			private It should_return_one_of_the_values_passed_in_the_list = () => ARandom.ItemFrom<string>( new List< string >( new[] { "a", "b", "c" } ) ).In( "a", "b", "c" ).ShouldBeTrue();
+		}
+
+
+		[Subject(typeof(ARandom), "ItemFrom<T>")]
+		public class When_getting_a_random_item_from_an_array_paramlist
+		{
+			private It should_fail_if_passed_a_null_list = () => Catch.Exception( () => ARandom.ItemFrom( (string[])null ) ).should_be_an_instance_of< ArgumentNullException >();
+			private It should_fail_if_passed_an_empty_list = () => Catch.Exception( () => ARandom.ItemFrom( new string[]{} ) ).should_be_an_instance_of< ArgumentException >();
+			private It should_return_one_of_the_values_passed_in_the_list = () => ARandom.ItemFrom( new[] { "a", "b", "c" } ).In( "a", "b", "c" ).ShouldBeTrue();
 		}
 	}
 }

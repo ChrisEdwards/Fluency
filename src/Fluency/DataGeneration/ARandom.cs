@@ -53,6 +53,9 @@ namespace Fluency.DataGeneration
 		/// <returns></returns>
 		public static string StringFromCharacterSet( int size, string charactersToChooseFrom )
 		{
+			if ( string.IsNullOrEmpty( charactersToChooseFrom ) )
+				throw new ArgumentNullException( "charactersToChooseFrom", "charactersToChooseFrom[] was null or empty. Cannot generate a string with no chars to choose from." );
+
 			var characterArray = charactersToChooseFrom.ToCharArray();
 			var builder = new StringBuilder( size );
 			for ( var i = 0; i < size; i++ )
@@ -90,6 +93,9 @@ namespace Fluency.DataGeneration
 		/// <returns></returns>
 		public static string Text( int maxChars )
 		{
+			if (maxChars < 1)
+				throw new ArgumentOutOfRangeException( "maxChars", "maxChars must be greater than zero, but was [{0}]".format_using( maxChars ) );
+
 			var sb = new StringBuilder();
 			var waffle = new WaffleEngine( _random );
 
@@ -110,6 +116,9 @@ namespace Fluency.DataGeneration
 		/// <returns></returns>
 		public static string Title( int maxChars )
 		{
+			if (maxChars < 1)
+				throw new ArgumentOutOfRangeException("maxChars", "maxChars must be greater than zero, but was [{0}]".format_using(maxChars));
+
 			var waffle = new WaffleEngine( _random );
 			var title = waffle.GenerateTitle();
 			if ( title.Length > maxChars )
@@ -153,14 +162,27 @@ namespace Fluency.DataGeneration
 		/// <returns></returns>
 		public static int IntBetween( int min, int max )
 		{
-			// If either boundary is so large it would cause an overflow, reset it...might be inaccurate, but only a little.
-			if (min >= int.MaxValue - 2)
-				min = int.MaxValue - 2;
-			if (max >= int.MaxValue - 2)
-				max = int.MaxValue - 2;
+			if ( !( min <= max ) )
+				throw new ArgumentException( "Min value must be less than or equal to Max value. Failed to generate a random int between {0} and {1}".format_using( min, max ) );
 
-			var result = _random.Next( min + 1, max + 2 );
-			return result - 1;
+			// Guard against number greater than int.maxvalue
+			var offset = -1;
+			if ( min == int.MinValue )
+			{
+				// Guard against number smaller than int.minvalue
+				offset = 1;
+
+				// If doing this would cause us to violate int.maxvalue, cheat (will never generate minvalue).
+				if ( max == int.MaxValue )
+				{
+					offset = -1;
+					min = min + 1;
+				}
+			}
+
+			// Use offset because Next() does not allow int.MaxValue as upper bounds.
+			var result = _random.Next( min + offset, max + offset );
+			return result - offset;
 		}
 
 
@@ -195,6 +217,12 @@ namespace Fluency.DataGeneration
 		/// <returns></returns>
 		public static T ItemFrom< T >( IList< T > items )
 		{
+			if ( items == null )
+				throw new ArgumentNullException( "items", "items parameter was NULL. Cannot select a random item from a null list." );
+
+			if ( items.Count == 0 )
+				throw new ArgumentException( "items was an empty list. Cannot select a random item from an empty list.", "items" );
+
 			return items[IntBetween( 0, items.Count - 1 )];
 		}
 
@@ -207,6 +235,12 @@ namespace Fluency.DataGeneration
 		/// <returns></returns>
 		public static T ItemFrom< T >( params T[] items )
 		{
+			if ( items == null )
+				throw new ArgumentNullException( "items", "items parameter was NULL. Cannot select a random item from a null list." );
+
+			if ( items.Length == 0 )
+				throw new ArgumentException( "items was an empty list. Cannot select a random item from an empty list.", "items" );
+
 			return ItemFrom< T >( new List< T >( items ) );
 		}
 
@@ -254,6 +288,11 @@ namespace Fluency.DataGeneration
 			double endTick = max.Ticks;
 			var numberOfTicksInRange = endTick - startTick;
 			var randomTickInRange = startTick + numberOfTicksInRange * _random.NextDouble();
+
+			// Handle overrun...that might occur.
+			if ( randomTickInRange > System.DateTime.MaxValue.Ticks )
+				randomTickInRange = System.DateTime.MaxValue.Ticks;
+
 			return new DateTime( Convert.ToInt64( randomTickInRange ) );
 		}
 
@@ -430,6 +469,7 @@ namespace Fluency.DataGeneration
 			return IntBetween( minAmount, maxAmount - 1 ) + ( IntBetween( 0, 100 ) / 100 );
 		}
 
+
 		// TODO: Add CurrencyAmountBetween( decimal minAmount, decimal maxAmount )
 
 
@@ -572,10 +612,13 @@ namespace Fluency.DataGeneration
 		/// <summary>
 		/// Generates a random birthdate  for a person of the specified <paramref name="age"/>.
 		/// </summary>
-		/// <param name="age">The age.</param>
+		/// <param name="age">The age. (between 1 and 1000</param>
 		/// <returns></returns>
 		public static DateTime BirthDateForAge( int age )
 		{
+			if ( age < 1 || age > 1000 )
+				throw new ArgumentOutOfRangeException( "age", "Age is out of range. Should be between 1 and 1000 (yeah, 1000 is large, but age of  building?)" );
+
 			var latestPossibleBirthday = age.YearsAgo().Date;
 			var earliestPossibleBirthday = ( age + 1 ).YearsAgo().Date.AddDays( 1 ); // Without this extra day, would be too old.
 			return DateBetween( earliestPossibleBirthday, latestPossibleBirthday );

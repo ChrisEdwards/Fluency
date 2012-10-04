@@ -15,7 +15,7 @@ namespace Fluency.Tests.Conventions
 		{
 			private const string EmailAddressRegex = @"^([a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]){1,70}$";
 			private const string ZipCodeRegex = @"\d\d\d\d\d";
-			private const string SimpleAddressRegex = @"^\d+\w+[a-zA-Z0-9].*$";
+			private const string SimpleAddressRegex = @"^\d+\w+[a-zA-Z0-9\.].*$";
 			private const string PhoneNumberRegex = @"^(((\(\d{3}\)|\d{3})( |-|\.))|(\(\d{3}\)|\d{3}))?\d{3}( |-|\.)?\d{4}(( |-|\.)?([Ee]xt|[Xx])[.]?( |-|\.)?\d{4})?$";
 
 			private Establish context = () => builder = new FluentBuilder< ConventionsTestClass >();

@@ -52,11 +52,16 @@
   <ItemGroup>
     <Compile Include="EmbeddedResourceFileSpecs.cs" />
     <Compile Include="IOSpecs.cs" />
+    <Compile Include="NumericalExtensionsSpecs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StringExtensionSpecs.cs" />
     <EmbeddedResource Include="TestContent.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Shiloh.DataGeneration\Shiloh.DataGeneration.csproj">
+      <Project>{B5088BE7-78C5-4C63-8F64-9147308D4E45}</Project>
+      <Name>Shiloh.DataGeneration</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Shiloh.Utils\Shiloh.Utils.csproj">
       <Project>{D9C01343-518C-47D5-B7AB-B5A400CAAD5E}</Project>
       <Name>Shiloh.Utils</Name>
