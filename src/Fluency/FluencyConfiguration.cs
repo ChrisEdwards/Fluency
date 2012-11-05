@@ -65,7 +65,7 @@ namespace Fluency
 
 
 		/// <summary>
-		/// Gets the id generator for the specified type..
+		/// Gets the id generator for the specified type.
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <returns></returns>
