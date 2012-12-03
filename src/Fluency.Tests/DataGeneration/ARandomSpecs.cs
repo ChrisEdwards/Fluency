@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Fluency.DataGeneration;
 using FluentNHibernate.Utils;
 using Machine.Specifications;
@@ -218,6 +219,18 @@ namespace Fluency.Tests.DataGeneration
 			private It should_fail_if_passed_a_null_list = () => Catch.Exception( () => ARandom.ItemFrom( (string[])null ) ).should_be_an_instance_of< ArgumentNullException >();
 			private It should_fail_if_passed_an_empty_list = () => Catch.Exception( () => ARandom.ItemFrom( new string[]{} ) ).should_be_an_instance_of< ArgumentException >();
 			private It should_return_one_of_the_values_passed_in_the_list = () => ARandom.ItemFrom( new[] { "a", "b", "c" } ).In( "a", "b", "c" ).ShouldBeTrue();
+		}
+
+		[Subject(typeof(ARandom), "Int")]
+		public class When_getting_a_random_int_from_multiple_threads_at_the_same_time
+		{
+			private static List< int > values = new List< int >();
+
+			private Because of = () => Parallel.For( 0, 100,
+			                                         new ParallelOptions { MaxDegreeOfParallelism = 10 },
+			                                         ( i, loop ) => values.Add( ARandom.IntBetween( int.MinValue, int.MaxValue ) ) );
+
+			private It should_return_all_unique_values = () => values.Distinct().Count().should_be_equal_to( 100 );
 		}
 	}
 }

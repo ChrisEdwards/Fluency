@@ -28,6 +28,8 @@ namespace Fluency.DataGeneration
 		private static readonly Random _random = new Random();
 		public static IValueConstraints _valueConstraints = new SqlServerDefaultValuesAndConstraints();
 
+		private static Random Random { get { return ThreadLocalRandom.Instance; } }
+
 
 		/// <summary>
 		/// Returns a random <see cref="string"/> of all capital letters. The length of the string equals the specified <paramref name="size"/>.
@@ -39,7 +41,7 @@ namespace Fluency.DataGeneration
 			var builder = new StringBuilder();
 			for ( var i = 0; i < size; i++ )
 					//26 letters in the alfabet, ascii + 65 for the capital letters
-				builder.Append( Convert.ToChar( Convert.ToInt32( Math.Floor( 26 * _random.NextDouble() + 65 ) ) ) );
+				builder.Append( Convert.ToChar( Convert.ToInt32( Math.Floor( 26 * Random.NextDouble() + 65 ) ) ) );
 			return builder.ToString();
 		}
 
@@ -97,7 +99,7 @@ namespace Fluency.DataGeneration
 				throw new ArgumentOutOfRangeException( "maxChars", "maxChars must be greater than zero, but was [{0}]".format_using( maxChars ) );
 
 			var sb = new StringBuilder();
-			var waffle = new WaffleEngine( _random );
+			var waffle = new WaffleEngine( Random );
 
 			// Guess at a number of paragraphs to generate.
 			const int numberOfCharactersPerParagraph = 80;
@@ -119,7 +121,7 @@ namespace Fluency.DataGeneration
 			if (maxChars < 1)
 				throw new ArgumentOutOfRangeException("maxChars", "maxChars must be greater than zero, but was [{0}]".format_using(maxChars));
 
-			var waffle = new WaffleEngine( _random );
+			var waffle = new WaffleEngine( Random );
 			var title = waffle.GenerateTitle();
 			if ( title.Length > maxChars )
 				title = title.Substring( 0, maxChars );
@@ -181,7 +183,7 @@ namespace Fluency.DataGeneration
 			}
 
 			// Use offset because Next() does not allow int.MaxValue as upper bounds.
-			var result = _random.Next( min + offset, max + offset );
+			var result = Random.Next( min + offset, max + offset );
 			return result - offset;
 		}
 
@@ -192,7 +194,7 @@ namespace Fluency.DataGeneration
 		/// <returns></returns>
 		public static double Double()
 		{
-			return _random.NextDouble() + Int();
+			return Random.NextDouble() + Int();
 		}
 
 
@@ -205,7 +207,7 @@ namespace Fluency.DataGeneration
 		public static double DoubleBetween( double min, double max )
 		{
 			var range = max - min;
-			return min + ( range * _random.NextDouble() );
+			return min + ( range * Random.NextDouble() );
 		}
 
 
@@ -287,7 +289,7 @@ namespace Fluency.DataGeneration
 			double startTick = min.Ticks;
 			double endTick = max.Ticks;
 			var numberOfTicksInRange = endTick - startTick;
-			var randomTickInRange = startTick + numberOfTicksInRange * _random.NextDouble();
+			var randomTickInRange = startTick + numberOfTicksInRange * Random.NextDouble();
 
 			// Handle overrun...that might occur.
 			if ( randomTickInRange > System.DateTime.MaxValue.Ticks )

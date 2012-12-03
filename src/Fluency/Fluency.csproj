@@ -71,6 +71,7 @@
     <Compile Include="DataGeneration\IValueConstraints.cs" />
     <Compile Include="DataGeneration\RandomData.cs" />
     <Compile Include="DataGeneration\SqlServerDefaultValuesAndConstraints.cs" />
+    <Compile Include="DataGeneration\ThreadLocalRandom.cs" />
     <Compile Include="DataGeneration\ValueConstraints.cs" />
     <Compile Include="DataGeneration\WaffleEngine.cs" />
     <Compile Include="DynamicFluentBuilder.cs" />
