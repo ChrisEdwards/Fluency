@@ -33,7 +33,7 @@ namespace Fluency.DataGeneration
             lock (GlobalLock) 
             { 
 				// Include threadId so that multiple appdomains don't get the same values.
-	            var seed = GlobalRandom.Next() + Thread.CurrentThread.ManagedThreadId;
+				var seed = GlobalRandom.Next() + Thread.CurrentThread.ManagedThreadId + AppDomain.CurrentDomain.Id * 10;
 	            return new Random(seed); 
             } 
         } 
