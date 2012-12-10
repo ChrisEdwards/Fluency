@@ -4,6 +4,9 @@ Fluency is a framework for building fluent interfaces or DSLs in .NET. It simpli
 
 The [FluencyKoans project](http://github.com/ChrisEdwards/FluencyKoans) is good way to learn how to use Fluency. It is a progression of short code exercises to introduce you to Fluency.
 
+You can see upcoming features and work in progress at the [Fluency Trello Board](https://trello.com/board/fluency/50c6421ef928e0fc2901778c).
+
+
 Installing Fluency
 ------------------
 You can install Fluency either by:
