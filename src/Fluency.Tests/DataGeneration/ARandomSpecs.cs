@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Fluency.DataGeneration;
 using FluentNHibernate.Utils;
 using Machine.Specifications;
+using Machine.Specifications.Model;
 using Shiloh.Utils;
 
 
@@ -232,5 +233,20 @@ namespace Fluency.Tests.DataGeneration
 
 			private It should_return_all_unique_values = () => values.Distinct().Count().should_be_equal_to( 100 );
 		}
+
+
+		[ Subject( typeof ( ARandom ), "AddressLine1" ) ]
+		public class When_getting_a_random_address_line_1 
+ 		{
+			private It should_return_a_non_empty_string = () => ARandom.AddressLine1().ShouldNotBeEmpty();
+			private It should_start_with_a_number = () => ARandom.AddressLine1().ShouldMatch( "^\\d+" );
+ 		}
+
+
+		[ Subject( typeof ( ARandom ), "StreetName" ) ]
+		public class When_getting_a_random_street_name 
+ 		{
+			private It should_return_a_non_empty_string = () => ARandom.StreetName().ShouldNotBeEmpty();
+ 		}
 	}
 }

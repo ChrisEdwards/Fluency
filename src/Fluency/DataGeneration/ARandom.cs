@@ -95,7 +95,7 @@ namespace Fluency.DataGeneration
 		/// <returns></returns>
 		public static string Text( int maxChars )
 		{
-			if (maxChars < 1)
+			if ( maxChars < 1 )
 				throw new ArgumentOutOfRangeException( "maxChars", "maxChars must be greater than zero, but was [{0}]".format_using( maxChars ) );
 
 			var sb = new StringBuilder();
@@ -118,8 +118,8 @@ namespace Fluency.DataGeneration
 		/// <returns></returns>
 		public static string Title( int maxChars )
 		{
-			if (maxChars < 1)
-				throw new ArgumentOutOfRangeException("maxChars", "maxChars must be greater than zero, but was [{0}]".format_using(maxChars));
+			if ( maxChars < 1 )
+				throw new ArgumentOutOfRangeException( "maxChars", "maxChars must be greater than zero, but was [{0}]".format_using( maxChars ) );
 
 			var waffle = new WaffleEngine( Random );
 			var title = waffle.GenerateTitle();
@@ -656,6 +656,19 @@ namespace Fluency.DataGeneration
 			var bothOnSameDay = startDate.Date == endDate.Date;
 			var neitherAreMidnight = startDate != startDate.Date && endDate != endDate.Date;
 			return bothOnSameDay && neitherAreMidnight;
+		}
+
+
+		public static string AddressLine1()
+		{
+			return string.Format( "{0} {1}",
+			                      IntBetween( 100, 9999 ),
+			                      StreetName() );
+		}
+
+		public static string StreetName()
+		{
+			return ItemFrom( RandomData.Streets );
 		}
 	}
 }
