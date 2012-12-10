@@ -39,6 +39,7 @@ namespace SampleApplication.Tests.UnitTests.NHibernate
 
 
 		[ Test ]
+		[ Ignore( "Requires SQL Lite" ) ]
 		public void Should_retrieve_quantity()
 		{
 			DateTime x = _actualLineItem.Order.OrderDate;
@@ -47,6 +48,7 @@ namespace SampleApplication.Tests.UnitTests.NHibernate
 
 
 		[ Test ]
+		[ Ignore( "Requires SQL Lite" ) ]
 		public void Should_retrieve_unit_price()
 		{
 			_actualLineItem.UnitPrice.Should().Be.EqualTo( _expectedLineItem.UnitPrice );

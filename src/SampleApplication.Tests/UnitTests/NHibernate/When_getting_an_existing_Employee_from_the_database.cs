@@ -11,6 +11,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+
 using NUnit.Framework;
 using SampleApplication.Domain;
 using SampleApplication.Tests.FluentBuilders;
@@ -30,13 +31,14 @@ namespace SampleApplication.Tests.Tests.NHibernate
 			_expectedCustomer = a.Customer.build();
 
 			_db.Add( _expectedCustomer )
-					.Persist();
+			   .Persist();
 
 			_actualCustomer = _session.Load< Customer >( _expectedCustomer.Id );
 		}
 
 
 		[ Test ]
+		[ Ignore( "Requires SQL Lite" ) ]
 		public void Should_retrieve_first_name()
 		{
 			Assert.That( _actualCustomer.FirstName, Is.EqualTo( _expectedCustomer.FirstName ) );
@@ -44,6 +46,7 @@ namespace SampleApplication.Tests.Tests.NHibernate
 
 
 		[ Test ]
+		[ Ignore( "Requires SQL Lite" ) ]
 		public void Should_retrieve_last_name()
 		{
 			Assert.That( _actualCustomer.LastName, Is.EqualTo( _expectedCustomer.LastName ) );

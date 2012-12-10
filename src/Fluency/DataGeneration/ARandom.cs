@@ -31,6 +31,9 @@ namespace Fluency.DataGeneration
 		private static Random Random { get { return ThreadLocalRandom.Instance; } }
 
 
+		#region Strings
+
+
 		/// <summary>
 		/// Returns a random <see cref="string"/> of all capital letters. The length of the string equals the specified <paramref name="size"/>.
 		/// </summary>
@@ -63,26 +66,6 @@ namespace Fluency.DataGeneration
 			for ( var i = 0; i < size; i++ )
 				builder.Append( ItemFrom( characterArray ) );
 			return builder.ToString();
-		}
-
-
-		/// <summary>
-		/// Returns a <see cref="string"/> containing the <paramref name="pattern"/> after replacing 
-		/// any <c>'9'</c> or <c>'#'</c> characters with random digits.<br/>
-		/// Example:<br/>
-		/// <code>ARandom.StringPattern( "(999) 999-9999" ) => "(361) 735-8254"</code>
-		/// </summary>
-		/// <param name="pattern">The pattern.</param>
-		/// <returns></returns>
-		public static string StringPattern( string pattern )
-		{
-			var output = "";
-			foreach ( var c in pattern )
-			{
-				var randomizedPattern = GetRandomizedPatternChar( c );
-				output += randomizedPattern;
-			}
-			return output;
 		}
 
 
@@ -127,6 +110,48 @@ namespace Fluency.DataGeneration
 				title = title.Substring( 0, maxChars );
 			return title;
 		}
+
+
+		/// <summary>
+		/// Returns a <see cref="string"/> containing the <paramref name="pattern"/> after replacing 
+		/// any <c>'9'</c> or <c>'#'</c> characters with random digits.<br/>
+		/// Example:<br/>
+		/// <code>ARandom.StringPattern( "(999) 999-9999" ) => "(361) 735-8254"</code>
+		/// </summary>
+		/// <param name="pattern">The pattern.</param>
+		/// <returns></returns>
+		public static string StringPattern( string pattern )
+		{
+			if ( pattern == null )
+				throw new ArgumentNullException( "pattern" );
+
+			var output = "";
+			foreach ( var c in pattern )
+			{
+				var randomizedPattern = GetRandomizedPatternChar( c );
+				output += randomizedPattern;
+			}
+			return output;
+		}
+
+
+		private static string GetRandomizedPatternChar( char c )
+		{
+			switch ( c )
+			{
+				case '9':
+				case '#':
+					return IntBetween( 0, 9 ).ToString();
+
+				default:
+					return c.ToString();
+			}
+		}
+
+		#endregion
+
+
+		#region Integers
 
 
 		/// <summary>
@@ -188,6 +213,12 @@ namespace Fluency.DataGeneration
 		}
 
 
+		#endregion
+
+
+		#region Doubles
+
+
 		/// <summary>
 		/// Returns a random <see cref="double"/> value.
 		/// </summary>
@@ -206,9 +237,97 @@ namespace Fluency.DataGeneration
 		/// <returns></returns>
 		public static double DoubleBetween( double min, double max )
 		{
+			if ( min > max )
+				throw new ArgumentException( "Min value must be less than Max value." );
+
 			var range = max - min;
 			return min + ( range * Random.NextDouble() );
 		}
+
+
+		#endregion
+
+
+		#region Floats (Singles)
+
+
+		/// <summary>
+		/// Returns a random <see cref="float"/> value.
+		/// </summary>
+		/// <returns></returns>
+		public static float Float()
+		{
+			return (float)( Random.NextDouble() + Int() );
+		}
+
+
+		/// <summary>
+		/// Returns a random <see cref="float"/> value between the specified <paramref name="min"/> and <paramref name="max"/> (inclusive).
+		/// </summary>
+		/// <param name="min">The min.</param>
+		/// <param name="max">The max.</param>
+		/// <returns></returns>
+		public static float FloatBetween( float min, float max )
+		{
+			if ( min > max )
+				throw new ArgumentException( "Min value must be less than Max value." );
+
+			var range = max - min;
+			return min + ( range * (float)Random.NextDouble() );
+		}
+
+
+		#endregion
+
+
+		#region Currency (Decimal)
+
+
+		/// <summary>
+		/// Returns a random currency amount (<see cref="Decimal"/>). <br/>
+		/// The value will be between zero and 999,999,999.00 (inclusive) with a precision of two decimal places.
+		/// </summary>
+		/// <returns></returns>
+		public static decimal CurrencyAmount()
+		{
+			return IntBetween( 0, 999999999 ) + ( IntBetween( 0, 100 ) / 100 );
+		}
+
+
+		/// <summary>
+		/// Returns a random currency amount (<see cref="Decimal"/>) that is less than or equal to 
+		/// the specified <paramref name="maxAmount"/>. <br/>
+		/// The value will be between zero and the specified <paramref name="maxAmount"/> (inclusive) 
+		/// with a precision of two decimal places.
+		/// </summary>
+		/// <param name="maxAmount">The max amount.</param>
+		/// <returns></returns>
+		public static decimal CurrencyAmountLessThan( int maxAmount )
+		{
+			return IntBetween( 0, maxAmount - 1 ) + ( IntBetween( 0, 100 ) / 100 );
+		}
+
+
+		/// <summary>
+		/// Returns a random currency amount (<see cref="Decimal"/>) that is greater than or equal to the 
+		/// specified <paramref name="minAmount"/> and less than or equal to  the specified 
+		/// <paramref name="maxAmount"/>. <br/>
+		/// The value will be between zero and the specified <paramref name="maxAmount"/> (inclusive) 
+		/// with a precision of two decimal places.
+		/// </summary>
+		/// <param name="minAmount">The min amount. </param>
+		/// <param name="maxAmount">The max amount.</param>
+		/// <returns></returns>
+		public static decimal CurrencyAmountBetween( int minAmount, int maxAmount )
+		{
+			return IntBetween( minAmount, maxAmount - 1 ) + ( IntBetween( 0, 100 ) / 100 );
+		}
+
+
+		#endregion
+
+
+		#region Lists and Enums
 
 
 		/// <summary>
@@ -262,6 +381,12 @@ namespace Fluency.DataGeneration
 			var randomArrayIndex = IntBetween( 0, values.Length - 1 );
 			return (TEnumType)values.GetValue( randomArrayIndex );
 		}
+
+
+		#endregion
+
+
+		#region DateTimes
 
 
 		/// <summary>
@@ -322,6 +447,77 @@ namespace Fluency.DataGeneration
 
 
 		/// <summary>
+		/// Returns a random <see cref="DateTime"/> less than now.
+		/// </summary>
+		/// <returns></returns>
+		public static DateTime DateTimeInPast()
+		{
+			return DateTimeBefore( System.DateTime.Now );
+		}
+
+
+		/// <summary>
+		/// Returns a random <see cref="DateTime"/> greater than the specified <paramref name="lowerBounds"/>
+		/// and less than now.
+		/// </summary>
+		/// <param name="lowerBounds">The start date.</param>
+		/// <returns></returns>
+		public static DateTime DateTimeInPastSince( DateTime lowerBounds )
+		{
+			return DateTimeBetween( lowerBounds, System.DateTime.Now );
+		}
+
+
+		/// <summary>
+		/// Returns a random <see cref="DateTime"/> greater than one year ago, and less than now.
+		/// </summary>
+		/// <returns></returns>
+		public static DateTime DateTimeInPastYear()
+		{
+			return DateTimeInPastSince( 1.YearsAgo() );
+		}
+
+
+		/// <summary>
+		/// Returns a random <see cref="DateTime"/> greater than now.
+		/// </summary>
+		/// <returns></returns>
+		public static DateTime DateTimeInFuture()
+		{
+			return DateTimeAfter( System.DateTime.Now );
+		}
+
+
+		#endregion
+
+
+		#region Dates (No Time)
+
+		/// <summary>
+		/// Generates a random date (no time) between the specified <paramref name="startDate"/> and <paramref name="endDate"/> (inclusive).
+		/// </summary>
+		/// <param name="startDate">The start date.</param>
+		/// <param name="endDate">The end date.</param>
+		/// <returns></returns>
+		public static DateTime DateBetween( DateTime startDate, DateTime endDate )
+		{
+			if ( DateTimeRangeDoesNotCrossDateBoundary( startDate, endDate ) )
+			{
+				throw new FluencyException(
+						"No valid date exists between the two supplied date time values. For a valid date to exist, there must be a midnight value between them (since technically a date without time is a datetime for midnight on the specified day)." );
+			}
+
+			var result = DateTimeBetween( startDate, endDate ).Date;
+
+			// Since start date includes time and result does not, stripping the time could make the result less than the start date. If so, just try again.
+			if ( result < startDate )
+				result = DateBetween( startDate, endDate );
+
+			return result;
+		}
+
+
+		/// <summary>
 		/// Returns a random  date (<see cref="DateTime"/> with no time data) greater than the specified <paramref name="lowerBounds"/>
 		/// </summary>
 		/// <param name="lowerBounds">The compare date time.</param>
@@ -345,32 +541,12 @@ namespace Fluency.DataGeneration
 
 
 		/// <summary>
-		/// Returns a random <see cref="DateTime"/> less than now.
-		/// </summary>
-		/// <returns></returns>
-		public static DateTime DateTimeInPast()
-		{
-			return DateTimeBefore( System.DateTime.Now );
-		}
-
-
-		/// <summary>
 		/// Returns a random  date (<see cref="DateTime"/> with no time data) less than today.
 		/// </summary>
 		/// <returns></returns>
 		public static DateTime DateInPast()
 		{
 			return DateTimeBefore( System.DateTime.Now ).Date;
-		}
-
-
-		/// <summary>
-		/// Returns a random <see cref="DateTime"/> greater than one year ago, and less than now.
-		/// </summary>
-		/// <returns></returns>
-		public static DateTime DateTimeInPastYear()
-		{
-			return DateTimeInPastSince( 1.YearsAgo() );
 		}
 
 
@@ -385,40 +561,7 @@ namespace Fluency.DataGeneration
 		}
 
 
-		/// <summary>
-		/// Returns a random <see cref="DateTime"/> greater than now.
-		/// </summary>
-		/// <returns></returns>
-		public static DateTime DateTimeInFuture()
-		{
-			return DateTimeAfter( System.DateTime.Now );
-		}
-
-
-		/// <summary>
-		/// Returns a random <see cref="DateTime"/> greater than the specified <paramref name="lowerBounds"/>
-		/// and less than now.
-		/// </summary>
-		/// <param name="lowerBounds">The start date.</param>
-		/// <returns></returns>
-		public static DateTime DateTimeInPastSince( DateTime lowerBounds )
-		{
-			return DateTimeBetween( lowerBounds, System.DateTime.Now );
-		}
-
-
-		private static string GetRandomizedPatternChar( char c )
-		{
-			switch ( c )
-			{
-				case '9':
-				case '#':
-					return IntBetween( 0, 9 ).ToString();
-
-				default:
-					return c.ToString();
-			}
-		}
+		#endregion
 
 
 		/// <summary>
@@ -428,47 +571,6 @@ namespace Fluency.DataGeneration
 		public static decimal InterestRate()
 		{
 			return (decimal)DoubleBetween( 0, 10 );
-		}
-
-
-		/// <summary>
-		/// Returns a random currency amount (<see cref="Decimal"/>). <br/>
-		/// The value will be between zero and 999,999,999.00 (inclusive) with a precision of two decimal places.
-		/// </summary>
-		/// <returns></returns>
-		public static decimal CurrencyAmount()
-		{
-			return IntBetween( 0, 999999999 ) + ( IntBetween( 0, 100 ) / 100 );
-		}
-
-
-		/// <summary>
-		/// Returns a random currency amount (<see cref="Decimal"/>) that is less than or equal to 
-		/// the specified <paramref name="maxAmount"/>. <br/>
-		/// The value will be between zero and the specified <paramref name="maxAmount"/> (inclusive) 
-		/// with a precision of two decimal places.
-		/// </summary>
-		/// <param name="maxAmount">The max amount.</param>
-		/// <returns></returns>
-		public static decimal CurrencyAmountLessThan( int maxAmount )
-		{
-			return IntBetween( 0, maxAmount - 1 ) + ( IntBetween( 0, 100 ) / 100 );
-		}
-
-
-		/// <summary>
-		/// Returns a random currency amount (<see cref="Decimal"/>) that is greater than or equal to the 
-		/// specified <paramref name="minAmount"/> and less than or equal to  the specified 
-		/// <paramref name="maxAmount"/>. <br/>
-		/// The value will be between zero and the specified <paramref name="maxAmount"/> (inclusive) 
-		/// with a precision of two decimal places.
-		/// </summary>
-		/// <param name="minAmount">The min amount. </param>
-		/// <param name="maxAmount">The max amount.</param>
-		/// <returns></returns>
-		public static decimal CurrencyAmountBetween( int minAmount, int maxAmount )
-		{
-			return IntBetween( minAmount, maxAmount - 1 ) + ( IntBetween( 0, 100 ) / 100 );
 		}
 
 
@@ -503,6 +605,9 @@ namespace Fluency.DataGeneration
 		}
 
 
+		#region Names
+
+
 		/// <summary>
 		/// Returns a random first name.<br/>
 		/// Examples: <code>"Bob", "Judy", "Josephina"</code>
@@ -533,6 +638,25 @@ namespace Fluency.DataGeneration
 		public static string FullName()
 		{
 			return FirstName() + " " + LastName();
+		}
+
+
+		#endregion
+
+
+		#region Locations and Addresses
+
+
+		public static string AddressLine1()
+		{
+			return string.Format( "{0} {1}",
+			                      IntBetween( 100, 9999 ),
+			                      StreetName() );
+		}
+
+		public static string StreetName()
+		{
+			return ItemFrom( RandomData.Streets );
 		}
 
 
@@ -570,17 +694,6 @@ namespace Fluency.DataGeneration
 
 
 		/// <summary>
-		/// Returns a random BirthDate (<see cref="DateTime"/>) for a person aged anywhere between 5 and 75 years old.<br/>
-		/// Note: The returned value is a Date and does not include time information.
-		/// </summary>
-		/// <returns></returns>
-		public static DateTime BirthDate()
-		{
-			return DateTimeBetween( 75.YearsAgo(), 5.YearsAgo() ).Date;
-		}
-
-
-		/// <summary>
 		/// Returns a random 5-digit zip code.<br/>
 		/// Example: <code>"78234"</code>
 		/// </summary>
@@ -589,6 +702,12 @@ namespace Fluency.DataGeneration
 		{
 			return StringPattern( "99999" );
 		}
+
+
+		#endregion
+
+
+		#region Ages and Birth Dates
 
 
 		/// <summary>
@@ -612,6 +731,17 @@ namespace Fluency.DataGeneration
 
 
 		/// <summary>
+		/// Returns a random BirthDate (<see cref="DateTime"/>) for a person aged anywhere between 5 and 75 years old.<br/>
+		/// Note: The returned value is a Date and does not include time information.
+		/// </summary>
+		/// <returns></returns>
+		public static DateTime BirthDate()
+		{
+			return DateTimeBetween( 75.YearsAgo(), 5.YearsAgo() ).Date;
+		}
+
+
+		/// <summary>
 		/// Generates a random birthdate  for a person of the specified <paramref name="age"/>.
 		/// </summary>
 		/// <param name="age">The age. (between 1 and 1000</param>
@@ -627,28 +757,7 @@ namespace Fluency.DataGeneration
 		}
 
 
-		/// <summary>
-		/// Generates a random date (no time) between the specified <paramref name="startDate"/> and <paramref name="endDate"/> (inclusive).
-		/// </summary>
-		/// <param name="startDate">The start date.</param>
-		/// <param name="endDate">The end date.</param>
-		/// <returns></returns>
-		public static DateTime DateBetween( DateTime startDate, DateTime endDate )
-		{
-			if ( DateTimeRangeDoesNotCrossDateBoundary( startDate, endDate ) )
-			{
-				throw new FluencyException(
-						"No valid date exists between the two supplied date time values. For a valid date to exist, there must be a midnight value between them (since technically a date without time is a datetime for midnight on the specified day)." );
-			}
-
-			var result = DateTimeBetween( startDate, endDate ).Date;
-
-			// Since start date includes time and result does not, stripping the time could make the result less than the start date. If so, just try again.
-			if ( result < startDate )
-				result = DateBetween( startDate, endDate );
-
-			return result;
-		}
+		#endregion
 
 
 		private static bool DateTimeRangeDoesNotCrossDateBoundary( DateTime startDate, DateTime endDate )
@@ -656,19 +765,6 @@ namespace Fluency.DataGeneration
 			var bothOnSameDay = startDate.Date == endDate.Date;
 			var neitherAreMidnight = startDate != startDate.Date && endDate != endDate.Date;
 			return bothOnSameDay && neitherAreMidnight;
-		}
-
-
-		public static string AddressLine1()
-		{
-			return string.Format( "{0} {1}",
-			                      IntBetween( 100, 9999 ),
-			                      StreetName() );
-		}
-
-		public static string StreetName()
-		{
-			return ItemFrom( RandomData.Streets );
 		}
 	}
 }
