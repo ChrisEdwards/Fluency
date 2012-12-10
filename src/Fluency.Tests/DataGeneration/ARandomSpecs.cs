@@ -147,7 +147,7 @@ namespace Fluency.Tests.DataGeneration
 			It should_fail_if_min_is_greater_than_max = () => Catch.Exception( () => ARandom.FloatBetween( float.Epsilon, 0 ) ).should_be_an_instance_of< ArgumentException >();
 		}
 
-		#endregion Doubles
+		#endregion 
 
 
 		#region Currency (Decimal)
@@ -229,6 +229,101 @@ namespace Fluency.Tests.DataGeneration
 		#endregion
 
 
+		
+		[Subject(typeof(ARandom), "EnumValue")]
+		public class When_selecting_a_random_enum_value
+		{
+			enum TestEnum
+			{
+				Value1,
+				Value2
+			}
+
+
+			It should_return_the_specified_enum_type = () => ARandom.EnumValue< TestEnum >().should_be_an_instance_of< TestEnum >();
+		}
+
+		#region DateTimes
+
+		[Subject(typeof(ARandom), "DateTime")]
+		public class When_generating_a_random_datetime
+		{
+			It should_return_a_value_of_type_datetime = () => ARandom.DateTime().should_be_an_instance_of< DateTime >();
+		}
+
+		[Subject(typeof(ARandom), "DateTimeBefore")]
+		public class When_generating_a_random_datetime_before_a_specified_datetime
+		{
+			It should_return_a_value_of_type_datetime = () => ARandom.DateTimeBefore( DateTime.Parse( "1/1/2010 2:00:00 PM" ) ).should_be_an_instance_of< DateTime >();
+			It should_return_a_datetime_prior_to_the_specified_datetime = () => ARandom.DateTimeBefore( DateTime.Parse( "1/1/2010 2:00:00 PM" ) ).should_be_less_than( DateTime.Parse( "1/1/2010 2:00:00 PM" ) );
+		}
+
+		[Subject(typeof(ARandom), "DateTimeAfter")]
+		public class When_generating_a_random_datetime_after_a_specified_datetime
+		{
+			It should_return_a_value_of_type_datetime = () => ARandom.DateTimeAfter( DateTime.Parse( "1/1/2010 2:00:00 PM" ) ).should_be_an_instance_of< DateTime >();
+			It should_return_a_datetime_greater_than_the_specified_datetime = () => ARandom.DateTimeAfter( DateTime.Parse( "1/1/2010 2:00:00 PM" ) ).should_be_greater_than( DateTime.Parse( "1/1/2010 2:00:00 PM" ) );
+		}
+
+		[Subject(typeof(ARandom), "DateTimeInPast")]
+		public class When_generating_a_random_datetime_in_the_past
+		{
+			It should_return_a_value_of_type_datetime = () => ARandom.DateTimeInPast().should_be_an_instance_of< DateTime >();
+			It should_return_a_datetime_prior_to_now = () => ARandom.DateTimeInPast().should_be_less_than( DateTime.Now );
+		}
+
+		[Subject(typeof(ARandom), "DateTimeInPastSince")]
+		public class When_generating_a_random_datetime_in_the_past_since_a_specified_date
+		{
+			It should_fail_if_the_specified_data_is_not_in_the_past = () => Catch.Exception( () => ARandom.DateTimeInPastSince( 2.DaysFromNow() ) ).should_be_an_instance_of< ArgumentException >();
+			It should_return_a_value_of_type_datetime = () => ARandom.DateTimeInPastSince( 2.MonthsAgo() ).should_be_an_instance_of< DateTime >();
+			It should_return_a_datetime_greater_than_the_specified_since_datetime = () => ARandom.DateTimeInPastSince( DateTime.Parse( "1/1/2010 2:00:00 PM" ) ).should_be_greater_than( DateTime.Parse( "1/1/2010 2:00:00 PM" ) );
+			It should_return_a_datetime_prior_to_now = () => ARandom.DateTimeInPastSince( DateTime.Parse( "1/1/2010 2:00:00 PM" ) ).should_be_less_than( DateTime.Now );
+		}
+
+		[Subject(typeof(ARandom), "DateTimeInPastYear")]
+		public class When_generating_a_random_datetime_in_the_past_year
+		{
+			It should_return_a_value_of_type_datetime = () => ARandom.DateTimeInPastYear().should_be_an_instance_of< DateTime >();
+			It should_return_a_datetime_greater_than_the_specified_since_datetime = () => ARandom.DateTimeInPastYear().should_be_greater_than( 1.YearsAgo() );
+			It should_return_a_datetime_prior_to_now = () => ARandom.DateTimeInPastYear().should_be_less_than( DateTime.Now );
+		}
+
+		[Subject(typeof(ARandom), "DateTimeInFuture")]
+		public class When_generating_a_random_datetime_in_the_future
+		{
+			It should_return_a_value_of_type_datetime = () => ARandom.DateTimeInFuture().should_be_an_instance_of< DateTime >();
+			It should_return_a_datetime_after_now = () => ARandom.DateTimeInFuture().should_be_greater_than( DateTime.Now );
+		}
+
+		[ Subject( typeof ( ARandom ), "DateTimeBetween" ) ]
+		public class When_generating_a_random_datetime_between_two_datetimes
+		{
+			It should_fail_if_the_start_date_is_greater_than_the_end_date = () => Catch.Exception( () => ARandom.DateTimeBetween( DateTime.Parse( "2/1/2010 1:00:00 PM" ), DateTime.Parse( "1/1/2010 2:00:00 PM" ) ) ).should_be_an_instance_of< ArgumentException >();
+			It should_be_greater_than_or_equal_to_the_min_date = () => ARandom.DateTimeBetween( DateTime.Parse( "1/1/2010 2:00:00 PM" ), DateTime.Parse( "2/1/2010 2:00:00 PM" ) ).should_be_greater_than_or_equal_to( DateTime.Parse( "1/1/2010 2:00:00 PM" ) );
+			It should_be_less_than_or_equal_to_the_max_date = () => ARandom.DateTimeBetween( DateTime.Parse( "1/1/2010 2:00:00 PM" ), DateTime.Parse( "2/1/2010 2:00:00 PM" ) ).should_be_less_than_or_equal_to( DateTime.Parse( "2/1/2010 2:00:00 PM" ) );
+		}
+
+		#endregion
+
+		#region Dates (No Time)
+
+		[Subject(typeof(ARandom), "Date")]
+		public class When_generating_a_random_date
+		{
+			It should_return_a_value_of_type_datetime = () => ARandom.Date().should_be_an_instance_of< DateTime >();
+			It should_not_have_a_time_component = () => ARandom.Date().TimeOfDay.ShouldEqual( TimeSpan.FromTicks( 0 ) );
+		}
+
+		[Subject(typeof(ARandom), "DateAfter")]
+		public class When_generating_a_random_date_after_a_specified_datetime
+		{
+			It should_return_a_value_of_type_datetime = () => ARandom.DateAfter( DateTime.Now ).should_be_an_instance_of< DateTime >();
+			It should_not_have_a_time_component = () => ARandom.DateAfter( DateTime.Now ).TimeOfDay.ShouldEqual( TimeSpan.FromTicks( 0 ) );
+			It should_not_include_the_specified_lower_bound_date = () => ARandom.DateAfter( DateTime.MaxValue.Date - 1.Days() ).ShouldEqual( DateTime.MaxValue.Date );
+		}
+
+		
 		[ Subject( typeof ( ARandom ), "DateBetween" ) ]
 		public class When_generating_a_random_date_between_two_datetimes
 		{
@@ -239,15 +334,7 @@ namespace Fluency.Tests.DataGeneration
 			It should_be_less_than_or_equal_to_the_max_date = () => ARandom.DateBetween( DateTime.Parse( "1/1/2010 2:00:00 PM" ), DateTime.Parse( "2/1/2010 2:00:00 PM" ) ).should_be_less_than_or_equal_to( DateTime.Parse( "2/1/2010 2:00:00 PM" ) );
 		}
 
-
-		[ Subject( typeof ( ARandom ), "DateTimeBetween" ) ]
-		public class When_generating_a_random_datetime_between_two_datetimes
-		{
-			It should_fail_if_the_start_date_is_greater_than_the_end_date = () => Catch.Exception( () => ARandom.DateTimeBetween( DateTime.Parse( "2/1/2010 1:00:00 PM" ), DateTime.Parse( "1/1/2010 2:00:00 PM" ) ) ).should_be_an_instance_of< ArgumentException >();
-			It should_be_greater_than_or_equal_to_the_min_date = () => ARandom.DateTimeBetween( DateTime.Parse( "1/1/2010 2:00:00 PM" ), DateTime.Parse( "2/1/2010 2:00:00 PM" ) ).should_be_greater_than_or_equal_to( DateTime.Parse( "1/1/2010 2:00:00 PM" ) );
-			It should_be_less_than_or_equal_to_the_max_date = () => ARandom.DateTimeBetween( DateTime.Parse( "1/1/2010 2:00:00 PM" ), DateTime.Parse( "2/1/2010 2:00:00 PM" ) ).should_be_less_than_or_equal_to( DateTime.Parse( "2/1/2010 2:00:00 PM" ) );
-		}
-
+		#endregion
 
 		#region Ages and Birth Dates
 

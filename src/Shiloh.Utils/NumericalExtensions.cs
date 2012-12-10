@@ -11,6 +11,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,42 @@ namespace Shiloh.Utils
 {
 	public static class NumericalExtensions
 	{
+		public static TimeSpan Days( this int days )
+		{
+			return TimeSpan.FromDays( days );
+		}
+
+
+		public static TimeSpan Hours( this int hours )
+		{
+			return TimeSpan.FromHours( hours );
+		}
+
+
+		public static TimeSpan Minutes( this int minutes )
+		{
+			return TimeSpan.FromMinutes( minutes );
+		}
+
+
+		public static TimeSpan Seconds( this int seconds )
+		{
+			return TimeSpan.FromSeconds( seconds );
+		}
+
+
+		public static TimeSpan Milliseconds( this int milliseconds )
+		{
+			return TimeSpan.FromMilliseconds( milliseconds );
+		}
+
+
+		public static TimeSpan Ticks( this int ticks )
+		{
+			return TimeSpan.FromTicks( ticks );
+		}
+
+
 		public static DateTime YearsAgo( this int years )
 		{
 			return DateTime.Now.AddYears( years * -1 );
@@ -58,14 +95,14 @@ namespace Shiloh.Utils
 
 		public static double Cents( this int cents )
 		{
-			double value = (double)cents / 100;
+			var value = (double)cents / 100;
 			return Math.Round( value, 2 );
 		}
 
 
 		public static double Percent( this int percent )
 		{
-			double value = (double)percent / 100;
+			var value = (double)percent / 100;
 			return Math.Round( value, 2 );
 		}
 
@@ -75,11 +112,13 @@ namespace Shiloh.Utils
 			return dollars;
 		}
 
+
 		public static IEnumerable< int > Times( this int times )
 		{
 			return Enumerable.Range( 0, times );
 		}
-		
+
+
 		/// <summary>
 		/// Repeats the given function the specified number of times returning 
 		/// an IEnumerable containing the specified count of return values.
@@ -88,12 +127,10 @@ namespace Shiloh.Utils
 		/// <param name="count">The count.</param>
 		/// <param name="func">The func.</param>
 		/// <returns></returns>
-		public static IEnumerable<T> Of<T>(this int count, Func<T> func)
+		public static IEnumerable< T > Of< T >( this int count, Func< T > func )
 		{
-			for (int i = 0; i < count; i++)
-			{
+			for ( var i = 0; i < count; i++ )
 				yield return func.Invoke();
-			}
 		}
 	}
 }

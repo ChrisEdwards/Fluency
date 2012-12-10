@@ -464,6 +464,9 @@ namespace Fluency.DataGeneration
 		/// <returns></returns>
 		public static DateTime DateTimeInPastSince( DateTime lowerBounds )
 		{
+			if ( lowerBounds >= System.DateTime.Now )
+				throw new ArgumentException( "The datetime must be in the past.", "lowerBounds" );
+
 			return DateTimeBetween( lowerBounds, System.DateTime.Now );
 		}
 
@@ -492,6 +495,16 @@ namespace Fluency.DataGeneration
 
 
 		#region Dates (No Time)
+
+		/// <summary>
+		/// Generates a random date with no time component.
+		/// </summary>
+		/// <returns></returns>
+		public static DateTime Date()
+		{
+			return DateTime().Date;
+		}
+
 
 		/// <summary>
 		/// Generates a random date (no time) between the specified <paramref name="startDate"/> and <paramref name="endDate"/> (inclusive).
@@ -524,7 +537,10 @@ namespace Fluency.DataGeneration
 		/// <returns></returns>
 		public static DateTime DateAfter( DateTime lowerBounds )
 		{
-			return DateTimeAfter( lowerBounds ).Date;
+			// Don't include lower bound date.
+			var startDate = lowerBounds + TimeSpan.FromTicks( 1 );
+
+			return DateBetween( startDate, _valueConstraints.MaxDateTime );
 		}
 
 
