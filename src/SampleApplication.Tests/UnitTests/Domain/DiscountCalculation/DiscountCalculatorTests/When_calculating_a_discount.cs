@@ -38,6 +38,7 @@ namespace SampleApplication.Tests.UnitTests.Domain.DiscountCalculation.DiscountC
 
 
 		[ Test ]
+		[Ignore("Need to setup db to run on any environment")]
 		public void For_an_order_less_than_100_dollars()
 		{
 			Order order = an.Order
