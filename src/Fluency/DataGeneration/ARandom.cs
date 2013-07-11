@@ -605,19 +605,69 @@ namespace Fluency.DataGeneration
 
 		/// <summary>
 		/// Returns a <see cref="string"/> containing a random email address.<br/>
-		/// It is (10 random capital letters)@(10 random capital letters).(com, org, or net)<br/>
+		/// It is (10 random letters)@(10 random letters).(com, org, net, etc.)<br/>
 		/// Example: <br/>
 		/// <code>"UDHGELEGAP@PTMWZJRKCD.com"</code>
 		/// </summary>
 		/// <returns></returns>
 		public static string Email()
 		{
-			return System.String.Format( "{0}@{1}.{2}",
-			                             String( 10 ),
-			                             // user name
-			                             String( 10 ),
-			                             // domain
-			                             ItemFrom( "com", "org", "net" ) ); // domain ext.
+			return string.Format( "{0}@{1}",
+			                      String( 10 ),
+			                      InternetHostName() );
+		}
+
+
+		/// <summary>
+		/// Returns a <see cref="string"/> containing a random http url.<br/>
+		/// It is of the form: http://(random hostname)/(1-5 part lowercase url path segments with no trailing slash)
+		/// Example:"http://erjl.fiehoisjn.cc/sjike/ffe/serwao"
+		/// </summary>
+		/// <returns></returns>
+		public static string HttpUrl()
+		{
+			return string.Format( "http://{0}/{1}",
+			                      InternetHostName(),
+			                      UrlPathSegments() );
+		}
+
+
+		static string UrlPathSegments()
+		{
+			var numSegments = IntBetween( 1, 5 );
+
+			var pathSegments = new string[numSegments];
+			for ( int i = 0; i < numSegments; i++ )
+				pathSegments[i] = String( IntBetween( 4, 10 ) ).ToLower();
+			
+			return string.Join( "/", pathSegments );
+		}
+
+
+		/// <summary>
+		/// Returns a <see cref="string"/> containing a randome internet host name.<br/>
+		/// It is of the form (3-4 random letters).(3-10 random letters).(com, org, net, etc...)<br/>
+		/// Example:<br/>
+		/// <code>"axd.wjdfard.net"</code>
+		/// </summary>
+		/// <returns></returns>
+		public static string InternetHostName()
+		{
+			return string.Format( "{0}.{1}.{2}",
+			                      ItemFrom( String( 5 ), "www", String( 4 ) ),
+			                      String( IntBetween( 3, 10 ) ),
+			                      DomainSuffix()
+					).ToLower();
+		}
+
+
+		/// <summary>
+		/// Returns as <see cref="string"/> containing a random internet domain name suffix like com, net, org, etc.
+		/// </summary>
+		/// <returns></returns>
+		public static string DomainSuffix()
+		{
+			return ItemFrom( "com", "gov", "net", "org", "biz", "cc", "tv" );
 		}
 
 
