@@ -43,8 +43,18 @@ namespace Fluency.DataGeneration
 		{
 			var builder = new StringBuilder();
 			for ( var i = 0; i < size; i++ )
-					//26 letters in the alfabet, ascii + 65 for the capital letters
-				builder.Append( Convert.ToChar( Convert.ToInt32( Math.Floor( 26 * Random.NextDouble() + 65 ) ) ) );
+			{
+			    var isUpper = IntBetween(1, 2) == 1;
+                if (isUpper)
+                {
+                    //26 letters in the alphabet, ascii + 65 for the capital letters
+                    builder.Append( Convert.ToChar( Convert.ToInt32( Math.Floor( 26 * Random.NextDouble() + 65 ) ) ) );
+                }
+                else
+                {
+                    builder.Append(Convert.ToChar(Convert.ToInt32(Math.Floor(26 * Random.NextDouble() + 97))));
+                }
+			}
 			return builder.ToString();
 		}
 
@@ -155,16 +165,15 @@ namespace Fluency.DataGeneration
 
 
 		/// <summary>
-		/// Returns a random <see cref="integer"/> between 1 and 9999.
+		/// Returns a random <see cref="integer"/> between int.MinValue and int.MaxValue.
 		/// </summary>
 		/// <remarks>
-		/// I think this code was tampered with. I believe it used to include the full range of int 
-		/// including negative values. Not sure.
+		/// returns a random int
 		/// </remarks>
 		/// <returns></returns>
 		public static int Int()
 		{
-			return IntBetween( 1, 9999 );
+			return IntBetween( int.MinValue, int.MaxValue );
 		}
 
 
@@ -172,12 +181,12 @@ namespace Fluency.DataGeneration
 		// TODO: Byte???
 
 		/// <summary>
-		/// Returns a random positive <see cref="integer"/> between 1 and 9999.
+		/// Returns a random positive <see cref="integer"/> between 1 and int.MaxValue.
 		/// </summary>
 		/// <returns></returns>
 		public static int PositiveInt()
 		{
-			return IntBetween( 1, 9999 );
+			return IntBetween( 1, int.MaxValue );
 		}
 
 

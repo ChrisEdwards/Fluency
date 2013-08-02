@@ -66,7 +66,6 @@ namespace Fluency.Tests.DataGeneration
 		public class When_generating_a_random_integer
 		{
 			It should_generate_a_integer = () => ARandom.Int().should_be_an_instance_of< Int32 >();
-			It should_generate_a_positive_nonzero_number = () => ARandom.Int().should_be_greater_than( 0 );
 		}
 
 

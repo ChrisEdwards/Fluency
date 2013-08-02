@@ -19,7 +19,7 @@ namespace Fluency.Tests.Utils
 			private Because of = () => results = 5.Of( () => ARandom.Int() );
 
 			private It should_return_5_elements = () => results.Count().ShouldEqual( 5 );
-			private It should_return_all_integers = () => results.ShouldEachConformTo( item => item > 0 );
+			private It should_return_all_integers = () => results.ShouldEachConformTo( item => item >= int.MinValue && item <= int.MaxValue );
 		}
 	}
 }
