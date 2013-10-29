@@ -91,6 +91,21 @@ namespace Fluency.Tests.DataGeneration
 			It should_accept_a_very_low_max_value = () => ARandom.IntBetween( int.MinValue, int.MinValue + 1 ).should_be_less_than_or_equal_to( int.MinValue + 1 );
 			It should_accept_min_and_max_values = () => ARandom.IntBetween( int.MinValue, int.MaxValue ).should_be_greater_than_or_equal_to( int.MinValue );
 			It should_fail_if_min_is_greater_than_max = () => Catch.Exception( () => ARandom.IntBetween( 10, 0 ) ).should_be_an_instance_of< ArgumentException >();
+            It should_eventually_generate_the_min_and_max_value = () =>
+            {
+                var generatedMin = false;
+                var generatedMax = false;
+
+                for (int i = 0; i < 100; i++)
+                {
+                    var result = ARandom.IntBetween(1, 3);
+                    if (result == 1) generatedMin = true;
+                    if (result == 3) generatedMax = true;
+                }
+
+                generatedMin.should_be_true();
+                generatedMax.should_be_true();
+            };
 		}
 
 		#endregion

@@ -207,6 +207,10 @@ namespace Fluency.DataGeneration
 				}
 			}
 
+            // Because upper bounds is exclusive, increment it by 1 unless it exceeds maxvalue
+            if (max < int.MaxValue)
+                max += 1;
+
 			// Use offset because Next() does not allow int.MaxValue as upper bounds.
 			var result = Random.Next( min + offset, max + offset );
 			return result - offset;
