@@ -423,14 +423,17 @@ namespace Fluency.Tests.DataGeneration
 
 		[ Subject( typeof ( ARandom ), "Int" ) ]
 		public class When_getting_a_random_int_from_multiple_threads_at_the_same_time
-		{
-			static List< int > values = new List< int >();
+		{						
+		    It should_return_all_unique_values = () =>
+		    {
+                List<int> values = new List<int>();
 
-			Because of = () => Parallel.For( 0, 100,
+                Parallel.For( 0, 100,
 			                                 new ParallelOptions { MaxDegreeOfParallelism = 10 },
 			                                 ( i, loop ) => values.Add( ARandom.IntBetween( int.MinValue, int.MaxValue ) ) );
 
-			It should_return_all_unique_values = () => values.Distinct().Count().should_be_equal_to( 100 );
+		        values.Distinct().Count().should_be_equal_to(100);
+		    };
 		}
 
 
