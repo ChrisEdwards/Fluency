@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -423,15 +424,14 @@ namespace Fluency.Tests.DataGeneration
 
 		[ Subject( typeof ( ARandom ), "Int" ) ]
 		public class When_getting_a_random_int_from_multiple_threads_at_the_same_time
-		{						
+		{
 		    It should_return_all_unique_values = () =>
 		    {
-                List<int> values = new List<int>();
-
+		        BlockingCollection<int> values = new BlockingCollection<int>();
                 Parallel.For( 0, 100,
 			                                 new ParallelOptions { MaxDegreeOfParallelism = 10 },
 			                                 ( i, loop ) => values.Add( ARandom.IntBetween( int.MinValue, int.MaxValue ) ) );
-
+                
 		        values.Distinct().Count().should_be_equal_to(100);
 		    };
 		}
