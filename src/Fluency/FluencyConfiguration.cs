@@ -28,6 +28,7 @@ namespace Fluency
 
 		readonly Dictionary< Type, IIdGenerator > _idGenerators = new Dictionary< Type, IIdGenerator >();
 
+	    private object _idGeneratorsLock = new object();
 
 		public FluencyConfiguration()
 		{
@@ -71,10 +72,13 @@ namespace Fluency
 		/// <returns></returns>
 		internal IIdGenerator GetIdGenerator< T >()
 		{
-			if ( !_idGenerators.ContainsKey( typeof ( T ) ) )
-				_idGenerators.Add( typeof ( T ), ConstructIdGenerator.Invoke() );
+            lock (_idGeneratorsLock)
+            {
+                if (!_idGenerators.ContainsKey(typeof(T)))
+                    _idGenerators.Add(typeof(T), ConstructIdGenerator.Invoke());
 
-			return _idGenerators[typeof ( T )];
-		}
+                return _idGenerators[typeof(T)];
+            }
+        }
 	}
 }

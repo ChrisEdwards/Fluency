@@ -93,6 +93,7 @@
     <Compile Include="BuilderTests\Using_a_custom_builder_as_an_alias_for_an_existing_instance.cs" />
     <Compile Include="BuilderTests\Using_a_custom_builder_to_work_with_a_list_property.cs" />
     <Compile Include="BuilderTests\When_building_two_consecutive_objects.cs" />
+    <Compile Include="BuilderTests\Creating_builders_on_different_threads.cs" />
     <Compile Include="BuilderTests\When_setting_a_reference_property.cs" />
     <Compile Include="Conventions\ByName\LastNameConventionSpecs.cs" />
     <Compile Include="Conventions\ByName\FirstNameConventionSpecs.cs" />
