@@ -25,21 +25,20 @@ namespace Fluency.DataGeneration
 	/// </summary>
 	public static class ARandom
 	{
-		private static readonly Random _random = new Random();
 		public static IValueConstraints _valueConstraints = new SqlServerDefaultValuesAndConstraints();
 
-		private static Random Random { get { return ThreadLocalRandom.Instance; } }
+        private static Random Random { get { return ThreadLocalRandom.Instance; } }
 
 
-		#region Strings
+        #region Strings
 
 
-		/// <summary>
-		/// Returns a random <see cref="string"/> of all capital letters. The length of the string equals the specified <paramref name="size"/>.
-		/// </summary>
-		/// <param name="size">The size.</param>
-		/// <returns></returns>
-		public static string String( int size )
+        /// <summary>
+        /// Returns a random <see cref="string"/> of all capital letters. The length of the string equals the specified <paramref name="size"/>.
+        /// </summary>
+        /// <param name="size">The size.</param>
+        /// <returns></returns>
+        public static string String( int size )
 		{
 			var builder = new StringBuilder();
 			for ( var i = 0; i < size; i++ )
