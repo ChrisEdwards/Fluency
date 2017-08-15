@@ -236,6 +236,30 @@ namespace Fluency
         }
 
         /// <summary>
+        /// Mark a all non public properties to be ignored when setting of default values
+        /// </summary>
+        /// <exception cref="FluencyException"></exception>
+        protected internal FluentBuilder<T> IgnoreNonPublicSetters()
+        {
+            if (_preBuiltResult != null)
+                throw new FluencyException("Cannot ignore properties once a pre built result has been given. Property change will have no affect.");
+
+            foreach (var propertyInfo in typeof(T).GetProperties())
+            {
+                if (_properties.Contains(propertyInfo.Name))
+                {
+                    var methodInfo = propertyInfo.GetSetMethod(nonPublic: true);
+                    if (!methodInfo.IsPublic)
+                    {
+                        _properties.Remove(propertyInfo.Name);
+                    }
+                }                
+            }
+
+            return this;
+        }
+
+        /// <summary>
         /// Sets the builder to be used to construct the value for the specified propety.
         /// </summary>
         /// <typeparam name="TPropertyType">The type of the property type.</typeparam>

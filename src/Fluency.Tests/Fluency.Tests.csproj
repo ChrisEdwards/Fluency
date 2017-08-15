@@ -90,6 +90,7 @@
   <ItemGroup>
     <Compile Include="AssertionExtensions.cs" />
     <Compile Include="BuilderTests\DynamicFluentBuilderSpecs.cs" />
+    <Compile Include="BuilderTests\IgnoreNonPublicSetters.cs" />
     <Compile Include="BuilderTests\IgnorePropertySpecs.cs" />
     <Compile Include="BuilderTests\Using_a_custom_builder_as_an_alias_for_an_existing_instance.cs" />
     <Compile Include="BuilderTests\Using_a_custom_builder_to_work_with_a_list_property.cs" />
