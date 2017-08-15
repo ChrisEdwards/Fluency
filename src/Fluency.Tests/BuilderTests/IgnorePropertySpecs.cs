@@ -67,5 +67,22 @@ namespace Fluency.Tests.BuilderTests
                 instance.PropertyBSetterCalled.Should().Be(false);
             };
         }
+
+        [Subject("FluencyIgnoreProperties")]
+        public class When_builder_is_configured_to_ignore_all_properties : IgnorePropertySpecs
+        {
+            Establish context = () => Fluency.Initialize(x => x.IdGeneratorIsConstructedBy(() => new DecrementingIdGenerator()));
+
+            private It should_not_call_setter_for_any_property = () =>
+            {
+                var builder = new FluentBuilder<AClassWithTwoProperties>();
+                builder.IgnoreAllProperties();
+
+                var instance = builder.build();
+
+                instance.PropertyASetterCalled.Should().Be(false);
+                instance.PropertyBSetterCalled.Should().Be(false);
+            };
+        }
     }
 }

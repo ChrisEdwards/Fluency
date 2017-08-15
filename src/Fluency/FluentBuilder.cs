@@ -222,6 +222,18 @@ namespace Fluency
             return this;
         }
 
+        /// <summary>
+        /// Mark a all properties to be ignored when setting of default values
+        /// </summary>
+        /// <exception cref="FluencyException"></exception>
+        protected internal FluentBuilder<T> IgnoreAllProperties()
+        {
+            if (_preBuiltResult != null)
+                throw new FluencyException("Cannot ignore properties once a pre built result has been given. Property change will have no affect.");
+            
+            _properties.Clear();            
+            return this;
+        }
 
         /// <summary>
         /// Sets the builder to be used to construct the value for the specified propety.
