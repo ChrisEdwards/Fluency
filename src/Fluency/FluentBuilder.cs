@@ -204,14 +204,68 @@ namespace Fluency
 			return this;
 		}
 
+        /// <summary>
+        /// Mark a property to be ignored when setting of default values
+        /// </summary>
+        /// <typeparam name="TPropertyType">The type of the property type.</typeparam>
+        /// <param name="propertyExpression">The property expression.</param>
+        /// <exception cref="FluencyException"></exception>
+	    protected internal FluentBuilder<T> IgnoreProperty<TPropertyType>(
+	        Expression<Func<T, TPropertyType>> propertyExpression)
+        {
+            if (_preBuiltResult != null)
+                throw new FluencyException("Cannot ignore property once a pre built result has been given. Property change will have no affect.");
 
-		/// <summary>
-		/// Sets the builder to be used to construct the value for the specified propety.
-		/// </summary>
-		/// <typeparam name="TPropertyType">The type of the property type.</typeparam>
-		/// <param name="propertyExpression">The property expression.</param>
-		/// <param name="builder">The builder.</param>
-		protected internal FluentBuilder< T > SetProperty< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression, IFluentBuilder builder )
+            var property = propertyExpression.GetPropertyInfo();
+
+            _properties.Remove(property.Name);
+            return this;
+        }
+
+        /// <summary>
+        /// Mark a all properties to be ignored when setting of default values
+        /// </summary>
+        /// <exception cref="FluencyException"></exception>
+        protected internal FluentBuilder<T> IgnoreAllProperties()
+        {
+            if (_preBuiltResult != null)
+                throw new FluencyException("Cannot ignore properties once a pre built result has been given. Property change will have no affect.");
+            
+            _properties.Clear();            
+            return this;
+        }
+
+        /// <summary>
+        /// Mark a all non public properties to be ignored when setting of default values
+        /// </summary>
+        /// <exception cref="FluencyException"></exception>
+        protected internal FluentBuilder<T> IgnoreNonPublicSetters()
+        {
+            if (_preBuiltResult != null)
+                throw new FluencyException("Cannot ignore properties once a pre built result has been given. Property change will have no affect.");
+
+            foreach (var propertyInfo in typeof(T).GetProperties())
+            {
+                if (_properties.Contains(propertyInfo.Name))
+                {
+                    var methodInfo = propertyInfo.GetSetMethod(nonPublic: true);
+                    if (!methodInfo.IsPublic)
+                    {
+                        _properties.Remove(propertyInfo.Name);
+                    }
+                }                
+            }
+
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the builder to be used to construct the value for the specified propety.
+        /// </summary>
+        /// <typeparam name="TPropertyType">The type of the property type.</typeparam>
+        /// <param name="propertyExpression">The property expression.</param>
+        /// <param name="builder">The builder.</param>
+        protected internal FluentBuilder< T > SetProperty< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression, IFluentBuilder builder )
 				where TPropertyType : class, new()
 		{
 			// Due to lack of polymorphism in generic parameters.
