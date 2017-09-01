@@ -43,3 +43,6 @@ build_output/*
 *.crunchproject.local.xml
 *.crunchsolution.local.xml
 *.ncrunchsolution
+nCrunchTemp_*
+tools/
+src/.vs/
