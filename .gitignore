@@ -46,3 +46,4 @@ build_output/*
 nCrunchTemp_*
 tools/
 src/.vs/
+src/packages/
