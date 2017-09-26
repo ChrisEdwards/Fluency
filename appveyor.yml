@@ -19,7 +19,7 @@ build:
   publish_nuget: false
 
 build_script:
-- ps: .\Build.ps1
+- ps: .\Build.ps1 -target Default -configuration Release
 
 artifacts:
 - path: .\artifacts\**\*.nupkg
