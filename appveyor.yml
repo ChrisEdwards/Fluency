@@ -7,13 +7,7 @@ image: Visual Studio 2017
 
 pull_requests:
   do_not_increment_build_number: true
-
-branches:
-  only:
-  - master
-  - develop
-  - release
-
+  
 configuration: Release
 
 nuget:
