@@ -21,6 +21,9 @@ build:
 build_script:
 - ps: .\Build.ps1 -target Default -configuration Release
 
+test_script:
+- ps: .\build.ps1 -target Run-Unit-Tests -Configuration Release
+
 artifacts:
 - path: .\artifacts\**\*.nupkg
   name: NuGet
