@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Machine.Specifications;
 
-namespace Fluency.Tests.BuilderTests
+namespace Fluency.Tests.Deprecated.BuilderTests
 {
     /// <summary>
     /// The FluentBuilder class accesses a static variable in it's constructor which 

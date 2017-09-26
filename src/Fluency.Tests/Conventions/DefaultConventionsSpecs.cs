@@ -5,8 +5,7 @@ using System;
 using Fluency.DataGeneration;
 using Machine.Specifications;
 
-
-namespace Fluency.Tests.Conventions
+namespace Fluency.Tests.Deprecated.Conventions
 {
 	public class DefaultConventionsSpecs
 	{
