@@ -22,7 +22,7 @@ using SharpTestsEx;
 // ReSharper disable InconsistentNaming
 
 
-namespace Fluency.Tests.BuilderTests
+namespace Fluency.Tests.Deprecated.BuilderTests
 {
 	/// <summary>
 	/// A FluentBuilder can work with properties that are generic lists. It does not yet support other types of collections though.

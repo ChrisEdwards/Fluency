@@ -1,7 +1,7 @@
 using Machine.Specifications;
 using SharpTestsEx;
 
-namespace Fluency.Tests.BuilderTests
+namespace Fluency.Tests.Deprecated.BuilderTests
 {
     public class IgnoreNonPublicSetters
     {

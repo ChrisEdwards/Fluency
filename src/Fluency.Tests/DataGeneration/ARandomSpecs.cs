@@ -7,8 +7,7 @@ using Fluency.DataGeneration;
 using Machine.Specifications;
 using Shiloh.Utils;
 
-
-namespace Fluency.Tests.DataGeneration
+namespace Fluency.Tests.Deprecated.DataGeneration
 {
 	public class ARandomSpecs
 	{

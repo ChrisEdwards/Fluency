@@ -11,14 +11,14 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+
 using Fluency.IdGenerators;
 using Machine.Specifications;
-using SpecUnit;
 
 // ReSharper disable InconsistentNaming
 
 
-namespace Fluency.Tests
+namespace Fluency.Tests.Deprecated
 {
 	public class FluencyInitializationSpecs
 	{

@@ -11,6 +11,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+
 using Fluency.IdGenerators;
 using Machine.Specifications;
 using NUnit.Framework;
@@ -18,7 +19,7 @@ using NUnit.Framework;
 // ReSharper disable InconsistentNaming
 
 
-namespace Fluency.Tests.BuilderTests
+namespace Fluency.Tests.Deprecated.BuilderTests
 {
 	public class when_building_two_consecutive_objects
 	{

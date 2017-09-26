@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{650A6CED-11AD-4DA2-984C-39FB773F88D3}</ProjectGuid>
+    <ProjectGuid>{F8CADD7C-6E49-476F-AF03-274507FA06B4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SpecUnit</RootNamespace>
-    <AssemblyName>SpecUnit</AssemblyName>
+    <RootNamespace>Fluency.Tests.Deprecated</RootNamespace>
+    <AssemblyName>Fluency.Tests.Deprecated</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
@@ -43,7 +43,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -54,22 +53,74 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Machine.Specifications, Version=0.5.8.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Machine.Specifications.0.5.8\lib\net40\Machine.Specifications.dll</HintPath>
+    </Reference>
+    <Reference Include="Machine.Specifications.Clr4, Version=0.5.8.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Machine.Specifications.0.5.8\lib\net40\Machine.Specifications.Clr4.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="nunit.framework, Version=2.6.4.14350, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
     </Reference>
+    <Reference Include="Rhino.Mocks, Version=3.6.0.0, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
+      <HintPath>..\packages\RhinoMocks.3.6\lib\Rhino.Mocks.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpTestsEx, Version=1.0.0.0, Culture=neutral, PublicKeyToken=8c60d8070630b1c1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\sharptestsex\SharpTestsEx.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Properties\CommonAssemblyInfo.cs" />
-    <Compile Include="ConcernAttribute.cs" />
-    <Compile Include="ContextSpecification.cs" />
-    <Compile Include="CleanUpContextAttribute.cs" />
-    <Compile Include="SpecAttribute.cs" />
-    <Compile Include="ContextAttribute.cs" />
-    <Compile Include="SpecificationAttribute.cs" />
-    <Compile Include="ObservationAttribute.cs" />
+    <Compile Include="AssertionExtensions.cs" />
+    <Compile Include="BuilderTests\IgnoreNonPublicSetters.cs" />
+    <Compile Include="BuilderTests\IgnorePropertySpecs.cs" />
+    <Compile Include="BuilderTests\Using_a_custom_builder_as_an_alias_for_an_existing_instance.cs" />
+    <Compile Include="BuilderTests\Using_a_custom_builder_to_work_with_a_list_property.cs" />
+    <Compile Include="BuilderTests\When_building_two_consecutive_objects.cs" />
+    <Compile Include="BuilderTests\Creating_builders_on_different_threads.cs" />
+    <Compile Include="BuilderTests\When_setting_a_reference_property.cs" />
+    <Compile Include="Conventions\ByName\LastNameConventionSpecs.cs" />
+    <Compile Include="Conventions\ByName\FirstNameConventionSpecs.cs" />
+    <Compile Include="Conventions\ByType\DateTypeConventionSpecs.cs" />
+    <Compile Include="Conventions\ByType\IntegerTypeConventionSpecs.cs" />
+    <Compile Include="Conventions\ByType\StringTypeConventionSpecs.cs" />
+    <Compile Include="Conventions\DefaultConventionsSpecs.cs" />
+    <Compile Include="DataGeneration\ARandomSpecs.cs" />
+    <Compile Include="FluencyInitializationSpecs.cs" />
+    <Compile Include="Probabilities\PercentChanceOfSpecs.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Probabilities\ProbabilityOfSpecs.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Probabilities\ProbabilitySpecs.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils\NumericalExtensionsSpecs.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Fluency\Fluency.csproj">
+      <Project>{CA8DE273-AA4A-4FC1-9D41-B67B56A53433}</Project>
+      <Name>Fluency</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shiloh.Utils\Shiloh.Utils.csproj">
+      <Project>{d9c01343-518c-47d5-b7ab-b5a400caad5e}</Project>
+      <Name>Shiloh.Utils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SpecUnit\SpecUnit.csproj">
+      <Project>{650A6CED-11AD-4DA2-984C-39FB773F88D3}</Project>
+      <Name>SpecUnit</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
       <Visible>False</Visible>

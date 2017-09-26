@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Fluency.DataGeneration;
 using Fluency.Utils;
 using Machine.Specifications;
 
-
-namespace Fluency.Tests.Utils
+namespace Fluency.Tests.Deprecated.Utils
 {
 	public class NumericalExtensionsSpecs
 	{
