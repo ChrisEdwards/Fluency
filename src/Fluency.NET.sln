@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fluency.Tests.Deprecated", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleApplication.Tests", "SampleApplication.Tests\SampleApplication.Tests.csproj", "{3AA1FDEB-5E41-466E-BDFA-571F6A49C1E4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fluency.Tests", "..\test\Fluency.Tests\Fluency.Tests.csproj", "{2C7DEE80-12F8-410E-ABD9-7A98BDB84AD2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{3AA1FDEB-5E41-466E-BDFA-571F6A49C1E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3AA1FDEB-5E41-466E-BDFA-571F6A49C1E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3AA1FDEB-5E41-466E-BDFA-571F6A49C1E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C7DEE80-12F8-410E-ABD9-7A98BDB84AD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C7DEE80-12F8-410E-ABD9-7A98BDB84AD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C7DEE80-12F8-410E-ABD9-7A98BDB84AD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C7DEE80-12F8-410E-ABD9-7A98BDB84AD2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
