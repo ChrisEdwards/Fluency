@@ -3,8 +3,10 @@
 //////////////////////////////////////////////////////////////////////
 // ARGUMENTS
 //////////////////////////////////////////////////////////////////////
-var target = Argument("target", "Default");
-var configuration = Argument("configuration", "Debug");
+var target = Argument<string>("target", "Default");
+var configuration = Argument<string>("configuration", "Debug");
+var name = Argument<string>("name", "Fluency");
+var verbosity = Argument<string>("verbosity", "Minimal");
 
 //////////////////////////////////////////////////////////////////////
 // PREPARATION
@@ -47,6 +49,12 @@ Task("Build")
         .SetVerbosity(Verbosity.Quiet));
 });
 
+
+Task("Run-Unit-Tests")
+    .Does(() =>
+{
+    
+});
 
 //////////////////////////////////////////////////////////////////////
 // TASK TARGETS
