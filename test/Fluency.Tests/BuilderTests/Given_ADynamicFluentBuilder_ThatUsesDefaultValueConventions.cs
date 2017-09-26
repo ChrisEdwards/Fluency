@@ -1,12 +1,32 @@
 ﻿using System;
+using System.Collections.Generic;
 using Fluency.DataGeneration;
 using FluentAssertions;
 using Xunit;
 
 namespace Fluency.Tests.BuilderTests
 {
-    public class Given_ADynamicFluentBuilder_ThatUsesDefaultValueConventions : DynamicFluentBuilderTests
+    public class Given_ADynamicFluentBuilder_ThatUsesDefaultValueConventions
     {
+        protected readonly DynamicFluentBuilder<TestClass> Sut;
+
+        protected class TestClass
+        {
+            public string StringProperty { get; set; }
+            public string FirstName { get; set; }
+            public string LastName { get; set; }
+            public int IntegerProperty { get; set; }
+            public DateTime DateTimeProperty { get; set; }
+            public TestClass ReferenceProperty { get; set; }
+            public IList<TestClass> ListProperty { get; set; }
+        }
+
+        protected Given_ADynamicFluentBuilder_ThatUsesDefaultValueConventions()
+        {
+            Fluency.Initialize(x => x.UseDefaultValueConventions());
+            Sut = new DynamicFluentBuilder<TestClass>();
+        }
+
         public class WhenBuildingTheObject : Given_ADynamicFluentBuilder_ThatUsesDefaultValueConventions
         {
             private readonly TestClass _result;

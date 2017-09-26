@@ -58,7 +58,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BuilderTests\DynamicFluentBuilderTests.cs" />
     <Compile Include="BuilderTests\Given_ADynamicFluentBuilder_ThatUsesDefaultValueConventions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
