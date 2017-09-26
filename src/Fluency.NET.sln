@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleApplication", "Sample
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fluency", "Fluency\Fluency.csproj", "{CA8DE273-AA4A-4FC1-9D41-B67B56A53433}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fluency.Tests", "Fluency.Tests\Fluency.Tests.csproj", "{F8CADD7C-6E49-476F-AF03-274507FA06B4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fluency.Tests.Deprecated", "Fluency.Tests\Fluency.Tests.Deprecated.csproj", "{F8CADD7C-6E49-476F-AF03-274507FA06B4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleApplication.Tests", "SampleApplication.Tests\SampleApplication.Tests.csproj", "{3AA1FDEB-5E41-466E-BDFA-571F6A49C1E4}"
 EndProject

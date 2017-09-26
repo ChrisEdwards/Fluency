@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 using Fluency.Tests;
+using Fluency.Tests.Deprecated;
 using SampleApplication.Domain;
 using SharpTestsEx;
 

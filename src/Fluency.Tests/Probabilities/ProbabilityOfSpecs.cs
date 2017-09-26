@@ -11,14 +11,14 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+
 using System.Collections.Generic;
 using System.Linq;
 using Fluency.Probabilities;
 using Machine.Specifications;
 using Shiloh.Utils;
 
-
-namespace Fluency.Tests.Probabilities
+namespace Fluency.Tests.Deprecated.Probabilities
 {
 	public class ProbabilitySpecificationSpecs
 	{

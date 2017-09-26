@@ -1,9 +1,8 @@
 using Fluency.IdGenerators;
 using Machine.Specifications;
-using Rhino.Mocks.Constraints;
 using SharpTestsEx;
 
-namespace Fluency.Tests.BuilderTests
+namespace Fluency.Tests.Deprecated.BuilderTests
 {
     public class IgnorePropertySpecs
     {
