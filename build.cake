@@ -1,5 +1,6 @@
 #addin "Newtonsoft.Json"
 #addin "Cake.Powershell&version=0.3.5"
+#tool "nuget:?package=xunit.runner.console&version=2.2.0"
 //////////////////////////////////////////////////////////////////////
 // ARGUMENTS
 //////////////////////////////////////////////////////////////////////
@@ -33,6 +34,7 @@ Task("Clean")
 
 
 Task("Restore-NuGet-Packages")
+    .IsDependentOn("Clean")
     .Does(() =>
 {
     NuGetRestore(solutionFile);
@@ -40,7 +42,6 @@ Task("Restore-NuGet-Packages")
 
 
 Task("Build")
-    .IsDependentOn("Clean")
     .IsDependentOn("Restore-NuGet-Packages")
     .Does(() =>
 {
@@ -53,7 +54,12 @@ Task("Build")
 Task("Run-Unit-Tests")
     .Does(() =>
 {
-    
+    var testAssemblies = GetFiles("./test/**/bin/" + configuration + "/*.Tests.dll");
+    XUnit2(testAssemblies, new XUnit2Settings {
+        Parallelism = ParallelismOption.All,
+        HtmlReport = false,
+        NoAppDomain = true
+    });
 });
 
 //////////////////////////////////////////////////////////////////////
@@ -61,7 +67,8 @@ Task("Run-Unit-Tests")
 //////////////////////////////////////////////////////////////////////
 
 Task("Default")
-    .IsDependentOn("Build");
+    .IsDependentOn("Build")
+    .IsDependentOn("Run-Unit-Tests");
     
 //////////////////////////////////////////////////////////////////////
 // EXECUTION
