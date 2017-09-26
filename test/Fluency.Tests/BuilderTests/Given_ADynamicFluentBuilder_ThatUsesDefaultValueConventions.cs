@@ -135,5 +135,133 @@ namespace Fluency.Tests.BuilderTests
             public void It_Should_UseProvidedValue() =>
                 _result.ReferenceProperty.Should().Be(_expectedValue);
         }
+
+        public class
+            WhenBuildingTheObject_AfterSpecifyingDynamicPropertyBuilder_UsingFor : Given_ADynamicFluentBuilder_ThatUsesDefaultValueConventions
+        {
+            private readonly TestClass _result;
+            private readonly TestClass _expectedValue;
+
+            public WhenBuildingTheObject_AfterSpecifyingDynamicPropertyBuilder_UsingFor()
+            {
+                _expectedValue = new TestClass { FirstName = "Bob", LastName = "Smith" };
+                FluentBuilder<TestClass> propertyBuilder = new DynamicFluentBuilder<TestClass>().AliasFor(_expectedValue);
+
+                _result = Sut.For(x => x.ReferenceProperty, propertyBuilder).build();
+            }
+
+            [Fact]
+            public void It_Should_UseProvidedValue() =>
+                _result.ReferenceProperty.Should().Be(_expectedValue);
+        }
+
+        public class
+            WhenBuildingTheObject_AfterSpecifyingDynamicPropertyBuilder_UsingHaving : Given_ADynamicFluentBuilder_ThatUsesDefaultValueConventions
+        {
+            private readonly TestClass _result;
+            private readonly TestClass _expectedValue;
+
+            public WhenBuildingTheObject_AfterSpecifyingDynamicPropertyBuilder_UsingHaving()
+            {
+                _expectedValue = new TestClass { FirstName = "Bob", LastName = "Smith" };
+                FluentBuilder<TestClass> propertyBuilder = new DynamicFluentBuilder<TestClass>().AliasFor(_expectedValue);
+
+                _result = Sut.Having(x => x.ReferenceProperty, propertyBuilder).build();
+            }
+
+            [Fact]
+            public void It_Should_UseProvidedValue() =>
+                _result.ReferenceProperty.Should().Be(_expectedValue);
+        }
+
+        public class
+            WhenBuildingTheObject_AfterSpecifyingListPropertyValues_UsingWithListOf : Given_ADynamicFluentBuilder_ThatUsesDefaultValueConventions
+        {
+            private readonly TestClass _result;
+            private readonly TestClass _firstExpectedValue;
+            private readonly TestClass _secondExpectedValue;
+
+            public WhenBuildingTheObject_AfterSpecifyingListPropertyValues_UsingWithListOf()
+            {
+                _firstExpectedValue = new TestClass { FirstName = "Bob", LastName = "Smith" };
+                _secondExpectedValue = new TestClass { FirstName = "Harry", LastName = "Johnson" };
+
+                _result = Sut.WithListOf(x => x.ListProperty, _firstExpectedValue, _secondExpectedValue).build();                
+            }
+
+            [Fact]
+            public void It_Should_UseProvidedValue() =>
+                _result.ListProperty.Should().BeEquivalentTo(
+                    new[] {_firstExpectedValue, _secondExpectedValue});
+        }
+
+        public class
+            WhenBuildingTheObject_AfterSpecifyingListPropertyValues_UsingHavingListOf : Given_ADynamicFluentBuilder_ThatUsesDefaultValueConventions
+        {
+            private readonly TestClass _result;
+            private readonly TestClass _firstExpectedValue;
+            private readonly TestClass _secondExpectedValue;
+
+            public WhenBuildingTheObject_AfterSpecifyingListPropertyValues_UsingHavingListOf()
+            {
+                _firstExpectedValue = new TestClass { FirstName = "Bob", LastName = "Smith" };
+                _secondExpectedValue = new TestClass { FirstName = "Harry", LastName = "Johnson" };
+
+                _result = Sut.HavingListOf(x => x.ListProperty, _firstExpectedValue, _secondExpectedValue).build();
+            }
+
+            [Fact]
+            public void It_Should_UseProvidedValue() =>
+                _result.ListProperty.Should().BeEquivalentTo(
+                    new[] { _firstExpectedValue, _secondExpectedValue });
+        }
+
+        public class
+            WhenBuildingTheObject_AfterSpecifyingListPropertyBuilders_UsingHavingListOf : Given_ADynamicFluentBuilder_ThatUsesDefaultValueConventions
+        {
+            private readonly TestClass _result;
+            private readonly TestClass _firstExpectedValue;
+            private readonly TestClass _secondExpectedValue;
+
+            public WhenBuildingTheObject_AfterSpecifyingListPropertyBuilders_UsingHavingListOf()
+            {
+                // Create a builder that will return the expected value.
+                _firstExpectedValue = new TestClass { FirstName = "Bob", LastName = "Smith" };
+                FluentBuilder<TestClass> firstValueBuilder = new DynamicFluentBuilder<TestClass>().AliasFor(_firstExpectedValue);
+                _secondExpectedValue = new TestClass { FirstName = "Harry", LastName = "Johnson" };
+                FluentBuilder<TestClass> secondValueBuilder = new DynamicFluentBuilder<TestClass>().AliasFor(_secondExpectedValue);
+
+                _result = Sut.HavingListOf(x => x.ListProperty, firstValueBuilder, secondValueBuilder).build();
+            }
+
+            [Fact]
+            public void It_Should_UseProvidedValue() =>
+                _result.ListProperty.Should().BeEquivalentTo(
+                    new[] { _firstExpectedValue, _secondExpectedValue });
+        }
+
+        public class
+            WhenBuildingTheObject_AfterSpecifyingListPropertyBuilders_UsingWithListOf : Given_ADynamicFluentBuilder_ThatUsesDefaultValueConventions
+        {
+            private readonly TestClass _result;
+            private readonly TestClass _firstExpectedValue;
+            private readonly TestClass _secondExpectedValue;
+
+            public WhenBuildingTheObject_AfterSpecifyingListPropertyBuilders_UsingWithListOf()
+            {
+                // Create a builder that will return the expected value.
+                _firstExpectedValue = new TestClass { FirstName = "Bob", LastName = "Smith" };
+                FluentBuilder<TestClass> firstValueBuilder = new DynamicFluentBuilder<TestClass>().AliasFor(_firstExpectedValue);
+                _secondExpectedValue = new TestClass { FirstName = "Harry", LastName = "Johnson" };
+                FluentBuilder<TestClass> secondValueBuilder = new DynamicFluentBuilder<TestClass>().AliasFor(_secondExpectedValue);
+
+                _result = Sut.WithListOf(x => x.ListProperty, firstValueBuilder, secondValueBuilder).build();
+            }
+
+            [Fact]
+            public void It_Should_UseProvidedValue() =>
+                _result.ListProperty.Should().BeEquivalentTo(
+                    new[] { _firstExpectedValue, _secondExpectedValue });
+        }
     }
 }
