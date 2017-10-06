@@ -1,10 +1,10 @@
-using Fluency.IdGenerators;
-using Machine.Specifications;
-using SharpTestsEx;
+﻿using Fluency.IdGenerators;
+using FluentAssertions;
+using Xunit;
 
-namespace Fluency.Tests.Deprecated.BuilderTests
+namespace Fluency.Tests.BuilderTests
 {
-    public class IgnorePropertySpecs
+    public class Given_AClassWithMultipleProperties
     {
         private class AClassWithTwoProperties
         {
@@ -34,12 +34,10 @@ namespace Fluency.Tests.Deprecated.BuilderTests
             }
         }
 
-        [Subject("FluencyIgnoreProperties")]
-        public class When_builder_is_not_configured_to_ignore_any_property : IgnorePropertySpecs
+        public class When_builder_is_not_configured_to_ignore_any_property : Given_AClassWithMultipleProperties
         {
-            Establish context = () => Fluency.Initialize(x => x.IdGeneratorIsConstructedBy(() => new DecrementingIdGenerator()));
-
-            private It should_populate_all_properties = () =>
+            [Fact]
+            public void should_populate_all_properties ()
             {
                 var builder = new FluentBuilder<AClassWithTwoProperties>();
 
@@ -47,15 +45,13 @@ namespace Fluency.Tests.Deprecated.BuilderTests
 
                 instance.PropertyASetterCalled.Should().Be(true);
                 instance.PropertyBSetterCalled.Should().Be(true);
-            };
+            }
         }
 
-        [Subject("FluencyIgnoreProperties")]
-        public class When_builder_is_configured_to_ignore_a_property : IgnorePropertySpecs
+        public class When_builder_is_configured_to_ignore_a_property : Given_AClassWithMultipleProperties
         {
-            Establish context = () => Fluency.Initialize(x => x.IdGeneratorIsConstructedBy(() => new DecrementingIdGenerator()));
-
-            private It should_not_call_setter_for_ignored_property = () =>
+            [Fact]
+            public void should_not_call_setter_for_ignored_property()
             {
                 var builder = new FluentBuilder<AClassWithTwoProperties>();
                 builder.IgnoreProperty(x => x.PropertyB);
@@ -64,15 +60,29 @@ namespace Fluency.Tests.Deprecated.BuilderTests
 
                 instance.PropertyASetterCalled.Should().Be(true);
                 instance.PropertyBSetterCalled.Should().Be(false);
-            };
+            }
         }
 
-        [Subject("FluencyIgnoreProperties")]
-        public class When_builder_is_configured_to_ignore_all_properties : IgnorePropertySpecs
+        public class When_builder_is_configured_to_ignore_multiple_properties : Given_AClassWithMultipleProperties
         {
-            Establish context = () => Fluency.Initialize(x => x.IdGeneratorIsConstructedBy(() => new DecrementingIdGenerator()));
+            [Fact]
+            public void should_not_call_setter_for_any_property()
+            {
+                var builder = new FluentBuilder<AClassWithTwoProperties>();
+                builder.IgnoreProperty(x => x.PropertyA);
+                builder.IgnoreProperty(x => x.PropertyB);
 
-            private It should_not_call_setter_for_any_property = () =>
+                var instance = builder.build();
+
+                instance.PropertyASetterCalled.Should().Be(false);
+                instance.PropertyBSetterCalled.Should().Be(false);
+            }
+        }
+
+        public class When_builder_is_configured_to_ignore_all_properties : Given_AClassWithMultipleProperties
+        {
+            [Fact]
+            public void should_not_call_setter_for_any_property()
             {
                 var builder = new FluentBuilder<AClassWithTwoProperties>();
                 builder.IgnoreAllProperties();
@@ -81,7 +91,7 @@ namespace Fluency.Tests.Deprecated.BuilderTests
 
                 instance.PropertyASetterCalled.Should().Be(false);
                 instance.PropertyBSetterCalled.Should().Be(false);
-            };
+            }
         }
     }
 }
