@@ -1,9 +1,9 @@
-using Machine.Specifications;
-using SharpTestsEx;
+﻿using FluentAssertions;
+using Xunit;
 
-namespace Fluency.Tests.Deprecated.BuilderTests
+namespace Fluency.Tests.BuilderTests
 {
-    public class IgnoreNonPublicSetters
+    public class Given_AClassWithNonPublicSetters
     {
         private class AClassWithNonPublicSetters
         {
@@ -13,10 +13,10 @@ namespace Fluency.Tests.Deprecated.BuilderTests
             public string PropertyWithPublicSetter { get; set; }
         }
 
-        [Subject("FluencyIgnoreProperties")]
-        public class When_builder_is_configured_to_ignore_non_public_setters : IgnorePropertySpecs
+        public class When_builder_is_configured_to_ignore_non_public_setters : Given_AClassWithNonPublicSetters
         {
-            private It should_not_populate_private_setters = () =>
+            [Fact]
+            public void should_not_populate_private_setters()
             {
                 var builder = new FluentBuilder<AClassWithNonPublicSetters>();
                 builder.IgnoreNonPublicSetters();
@@ -24,9 +24,10 @@ namespace Fluency.Tests.Deprecated.BuilderTests
                 var instance = builder.build();
 
                 instance.PropertyWithPrivateSetter.Should().Be(null);
-            };
+            }
 
-            private It should_not_populate_protected_setters = () =>
+            [Fact]
+            public void should_not_populate_protected_setters()
             {
                 var builder = new FluentBuilder<AClassWithNonPublicSetters>();
                 builder.IgnoreNonPublicSetters();
@@ -34,9 +35,10 @@ namespace Fluency.Tests.Deprecated.BuilderTests
                 var instance = builder.build();
 
                 instance.PropertyWithProtectedSetter.Should().Be(null);
-            };
+            }
 
-            private It should_not_populate_internal_setters = () =>
+            [Fact]
+            public void should_not_populate_internal_setters()
             {
                 var builder = new FluentBuilder<AClassWithNonPublicSetters>();
                 builder.IgnoreNonPublicSetters();
@@ -44,18 +46,19 @@ namespace Fluency.Tests.Deprecated.BuilderTests
                 var instance = builder.build();
 
                 instance.PropertyWithInternalSetter.Should().Be(null);
-            };
+            }
 
-            private It should_still_call_public_setters = () =>
+            [Fact]
+            public void should_still_call_public_setters()
             {
                 var builder = new FluentBuilder<AClassWithNonPublicSetters>();
                 builder.IgnoreNonPublicSetters();
 
                 var instance = builder.build();
 
-                instance.PropertyWithPublicSetter.Should().Not.Be(null);
-                instance.PropertyWithPublicSetter.Should().Not.Be(string.Empty);
-            };
+                instance.PropertyWithPublicSetter.Should().NotBe(null);
+                instance.PropertyWithPublicSetter.Should().NotBe(string.Empty);
+            }
         }
     }
 }

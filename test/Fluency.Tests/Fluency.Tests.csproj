@@ -58,6 +58,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BuilderTests\Given_AClassWithNonPublicSetters.cs" />
     <Compile Include="BuilderTests\Given_ADynamicFluentBuilder_ThatUsesDefaultValueConventions.cs" />
     <Compile Include="BuilderTests\Given_BuildersCreatedOnDifferentThreads.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
