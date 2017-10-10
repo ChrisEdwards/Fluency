@@ -62,6 +62,7 @@
     <Compile Include="BuilderTests\Given_AClassWithNonPublicSetters.cs" />
     <Compile Include="BuilderTests\Given_ADynamicFluentBuilder_ThatUsesDefaultValueConventions.cs" />
     <Compile Include="BuilderTests\Given_BuildersCreatedOnDifferentThreads.cs" />
+    <Compile Include="BuilderTests\Using_a_custom_builder_as_an_alias_for_an_existing_instance.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

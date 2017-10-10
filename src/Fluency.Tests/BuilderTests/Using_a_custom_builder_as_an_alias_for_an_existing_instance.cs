@@ -43,24 +43,6 @@ namespace Fluency.Tests.Deprecated.BuilderTests
 
 
 		[ Subject( "FluentBuilder" ) ]
-		public class When_setting_the_builder_as_an_alias_for_an_existing_instance : Given_a_custom_builder
-		{
-			Establish context = () => _builder.AliasFor( _existingInstance );
-
-			It should_return_the_existing_instance_as_the_build_result = () => _buildResult.Should().Be.SameInstanceAs( _existingInstance );
-		}
-
-
-		[ Subject( "FluentBuilder" ) ]
-		public class When_setting_the_builder_as_an_alias_for_an_existing_instance_using_the_UsePrebuiltResult_alternative_syntax : Given_a_custom_builder
-		{
-			Establish context = () => _builder.UsePreBuiltResult( _existingInstance );
-
-			It should_return_the_existing_instance_as_the_build_result = () => _buildResult.Should().Be.SameInstanceAs( _existingInstance );
-		}
-
-
-		[ Subject( "FluentBuilder" ) ]
 		public class When_setting_the_builder_as_an_alias_for_an_existing_instance_then_setting_it_as_an_alias_for_a_different_instance : Given_a_custom_builder
 		{
 			public static MyCustomType _differentInstance = new MyCustomType();
