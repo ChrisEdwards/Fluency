@@ -92,27 +92,7 @@ namespace Fluency.Tests.Deprecated.BuilderTests
 		/// </summary>
 		public class By_passing_in_a_list_builder_to_build_the_list_for_the_property
 		{
-			[ Subject( "FluentBuilder" ) ]
-			public class When_setting_the_list_property_to_an_instance_of_a_list_builder : Given_a_builder_for_a_target_type_having_a_list_property
-			{
-				public static IFluentListBuilder< Bar > _listBuilder;
-				public static IList< Bar > _expectedList = new List< Bar >();
-
-				private Establish context = () =>
-				                            	{
-				                            		// Setup mock list builder.
-				                            		_listBuilder = MockRepository.GenerateMock< FluentListBuilder< Bar > >();
-				                            		_listBuilder.Stub( x => x.build() ).Return( _expectedList );
-
-				                            		// Set the list builder.
-				                            		_builder.SetList( x => x.Bars, _listBuilder );
-				                            	};
-
-				private It should_invoke_the_list_builder_to_get_the_list_propertys_value = () => _listBuilder.AssertWasCalled( x => x.build() );
-				private It should_build_an_instance_having_the_list_property_set_to_the_result_of_the_list_builder = () => _buildResult.Bars.Should().Be.SameInstanceAs( _expectedList );
-			}
-
-
+			
 			[ Subject( "FluentBuilder" ) ]
 			public class When_setting_the_list_property_using_a_builder_that_is_not_a_list_builder : Given_a_builder_for_a_target_type_having_a_list_property
 			{
