@@ -53,5 +53,22 @@ namespace Fluency.Tests.BuilderTests
                 result.Should().BeSameAs(_existingInstance);
             }
         }
+
+        public class
+            When_setting_the_builder_as_an_alias_for_an_existing_instance_then_setting_it_as_an_alias_for_a_different_instance
+            : Given_a_custom_builder
+        {
+            [Fact]
+            public void should_return_the_last_instance_it_was_set_as_an_alias_for()
+            {
+                MyCustomType differentInstance = new MyCustomType();
+                _builder.AliasFor(_existingInstance);
+                _builder.AliasFor(differentInstance);
+
+                var result = _builder.build();
+
+                result.Should().BeSameAs(differentInstance);
+            }
+        }
     }
 }
