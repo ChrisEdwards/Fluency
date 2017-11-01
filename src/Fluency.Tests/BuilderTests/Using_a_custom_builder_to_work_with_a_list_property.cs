@@ -90,29 +90,7 @@ namespace Fluency.Tests.Deprecated.BuilderTests
         /// </summary>
         public class By_adding_a_builder_to_build_an_item_for_the_list
         {
-            [ Subject( "FluentBuilder" ) ]
-            public class When_adding_multiple_builders_for_list_items_to_a_list_property_using_AddToList : Given_a_builder_for_a_target_type_having_a_list_property
-            {
-                private static Bar _expectedListItem1 = new Bar();
-                private static IFluentBuilder< Bar > _listItemBuilder1;
-
-                private static Bar _expectedListItem2 = new Bar();
-                private static IFluentBuilder< Bar > _listItemBuilder2;
-
-                private Establish context = () =>
-                                                {
-                                                    _listItemBuilder1 = MockBuilderFor( _expectedListItem1 );
-                                                    _listItemBuilder2 = MockBuilderFor( _expectedListItem2 );
-
-                                                    _builder.AddToList( x => x.Bars, _listItemBuilder1, _listItemBuilder2 );
-                                                };
-
-                private It should_invoke_the_builder_to_create_the_first_list_item = () => _listItemBuilder1.AssertWasCalled( x => x.build() );
-                private It should_build_an_instance_whose_list_property_contains_the_first_item = () => _buildResult.Bars.Should().Contain( _expectedListItem1 );
-
-                private It should_invoke_the_builder_to_create_the_second_list_item = () => _listItemBuilder2.AssertWasCalled( x => x.build() );
-                private It should_build_an_instance_whose_list_property_contains_the_second_item = () => _buildResult.Bars.Should().Contain( _expectedListItem2 );
-            }
+           
         }
     }
 }

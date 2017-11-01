@@ -235,6 +235,28 @@ namespace Fluency.Tests.BuilderTests
                     buildResult.Bars[0].SomeProperty.Should().Be("CustomBuilderInvoked");
                 }
             }
+
+            public class When_adding_multiple_builders_for_list_items_to_a_list_property_using_AddToList : Given_a_builder_for_a_target_type_having_a_list_property
+            {
+                [Fact]
+                public void should_build_an_instance_whose_list_property_contains_the_new_item()
+                {
+                    var listItemBuilder1 = new CustomBuilderBar();
+                    listItemBuilder1.SomePropertyValue = "CustomBuilderInvoked1";
+
+                    var listItemBuilder2 = new CustomBuilderBar();
+                    listItemBuilder2.SomePropertyValue = "CustomBuilderInvoked2";
+
+
+                    _builder.AddToList(x => x.Bars, listItemBuilder1, listItemBuilder2);
+
+                    var buildResult = _builder.build();
+
+                    buildResult.Bars.Count.Should().Be(2);
+                    buildResult.Bars[0].SomeProperty.Should().Be("CustomBuilderInvoked1");
+                    buildResult.Bars[1].SomeProperty.Should().Be("CustomBuilderInvoked2");
+                }
+            }
         }
 
     }
