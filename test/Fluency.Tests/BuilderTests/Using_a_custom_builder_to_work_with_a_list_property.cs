@@ -195,9 +195,11 @@ namespace Fluency.Tests.BuilderTests
         {
             internal class CustomBuilderBar : FluentBuilder<Bar>
             {
+                public string SomePropertyValue { get; set; }
+
                 protected override void AfterBuilding(Bar buildResult)
                 {
-                    buildResult.SomeProperty = "CustomBuilderInvoked";
+                    buildResult.SomeProperty = SomePropertyValue;
                     base.AfterBuilding(buildResult);
                 }
             }
@@ -207,9 +209,25 @@ namespace Fluency.Tests.BuilderTests
                 [Fact]
                 public void should_build_an_instance_whose_list_property_contains_the_new_item()
                 {
-                    FluentBuilder<Bar> _listItemBuilder = new CustomBuilderBar();
-                    
-                    _builder.AddListItem(x => x.Bars, _listItemBuilder);
+                    var listItemBuilder = new CustomBuilderBar();
+                    listItemBuilder.SomePropertyValue = "CustomBuilderInvoked";
+                    _builder.AddListItem(x => x.Bars, listItemBuilder);
+
+                    var buildResult = _builder.build();
+
+                    buildResult.Bars.Count.Should().Be(1);
+                    buildResult.Bars[0].SomeProperty.Should().Be("CustomBuilderInvoked");
+                }
+            }
+
+            public class When_adding_a_builder_for_a_list_item_to_a_list_property_using_AddToList : Given_a_builder_for_a_target_type_having_a_list_property
+            {
+                [Fact]
+                public void should_build_an_instance_whose_list_property_contains_the_new_item()
+                {
+                    var listItemBuilder = new CustomBuilderBar();
+                    listItemBuilder.SomePropertyValue = "CustomBuilderInvoked";
+                    _builder.AddToList(x => x.Bars, listItemBuilder);
 
                     var buildResult = _builder.build();
 
