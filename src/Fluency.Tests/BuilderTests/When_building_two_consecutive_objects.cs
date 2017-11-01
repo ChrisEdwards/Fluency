@@ -57,30 +57,6 @@ namespace Fluency.Tests.Deprecated.BuilderTests
 	}
 
 
-	[ Subject( "FluentBuilder" ) ]
-	public class when_the_two_objects_are_of_the_same_type : when_building_two_consecutive_objects
-	{
-		It should_return_unique_ids = () =>
-		                              	{
-		                              		ClassWithId object1 = new BuilderWithId().build();
-		                              		ClassWithId object2 = new BuilderWithId().build();
-
-		                              		Assert.That( object1.Id, Is.Not.EqualTo( object2.Id ) );
-		                              	};
-	}
-
-
-	[ Subject( "FluentBuilder" ) ]
-	public class when_the_two_objects_are_of_different_types : when_building_two_consecutive_objects
-	{
-		It should_not_return_unique_ids = () =>
-		                                  	{
-		                                  		ClassWithId object1 = new BuilderWithId().build();
-		                                  		DifferentClassWithId object2 = new DifferentBuilderWithId().build();
-
-		                                  		Assert.That( object1.Id, Is.EqualTo( object2.Id ) );
-		                                  	};
-	}
 }
 
 
