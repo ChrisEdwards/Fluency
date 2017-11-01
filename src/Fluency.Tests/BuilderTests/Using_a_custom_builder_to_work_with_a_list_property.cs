@@ -91,23 +91,6 @@ namespace Fluency.Tests.Deprecated.BuilderTests
         public class By_adding_a_builder_to_build_an_item_for_the_list
         {
             [ Subject( "FluentBuilder" ) ]
-            public class When_adding_a_list_item_to_a_list_property_using_deprecated_AddListItem_method : Given_a_builder_for_a_target_type_having_a_list_property
-            {
-                private static Bar _expectedListItem = new Bar();
-                private static IFluentBuilder< Bar > _listItemBuilder;
-
-                private Establish context = () =>
-                                                {
-                                                    _listItemBuilder = MockBuilderFor( _expectedListItem );
-                                                    _builder.AddListItem( x => x.Bars, _listItemBuilder );
-                                                };
-
-                private It should_invoke_the_builder_to_create_the_new_list_item = () => _listItemBuilder.AssertWasCalled( x => x.build() );
-                private It should_build_an_instance_whose_list_property_contains_the_new_item = () => _buildResult.Bars.Should().Contain( _expectedListItem );
-            }
-
-
-            [ Subject( "FluentBuilder" ) ]
             public class When_adding_a_builder_for_a_list_item_to_a_list_property_using_AddToList : Given_a_builder_for_a_target_type_having_a_list_property
             {
                 private static Bar _expectedListItem = new Bar();

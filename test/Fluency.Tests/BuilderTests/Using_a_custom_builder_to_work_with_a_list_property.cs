@@ -35,7 +35,10 @@ namespace Fluency.Tests.BuilderTests
         /// <summary>
         /// Bar is simply a type that we are using in for the list property.
         /// </summary>
-        public class Bar { }
+        public class Bar
+        {
+            public string SomeProperty { get; set; }
+        }
         
         public class FooBuilder : FluentBuilder<Foo> { }
         
@@ -181,6 +184,37 @@ namespace Fluency.Tests.BuilderTests
                     var buildResult = _builder.build();
 
                     buildResult.Bars.Should().BeEquivalentTo(expectedListItem1, expectedListItem2);
+                }
+            }
+        }
+
+        /// <summary>
+        /// To add an item to a list from within a custom builder, you can call <code>AddListItem( x => x.ListProperty, item );</code>
+        /// </summary>
+        public class By_adding_a_builder_to_build_an_item_for_the_list
+        {
+            internal class CustomBuilderBar : FluentBuilder<Bar>
+            {
+                protected override void AfterBuilding(Bar buildResult)
+                {
+                    buildResult.SomeProperty = "CustomBuilderInvoked";
+                    base.AfterBuilding(buildResult);
+                }
+            }
+
+            public class When_adding_a_list_item_to_a_list_property_using_deprecated_AddListItem_method : Given_a_builder_for_a_target_type_having_a_list_property
+            {
+                [Fact]
+                public void should_build_an_instance_whose_list_property_contains_the_new_item()
+                {
+                    FluentBuilder<Bar> _listItemBuilder = new CustomBuilderBar();
+                    
+                    _builder.AddListItem(x => x.Bars, _listItemBuilder);
+
+                    var buildResult = _builder.build();
+
+                    buildResult.Bars.Count.Should().Be(1);
+                    buildResult.Bars[0].SomeProperty.Should().Be("CustomBuilderInvoked");
                 }
             }
         }
