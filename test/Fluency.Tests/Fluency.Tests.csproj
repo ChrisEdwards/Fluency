@@ -149,6 +149,7 @@
     <Compile Include="BuilderTests\Using_a_custom_builder_to_work_with_a_list_property.cs" />
     <Compile Include="BuilderTests\When_building_two_consecutive_objects.cs" />
     <Compile Include="BuilderTests\when_setting_a_reference_property.cs" />
+    <Compile Include="Conventions\ByName\FirstNameConventionTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

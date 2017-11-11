@@ -33,21 +33,6 @@ namespace Fluency.Tests.Deprecated.Conventions.ByName
 			Because of = () => { convention = Convention.FirstName(); };
 		}
 
-
-		[ Subject( typeof ( Convention ), "FirstName" ) ]
-		public class When_property_name_is_lowercase_firstname : When_getting_the_default_value_for_a_property_having_a_first_name_convention_applied
-		{
-			Establish context = () =>
-			                    	{
-			                    		var person = new {firstname = "bob"};
-			                    		propertyInfo = person.PropertyInfoFor( x => x.firstname );
-			                    	};
-
-			It should_apply = () => convention.AppliesTo( propertyInfo ).Should().Be.True();
-			It should_return_a_random_first_name = () => convention.DefaultValue( propertyInfo ).Should().Not.Be.Empty();
-		}
-
-
 		[ Subject( typeof ( Convention ), "FirstName" ) ]
 		public class When_property_name_is_mixed_case_FirstName : When_getting_the_default_value_for_a_property_having_a_first_name_convention_applied
 		{
