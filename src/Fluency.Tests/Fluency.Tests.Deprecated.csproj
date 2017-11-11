@@ -79,7 +79,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssertionExtensions.cs" />
-    <Compile Include="Conventions\ByName\LastNameConventionSpecs.cs" />
     <Compile Include="Conventions\ByType\DateTypeConventionSpecs.cs" />
     <Compile Include="Conventions\ByType\IntegerTypeConventionSpecs.cs" />
     <Compile Include="Conventions\ByType\StringTypeConventionSpecs.cs" />
