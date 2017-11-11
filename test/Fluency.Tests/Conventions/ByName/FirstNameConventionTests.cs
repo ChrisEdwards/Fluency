@@ -69,9 +69,8 @@ namespace Fluency.Tests.Conventions.ByName
         {
             public When_property_name_contains_lowercase_firstname()
             {
-                // BUG: original test values, to fix
-                var person = new { FirstName = "bob" };
-                propertyInfo = person.PropertyInfoFor(x => x.FirstName);
+                var person = new { customerfirstname = "bob" };
+                propertyInfo = person.PropertyInfoFor(x => x.customerfirstname);
             }
 
             [Fact]
@@ -91,9 +90,8 @@ namespace Fluency.Tests.Conventions.ByName
         {
             public When_property_name_contains_mixed_case_FirstName()
             {
-                // BUG: original test values, to fix
-                var person = new { FirstName = "bob" };
-                propertyInfo = person.PropertyInfoFor(x => x.FirstName);
+                var person = new { CustomerFirstName = "bob" };
+                propertyInfo = person.PropertyInfoFor(x => x.CustomerFirstName);
             }
 
             [Fact]
