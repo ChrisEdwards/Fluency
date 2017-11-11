@@ -151,6 +151,7 @@
     <Compile Include="BuilderTests\when_setting_a_reference_property.cs" />
     <Compile Include="Conventions\ByName\LastNameConventionTests.cs" />
     <Compile Include="Conventions\ByName\FirstNameConventionTests.cs" />
+    <Compile Include="Conventions\ByType\DateTypeConventionsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
