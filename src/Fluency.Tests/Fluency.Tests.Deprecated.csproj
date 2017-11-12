@@ -79,7 +79,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssertionExtensions.cs" />
-    <Compile Include="Conventions\ByType\StringTypeConventionSpecs.cs" />
     <Compile Include="Conventions\DefaultConventionsSpecs.cs" />
     <Compile Include="DataGeneration\ARandomSpecs.cs" />
     <Compile Include="FluencyInitializationSpecs.cs" />

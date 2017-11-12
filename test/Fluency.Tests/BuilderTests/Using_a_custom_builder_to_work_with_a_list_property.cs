@@ -258,6 +258,5 @@ namespace Fluency.Tests.BuilderTests
                 }
             }
         }
-
     }
 }
