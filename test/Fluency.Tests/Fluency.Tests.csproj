@@ -154,6 +154,7 @@
     <Compile Include="Conventions\ByType\DateTypeConventionsTests.cs" />
     <Compile Include="Conventions\ByType\IntegerTypeConventionTests.cs" />
     <Compile Include="Conventions\ByType\StringTypeConventionTests.cs" />
+    <Compile Include="Conventions\DefaultConventionsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
