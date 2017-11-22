@@ -155,6 +155,8 @@
     <Compile Include="Conventions\ByType\IntegerTypeConventionTests.cs" />
     <Compile Include="Conventions\ByType\StringTypeConventionTests.cs" />
     <Compile Include="Conventions\DefaultConventionsTests.cs" />
+    <Compile Include="DataGeneration\ARandomTests.cs" />
+    <Compile Include="Catch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
