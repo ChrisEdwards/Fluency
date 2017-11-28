@@ -79,7 +79,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssertionExtensions.cs" />
-    <Compile Include="FluencyInitializationSpecs.cs" />
     <Compile Include="Probabilities\PercentChanceOfSpecs.cs">
       <SubType>Code</SubType>
     </Compile>
