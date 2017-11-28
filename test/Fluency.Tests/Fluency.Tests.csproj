@@ -157,6 +157,7 @@
     <Compile Include="Conventions\DefaultConventionsTests.cs" />
     <Compile Include="DataGeneration\ARandomTests.cs" />
     <Compile Include="Catch.cs" />
+    <Compile Include="FluencyInitializationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
