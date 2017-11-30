@@ -12,12 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 using Fluency.Utils;
+using FluentAssertions;
 using NUnit.Framework;
 using SampleApplication.Domain;
 using SampleApplication.Domain.DiscountCalculation;
 using SampleApplication.Tests.FluentBuilders;
-using SharpTestsEx;
-
 
 namespace SampleApplication.Tests.UnitTests.Domain.DiscountCalculation.DiscountCalculatorTests
 {
@@ -51,7 +50,7 @@ namespace SampleApplication.Tests.UnitTests.Domain.DiscountCalculation.DiscountC
 
 			double discount = _calculator.CalculateDiscount( order );
 
-			discount.Should().Be.EqualTo( 10.dollars() );
+			discount.Should().Be( 10.dollars() );
 		}
 	}
 }

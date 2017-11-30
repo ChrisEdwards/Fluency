@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 using Fluency.Utils;
+using FluentAssertions;
 using NUnit.Framework;
 using SampleApplication.Domain;
 using SampleApplication.Tests.FluentBuilders;
-using SharpTestsEx;
 
 
 namespace SampleApplication.Tests.UnitTests.Domain.LineItemTests
@@ -29,7 +29,7 @@ namespace SampleApplication.Tests.UnitTests.Domain.LineItemTests
 			LineItem lineItem = a.LineItem.WithQuantity( 1 ).And.UnitPriceOf( 5.dollars() )
 					.build();
 
-			lineItem.Amount.Should().Be.EqualTo( 5.dollars() );
+			lineItem.Amount.Should().Be( 5.dollars() );
 		}
 	}
 }

@@ -1,0 +1,46 @@
+﻿version: '{build}'
+
+environment:
+  packageVersion: 0.0.1
+
+init:
+- ps: >-
+    if ($env:APPVEYOR_REPO_TAG -eq "true")
+    {
+        Update-AppveyorBuild -Version "$($env:APPVEYOR_REPO_TAG_NAME.TrimStart("v"))"
+    }
+    else
+    {
+        Update-AppveyorBuild -Version "dev-$($env:APPVEYOR_REPO_COMMIT.Substring(0, 7))"
+    }
+
+image: Visual Studio 2017
+
+branches:
+  only:
+  - master
+  - refs/pull/*/merge
+
+pull_requests:
+  do_not_increment_build_number: true
+  
+configuration: Release
+
+nuget:
+  account_feed: false
+  project_feed: true
+  disable_publish_on_pr: true
+
+build:
+  publish_nuget: false
+
+build_script:
+- ps: .\Build.ps1 -target Default -configuration Release
+
+test_script:
+- ps: .\build.ps1 -target Run-Unit-Tests -Configuration Release
+
+artifacts:
+- path: .\artifacts\**\*.nupkg
+  name: NuGet
+

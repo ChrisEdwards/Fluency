@@ -12,11 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 using Fluency.Utils;
+using FluentAssertions;
 using NUnit.Framework;
 using SampleApplication.Domain;
 using SampleApplication.Tests.FluentBuilders;
-using SharpTestsEx;
-
 
 namespace SampleApplication.Tests.UnitTests.Domain.OrderTests
 {
@@ -29,7 +28,7 @@ namespace SampleApplication.Tests.UnitTests.Domain.OrderTests
 			Order order = an.Order.With( a.LineItem.Costing( 10.dollars() ) )
 					.build();
 
-			order.TotalAmount.Should().Be.EqualTo( 10.dollars() );
+			order.TotalAmount.Should().Be( 10.dollars() );
 		}
 	}
 }

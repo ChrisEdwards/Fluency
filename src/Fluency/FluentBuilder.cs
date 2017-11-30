@@ -204,6 +204,28 @@ namespace Fluency
 			return this;
 		}
 
+	    /// <summary>
+	    /// Sets the builder to be used to construct the value for the specified propety.
+	    /// </summary>
+	    /// <typeparam name="TPropertyType">The type of the property type.</typeparam>
+	    /// <param name="propertyExpression">The property expression.</param>
+	    /// <param name="builder">The builder.</param>
+	    protected internal FluentBuilder<T> SetProperty<TPropertyType>(Expression<Func<T, TPropertyType>> propertyExpression, IFluentBuilder builder)
+	        where TPropertyType : class, new()
+	    {
+	        // Due to lack of polymorphism in generic parameters.
+	        if (!(builder is FluentBuilder<TPropertyType>))
+	        {
+	            throw new ArgumentException(
+	                "Invalid builder type. Builder type must be a builder of Property Type. \n  BuilderType='{0}'\n  PropertyType='{1}'".format_using(builder.GetType().FullName,
+	                    typeof(TPropertyType).FullName));
+	        }
+
+	        AddBuilderFor(propertyExpression, builder);
+
+	        return this;
+	    }
+
         /// <summary>
         /// Mark a property to be ignored when setting of default values
         /// </summary>
@@ -258,28 +280,6 @@ namespace Fluency
 
             return this;
         }
-
-        /// <summary>
-        /// Sets the builder to be used to construct the value for the specified propety.
-        /// </summary>
-        /// <typeparam name="TPropertyType">The type of the property type.</typeparam>
-        /// <param name="propertyExpression">The property expression.</param>
-        /// <param name="builder">The builder.</param>
-        protected internal FluentBuilder< T > SetProperty< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression, IFluentBuilder builder )
-				where TPropertyType : class, new()
-		{
-			// Due to lack of polymorphism in generic parameters.
-			if ( !( builder is FluentBuilder< TPropertyType > ) )
-			{
-				throw new ArgumentException(
-						"Invalid builder type. Builder type must be a builder of Property Type. \n  BuilderType='{0}'\n  PropertyType='{1}'".format_using( builder.GetType().FullName,
-						                                                                                                                                   typeof ( TPropertyType ).FullName ) );
-			}
-
-			AddBuilderFor( propertyExpression, builder );
-
-			return this;
-		}
 
 
 		/// <summary>

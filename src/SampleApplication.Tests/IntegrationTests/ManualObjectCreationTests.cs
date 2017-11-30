@@ -13,10 +13,9 @@
 // limitations under the License.
 
 using System;
+using FluentAssertions;
 using NUnit.Framework;
 using SampleApplication.Domain;
-using SharpTestsEx;
-
 
 namespace SampleApplication.Tests.IntegrationTests
 {
@@ -74,7 +73,7 @@ namespace SampleApplication.Tests.IntegrationTests
 
 			// Assert.
 			const double expectedTotal = ( 1 * 1.60 ) + ( 10 * 25.99 );
-			actualTotal.Should().Be.EqualTo( expectedTotal );
+			actualTotal.Should().Be( expectedTotal );
 		}
 	}
 }

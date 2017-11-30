@@ -31,6 +31,7 @@ using System.Runtime.InteropServices;
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 
 [assembly: Guid("8ea43609-1872-4ad5-a296-c990239a9bf8")]
+[assembly: InternalsVisibleTo("Fluency.Tests.Deprecated")]
 [assembly: InternalsVisibleTo("Fluency.Tests")]
 
 
