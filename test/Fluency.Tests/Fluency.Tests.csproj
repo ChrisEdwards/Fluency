@@ -158,6 +158,7 @@
     <Compile Include="DataGeneration\ARandomTests.cs" />
     <Compile Include="Catch.cs" />
     <Compile Include="FluencyInitializationTests.cs" />
+    <Compile Include="Probabilities\PercentChanceOfTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\NumericalExtensionsSpecs.cs" />
   </ItemGroup>
@@ -170,6 +171,9 @@
       <Project>{ca8de273-aa4a-4fc1-9d41-b67b56a53433}</Project>
       <Name>Fluency</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
