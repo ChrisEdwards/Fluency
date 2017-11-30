@@ -61,6 +61,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Castle.Core.3.0.0.4001\lib\net40-client\Castle.Core.dll</HintPath>
     </Reference>
+    <Reference Include="FluentAssertions, Version=4.19.4.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentAssertions.4.19.4\lib\net40\FluentAssertions.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentAssertions.Core, Version=4.19.4.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentAssertions.4.19.4\lib\net40\FluentAssertions.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Iesi.Collections, Version=1.0.1.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <HintPath>..\packages\Iesi.Collections.1.0.1\lib\Iesi.Collections.dll</HintPath>
     </Reference>
@@ -81,10 +87,6 @@
     <Reference Include="Remotion.Data.Linq">
       <HintPath>..\packages\NHibernate.3.0.0.4000\lib\Remotion.Data.Linq.dll</HintPath>
     </Reference>
-    <Reference Include="SharpTestsEx, Version=1.0.0.0, Culture=neutral, PublicKeyToken=8c60d8070630b1c1, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\sharptestsex\SharpTestsEx.dll</HintPath>
-    </Reference>
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -93,6 +95,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\sqlite3-dotnet\System.Data.SQLite.DLL</HintPath>
     </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Anonymous.cs" />
@@ -121,14 +125,9 @@
     <Compile Include="UnitTests\FluentBuilders\EmployeeBuilderTests.cs" />
     <Compile Include="UnitTests\FluentBuilders\LineItemBuilderTests.cs" />
     <Compile Include="TestData.cs" />
-    <Compile Include="Utils\DomainAssertionExtensions.cs" />
     <Compile Include="Utils\IDbCommandExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Fluency.Tests\Fluency.Tests.Deprecated.csproj">
-      <Project>{F8CADD7C-6E49-476F-AF03-274507FA06B4}</Project>
-      <Name>Fluency.Tests.Deprecated</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Fluency\Fluency.csproj">
       <Project>{CA8DE273-AA4A-4FC1-9D41-B67B56A53433}</Project>
       <Name>Fluency</Name>

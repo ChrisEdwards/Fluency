@@ -12,11 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 using System;
+using FluentAssertions;
 using NUnit.Framework;
 using SampleApplication.Domain;
 using SampleApplication.Tests.FluentBuilders;
-using SharpTestsEx;
-
 
 namespace SampleApplication.Tests.UnitTests.NHibernate
 {
@@ -43,7 +42,7 @@ namespace SampleApplication.Tests.UnitTests.NHibernate
 		public void Should_retrieve_quantity()
 		{
 			DateTime x = _actualLineItem.Order.OrderDate;
-			_actualLineItem.Quantity.Should().Be.EqualTo( _expectedLineItem.Quantity );
+			_actualLineItem.Quantity.Should().Be( _expectedLineItem.Quantity );
 		}
 
 
@@ -51,7 +50,7 @@ namespace SampleApplication.Tests.UnitTests.NHibernate
 		[ Ignore( "Requires SQL Lite" ) ]
 		public void Should_retrieve_unit_price()
 		{
-			_actualLineItem.UnitPrice.Should().Be.EqualTo( _expectedLineItem.UnitPrice );
+			_actualLineItem.UnitPrice.Should().Be( _expectedLineItem.UnitPrice );
 		}
 	}
 }

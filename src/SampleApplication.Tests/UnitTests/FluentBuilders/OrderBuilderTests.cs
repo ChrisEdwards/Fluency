@@ -11,10 +11,11 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+
+using FluentAssertions;
 using NUnit.Framework;
 using SampleApplication.Domain;
 using SampleApplication.Tests.FluentBuilders;
-using SharpTestsEx;
 
 // ReSharper disable InconsistentNaming
 
@@ -44,7 +45,7 @@ namespace SampleApplication.Tests.UnitTests.FluentBuilders
 		[ Test ]
 		public void Should_build_the_LineItem_with_reference_to_the_Order()
 		{
-			_lineItem.Order.Should().Be.SameInstanceAs( _order );
+			_lineItem.Order.Should().BeSameAs( _order );
 		}
 
 
